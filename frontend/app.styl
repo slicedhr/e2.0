@@ -1,0 +1,308 @@
+
+body, html
+	overflow hidden
+	position absolute
+	transition all .5s
+	width 100%
+	height 100%
+html
+	opacity 0
+.hide-selectable
+	tr
+		td:first-child, th:first-child
+			display none !important
+		td:nth-child(2), th:nth-child(2)
+			padding-left 13px !important
+.show-selectable
+	tr
+		td:nth-child(2), th:nth-child(2)
+			padding-left 0 !important
+.activate-main-menu-button
+	transition all .5s
+	margin 0 !important
+	position absolute
+	top 5px
+.activatedmenubutton
+	top -5px
+	left -7px
+.mainmenu
+	height 100% !important
+	background #4558C1
+	width 250px
+	position fixed
+	top 0
+	left 0
+	.contentmenu
+		margin-top 32px
+.loginimage
+	background: url(../images/login-background.png);
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+	transition all .6s ease-in-out
+	font-family: 'Roboto', sans-serif;
+   
+default-footer
+	background #37495D
+	color white
+	margin-top 20px
+	a
+		color #00A1FF
+		text-decoration none
+md-backdrop
+	position fixed
+
+basic-filtrator
+	md-select 
+		.md-select-value
+			border-bottom-color white
+			&.md-select-placeholder
+				color white
+	.search-button
+		margin-top 5px !important
+		margin-left 10px !important
+		position absolute
+		top 10px
+		svg
+			margin-left -2px
+			margin-top -5px
+	.search-field
+		input
+			background white
+			border-bottom none
+			border-radius 2px
+			box-shadow 0px 3px 5px -1px rgba(0, 0, 0, 0.14), 0px 6px 10px 0px rgba(0, 0, 0, 0.098), 0px 1px 18px 0px rgba(0, 0, 0, 0.084)
+			position absolute
+			margin-top 10px
+			top 13px
+			width 100%
+.repeat-animation
+	transition all 1s
+	&.ng-leave
+		animation fadeOutUp 1s
+	&.ng-enter
+		animation fadeInDown 1s
+.text-center
+	text-align center
+.text-left
+	text-align left
+.design-toolbar-icon
+	position relative
+	overflow hidden
+	.design-icon
+		fill rgba(255,255,255,.17) !important
+		position absolute
+		right 50px
+		top -6px
+.loaded
+	opacity 1
+.icon-fill-white
+	fill white !important
+
+.icon-fill-gray
+	fill gray !important
+.main-container
+	position absolute
+	height 100%
+	width 100%
+.add-action-button
+	background-color #0C9C49 !important
+	position fixed
+	bottom 20px
+	right 35px
+	svg
+		margin-top -4px
+		margin-left -3px
+.main-toolbar
+	transition all .6s
+	&.ng-enter.ng-enter-active
+		animation fadeInDown .8s
+	&.ng-leave.ng-leave-active
+		animation fadeOutUp .6s
+.user-menu-button
+	text-align left
+	text-overflow ellipsis
+	img
+		border-radius 50%
+		box-sizing content-box
+		height 35px
+		vertical-align middle
+		transition all .5s
+		width 35px
+	span
+		margin-left 7px
+		vertical-align middle
+.user-menu-toolbar, .menu-toolbar-default
+	margin-top 0
+	img
+		border-radius 50%
+		height 45px
+		margin-top 8px
+		vertical-align middle
+		width 45px
+	span
+		font-size 17px
+		margin-left 11px
+		margin-top 20px
+		vertical-align middle
+.user-menu-options
+	padding 0
+	svg
+		margin-top -1px
+
+.menu-default-content
+	padding 0
+	
+.menu-default-messages
+	position relative
+	*
+		text-overflow ellipsis !important
+	.desc
+		font-size 15px
+		display inline-block
+		vertical-align top
+		.name
+			font-size 15px
+			color cornflowerblue
+			display block
+			margin-top -4px
+			text-overflow ellipsis
+		.msg
+			font-size 14px
+			display block
+			margin-top -18px
+			color #515151
+			text-align left
+			
+	.thumb
+		background #d3d3d3
+		border-radius 50%
+		display inline-block
+		margin-top 2px
+		overflow hidden
+		height 45px
+		vertical-align middle
+		width 45px
+		img
+			width 100%;
+			max-width 100%
+.delay
+	&.1s
+		animation-delay 1s
+	&.1-3s
+		animation-delay 1.3s
+	&.1-6s
+		animation-delay 1.6s
+	&.1-9s
+		animation-delay 1.9s
+.data-table-header
+	background #31ADFF
+	color #3C3C3C
+.number-notification
+	background #e64c40
+	border-radius 50%
+	display block
+	font-size 12px
+	height 23px
+	line-height 23px
+	margin-left 19px
+	margin-top 2px
+	position absolute
+	width 23px
+.image-in-tap
+	width 25px
+	&.inbox
+		width 32px
+.main-tabs
+	md-ink-bar
+		background rgb(121,134,203) !important
+		color rgb(121,134,203) !important
+.header-main-tabs
+	height 50px
+	margin-top -24px
+	h3
+		font-weight 100
+		font-size 24px
+		line-height 50px
+		text-align center
+		transition all .5s
+.initial-text
+	text-transform initial
+	text-overflow ellipsis
+	span
+		text-overflow ellipsis
+.bottom-radius-8
+	border-radius 0 0 8px 8px
+.toolbar-design
+	color white
+	transition all .6s
+	&.design-1
+		background #465862 url(../images/design1.png) no-repeat right 
+		background-size 25%
+		color white
+	&.design-2
+		background #154D55 url(../images/design2.png) no-repeat right
+		background-size 13% 222%
+		color white
+	&.design-3
+		background #00BACF url(../images/design3.jpg) no-repeat right
+		background-size 21% 101%
+		color white
+	&.design-4
+		background #251F39 url(../images/design4.jpg) no-repeat right
+		background-size 21%
+		color white
+	&.design-5
+		background #3E7CED url(../images/design5.jpg) no-repeat right
+		background-size 30%
+		color white
+	&.design-6
+		background #1F9CD6 url(../images/design6.jpg) no-repeat right
+		background-size 30%
+		color white
+	&.design-7
+		background #2D6E94 url(../images/design7.jpg) no-repeat right
+		background-size 30%
+		color white
+	&.design-8
+		background #242424 url(../images/design8.jpg) no-repeat right
+		background-size 30%
+		color white
+	&.design-9
+		background #4558C1 url(../images/design9.jpg) no-repeat right
+		background-size 50%
+		background-position-x 106%
+	&.design-10
+		background #4356BD url(../images/design10.jpg) no-repeat right
+		background-size 30%
+		color white
+	&.redonded
+		border-radius 10px 10px 3px 3px
+.scroller
+	width 100%
+	height 100%
+	overflow-y hidden
+	position absolute
+.search-animation
+	transition .6s all
+.search-animation.ng-hide-add
+	animation fadeOutUp .6s
+.search-animation.ng-hide-remove
+	animation fadeInDown .6s
+.text-title-animation
+	transition all .6s
+	position absolute
+	top 14px
+.text-title-animation.ng-hide-add
+	animation fadeOutDown .6s
+.text-title-animation.ng-hide-remove
+	animation fadeInUp .6s
+.default-content
+	table
+		md-checkbox
+			&.md-checked 
+				.md-icon
+					background #0D679E
+		
+			

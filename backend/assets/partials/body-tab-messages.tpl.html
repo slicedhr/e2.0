@@ -1,0 +1,22 @@
+<md-list>
+    <md-list-item class="menu-default-messages" ng-repeat="message in app.initData.mensajes">
+      <div class="md-list-item-text">
+        <md-button>
+            <span class="thumb">
+                <img ng-src="images/profile_photos/{{message.from.profile_image  || 'default_avatar.png' }}" alt="" />
+            </span>
+            <span class="desc">
+              <span class="name">{{ message.from.first_name + " " + message.from.last_name | limitTo: 23 }}{{ (message.from.first_name+" "+message.from.last_name).length > 23 ? '...' : '' }}</span>
+              <span class="msg">{{ message.message | limitTo: 23 }}{{ (message.message).length > 23 ? '...' : '' }}</span>
+            </span>
+        </md-button>
+      </div>
+      <md-divider></md-divider>
+     
+    </md-list-item>
+    
+    <md-list-item class="initial-text" ng-if="app.initData.mensajes.length < 1">
+      <span>No hay Mensajes pendientes por leer</span>
+    </md-list-item>
+      
+</md-list>

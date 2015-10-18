@@ -1,0 +1,9 @@
+ <md-list>
+    <md-list-item ng-repeat="notification in app.initData.notificaciones | limitTo: 7 | orderBy: '-id'">
+      <md-button class="initial-text" title="{{ notification.text }}"> {{ notification.text }} </md-button>
+      <!-- <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox> -->
+    </md-list-item>
+    <md-list-item class="initial-text" ng-if="app.initData.notificaciones.length < 1">
+      <span>No hay notificaciones pendientes por leer</span>
+    </md-list-item>
+ </md-list>

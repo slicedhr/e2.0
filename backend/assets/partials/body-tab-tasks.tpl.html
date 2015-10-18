@@ -1,0 +1,11 @@
+<md-list>
+    <md-list-item ng-repeat="task in app.initData.tareas | limitTo: 21 | orderBy: '-id'">
+      <md-button class="initial-text" title="{{ task.title }}"> {{ task.title }} </md-button>
+      <!-- <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox> -->
+    </md-list-item>
+    <md-menu-item >
+
+        <span ng-if="app.initData.tareas.length < 1">No hay Tareas pendientes</span>
+
+    </md-menu-item>
+</md-list>

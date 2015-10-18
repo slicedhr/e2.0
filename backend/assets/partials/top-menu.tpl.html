@@ -1,0 +1,39 @@
+<md-button class="md-icon-button activate-main-menu-button animated rotateIn" ng-class="{'activatedmenubutton': app.activatedmenu }" aria-label="Settings" ng-morph-modal="mainMenuSettings" ng-click="app.activatedmenu = !app.activatedmenu">
+	<ng-md-icon icon="{{ app.activatedmenu ? 'close' : 'menu' }}" size="24" class="icon-fill-white"></ng-md-icon>
+</md-button>
+<span flex></span>
+
+<md-button class="md-icon-button animated fadeIn delay 1s" aria-label="Generate">
+  <md-tooltip md-direction="bottom">
+    Generar Cotización
+  </md-tooltip>
+  <img src="/images/icons/generar.png" width="30" style="vertical-align: middle" alt="">
+</md-button>
+
+<md-button class="md-icon-button animated fadeIn delay 1-3s" aria-label="Tasks" ng-click="app.openNotificationsSideNav(0)">
+  <md-tooltip md-direction="bottom">
+    Tareas
+  </md-tooltip>
+  <span class="number-notification md-whiteframe-z2">{{app.initData.tareas.length}}</span>
+  <img src="/images/icons/task.png" width="24" style="vertical-align: middle" alt="">
+</md-button>
+
+<md-button class="md-icon-button animated fadeIn delay 1-6s" aria-label="Messages" ng-click="app.openNotificationsSideNav(1)">
+  <md-tooltip md-direction="bottom">
+    Mensajes
+  </md-tooltip>
+  <span class="number-notification md-whiteframe-z2">{{app.initData.mensajes.length}}</span>
+  <img src="/images/icons/inbox.png" width="26" style="vertical-align: middle" alt="">
+</md-button>
+
+<md-button class="md-icon-button animated fadeIn delay 1-9s" aria-label="Notifications" ng-click="app.openNotificationsSideNav(2)">
+  <md-tooltip md-direction="bottom">
+    Notificaciones
+  </md-tooltip>
+  <span class="number-notification md-whiteframe-z2">{{app.initData.notificaciones.length}}</span>
+  <img src="/images/icons/notificacion.png" width="24" style="vertical-align: middle" alt="">
+</md-button>
+
+
+<div ng-include="'/partials/profile-menu-content.tpl.html'" flex="10" scope="app"></div>
+  

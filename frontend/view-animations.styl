@@ -1,0 +1,87 @@
+/*
+  Steps
+    - .anim-in-setup
+    - .anim-in
+    - .anim-out-setup
+    - .anim-out
+*/
+
+// .fadeLeft
+
+.anim-in-out.anim-in-setup.fadeLeft, .anim-in-out.anim-in-setup .fadeLeft
+  display none
+  
+.anim-in-out.anim-in.fadeLeft, .anim-in-out.anim-in .fadeLeft
+  animation: fadeInLeft .6s ease-in
+
+.anim-in-out.anim-out-setup.fadeLeft, .anim-in-out.anim-out-setup .fadeLeft
+  display block
+  
+.anim-in-out.anim-out.fadeLeft, .anim-in-out.anim-out .fadeLeft
+  animation: fadeOutLeft .6s ease-out
+  transition all .6s
+  opacity 0
+
+// .fadeRight
+
+.anim-in-out.anim-in-setup.fadeRight, .anim-in-out.anim-in-setup .fadeRight
+  display none
+  
+.anim-in-out.anim-in.fadeRight, .anim-in-out.anim-in .fadeRight
+  animation: fadeInRight .6s ease-in
+
+.anim-in-out.anim-out-setup.fadeRight, .anim-in-out.anim-out-setup .fadeRight
+  display block
+  
+.anim-in-out.anim-out.fadeRight, .anim-in-out.anim-out .fadeRight
+  animation: fadeOutRight .6s ease-out
+  transition all .6s
+  opacity 0
+  
+// .fadeUp
+
+.anim-in-out.anim-in-setup.fadeUp, .anim-in-out.anim-in-setup .fadeUp
+  display none
+  
+.anim-in-out.anim-in.fadeUp, .anim-in-out.anim-in .fadeUp
+  animation: fadeInUp .6s ease-in
+
+.anim-in-out.anim-out-setup.fadeUp, .anim-in-out.anim-out-setup .fadeUp
+  
+.anim-in-out.anim-out.fadeUp, .anim-in-out.anim-out .fadeUp
+  animation: fadeOutDown .6s ease-out
+  transition all .6s
+  opacity 0
+
+// .fadeDown
+
+.anim-in-out.anim-in-setup.fadeDown, .anim-in-out.anim-in-setup .fadeDown
+  display none
+  
+.anim-in-out.anim-in.fadeDown, .anim-in-out.anim-in .fadeDown
+  animation: fadeInDown .6s ease-in
+
+.anim-in-out.anim-out-setup.fadeDown, .anim-in-out.anim-out-setup .fadeDown
+  
+.anim-in-out.anim-out.fadeDown, .anim-in-out.anim-out .fadeDown
+  animation: fadeOutDown .6s ease-out
+  transition all .6s
+  opacity 0
+
+// .fadeLeftText
+  
+.anim-in-out.anim-in-setup.fadeLeftText, .anim-in-out.anim-in-setup .fadeLeftText
+  display none
+  opacity 0
+  transition all 2s
+  
+.anim-in-out.anim-in.fadeLeftText, .anim-in-out.anim-in .fadeLeftText
+  animation: fadeInLeft 3s linear
+
+.anim-in-out.anim-out-setup.fadeLeftText, .anim-in-out.anim-out-setup .fadeLeftText
+  display block
+  
+.anim-in-out.anim-out.fadeLeftText, .anim-in-out.anim-out .fadeLeftText
+  animation: fadeOutLeft .6s ease-out
+  transition all .6s
+  opacity 0

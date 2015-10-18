@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang='es' data-ng-app='enterprise' ng-class="{ loaded: true }" ng-cloak>
+  <head>
+    <meta charset="utf-8">
+    <title>Enterprise</title>
+
+    <meta name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes'>
+
+    <base href="/">
+    <!-- inject:head:js -->
+    <!-- endinject -->
+    <!-- inject:html -->
+    <!-- endinject -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="vendor/angular-material/angular-material.css">
+    <link rel="stylesheet" href="vendor/angular-chart.js/dist/angular-chart.css">
+    <link rel="stylesheet" href="vendor/angular-material-icons/angular-material-icons.css">
+    <link rel="stylesheet" href="vendor/angular-material-data-table/dist/md-data-table.min.css">
+    <link rel="stylesheet" href="vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" href="vendor/perfect-scrollbar/src/perfect-scrollbar.css">
+    <!-- endbower -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/view-animations.css">
+    <link rel="stylesheet" href="css/areas/areas.css">
+    <link rel="stylesheet" href="css/arp/arp.css">
+    <link rel="stylesheet" href="css/home/home.css">
+    <link rel="stylesheet" href="css/login/login.css">
+    <link rel="stylesheet" href="css/user/user.css">
+    <!-- endinject -->
+  </head>
+  <body data-ng-controller="AppCtrl as app">
+
+    <div layout="column" layout-fill>
+
+      <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5" class="main-toolbar toolbar-design design-9 md-whiteframe-z5" ng-if="auth.user">
+
+          <div class="md-toolbar-tools animated fadeIn" ng-include="'partials/top-menu.tpl.html'" scope="app"></div>
+
+      </md-toolbar>
+
+        
+
+      <md-content ng-class="{'loginimage': toState == 'login'}" flex>
+
+        <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+
+          <div class="main-container anim-in-out" data-anim-sync="true" data-ui-view>
+              
+          </div>
+
+        </perfect-scrollbar>
+      
+      </md-content>
+
+    </div>
+
+    <md-sidenav md-component-id="left" class="md-sidenav-left">
+
+    </md-sidenav>
+
+    <md-sidenav md-component-id="profilenotifications" class="md-sidenav-right">
+
+      <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+
+        <md-content layout-fill ng-include="'/partials/main-tabs.tpl.html'" scope="app">
+
+        </md-content>
+
+      </perfect-scrollbar>
+      
+    </md-sidenav>
+
+
+    <!-- bower:js -->
+    <script src="vendor/jquery/dist/jquery.js"></script>
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-animate/angular-animate.js"></script>
+    <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="vendor/angular-aria/angular-aria.js"></script>
+    <script src="vendor/angular-material/angular-material.js"></script>
+    <script src="vendor/Chart.js/Chart.js"></script>
+    <script src="vendor/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="vendor/angular-material-icons/angular-material-icons.min.js"></script>
+    <script src="vendor/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+    <script src="vendor/angular-material-data-table/dist/md-data-table.min.js"></script>
+    <script src="vendor/angular-jwt/dist/angular-jwt.js"></script>
+    <script src="vendor/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="vendor/sails.io.js/dist/sails.io.js"></script>
+    <script src="vendor/ngMorph/dist/angular-morph.min.js"></script>
+    <script src="vendor/angular-ui-router-anim-in-out/anim-in-out.js"></script>
+    <script src="vendor/perfect-scrollbar/src/perfect-scrollbar.js"></script>
+    <script src="vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <!-- endbower -->
+    <!-- inject:js -->
+    <script src="js/user/user-module.js"></script>
+    <script src="js/user/user-routes.js"></script>
+    <script src="js/user/user-controller.js"></script>
+    <script src="js/app-module.js"></script>
+    <script src="js/partials/default-template-directive.js"></script>
+    <script src="js/login/login-module.js"></script>
+    <script src="js/login/login-routes.js"></script>
+    <script src="js/login/login-controller.js"></script>
+    <script src="js/login/auth-factory.js"></script>
+    <script src="js/home/home-module.js"></script>
+    <script src="js/home/main-menu-directive.js"></script>
+    <script src="js/home/home-routes.js"></script>
+    <script src="js/home/home-controller.js"></script>
+    <script src="js/arp/arp-module.js"></script>
+    <script src="js/arp/arp-routes.js"></script>
+    <script src="js/arp/arp-form-directive.js"></script>
+    <script src="js/arp/arp-controller.js"></script>
+    <script src="js/areas/areas-module.js"></script>
+    <script src="js/areas/areas-routes.js"></script>
+    <script src="js/areas/areas-form-directive.js"></script>
+    <script src="js/areas/areas-factory.js"></script>
+    <script src="js/areas/areas-controller.js"></script>
+    <script src="js/app-directives/right-click-directive.js"></script>
+    <script src="js/app-directives/ng-enter-directive.js"></script>
+    <script src="js/app-directives/count-to-directive.js"></script>
+    <script src="js/error-interceptor-factory.js"></script>
+    <script src="js/default-footer-directive.js"></script>
+    <script src="js/basic-filtrator-directive.js"></script>
+    <script src="js/app-routes.js"></script>
+    <script src="js/app-factory.js"></script>
+    <script src="js/api-url-constant.js"></script>
+    <!-- endinject -->
+  </body>
+</html>

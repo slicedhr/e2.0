@@ -1,0 +1,25 @@
+{
+  "name": "enterprise",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.4.*",
+    "angular-animate": "~1.4.*",
+    "angular-ui-router": "~0.2.10",
+    "angular-material": "~0.10.0",
+    "angular-chart.js": "~0.8.4",
+    "angular-material-icons": "~0.6.0",
+    "svg-morpheus": "~0.1.8",
+    "angular-material-data-table": "~0.8.14",
+    "animate.css": "~3.4.0",
+    "angular-jwt": "~0.0.9",
+    "angular-loading-bar": "~0.8.0",
+    "sails.io.js": "~0.11.7",
+    "jquery": "~2.1.4",
+    "ngMorph": "angular-morph#~0.1.0",
+    "angular-ui-router-anim-in-out": "~0.0.13",
+    "angular-perfect-scrollbar": "~0.0.4"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.*"
+  }
+}

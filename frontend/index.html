@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang='es' data-ng-app='enterprise' ng-class="{ loaded: true }" ng-cloak>
+  <head>
+    <meta charset="utf-8">
+    <title>Enterprise</title>
+
+    <meta name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes'>
+
+    <base href="/">
+    <!-- inject:head:js -->
+    <!-- endinject -->
+    <!-- inject:html -->
+    <!-- endinject -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- inject:css -->
+    <!-- endinject -->
+  </head>
+  <body data-ng-controller="AppCtrl as app">
+
+    <div layout="column" layout-fill>
+
+      <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5" class="main-toolbar toolbar-design design-9 md-whiteframe-z5" ng-if="auth.user">
+
+          <div class="md-toolbar-tools animated fadeIn" ng-include="'partials/top-menu.tpl.html'" scope="app"></div>
+
+      </md-toolbar>
+
+        
+
+      <md-content ng-class="{'loginimage': toState == 'login'}" flex>
+
+        <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+
+          <div class="main-container anim-in-out" data-anim-sync="true" data-ui-view>
+              
+          </div>
+
+        </perfect-scrollbar>
+      
+      </md-content>
+
+    </div>
+
+    <md-sidenav md-component-id="left" class="md-sidenav-left">
+
+    </md-sidenav>
+
+    <md-sidenav md-component-id="profilenotifications" class="md-sidenav-right">
+
+      <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+
+        <md-content layout-fill ng-include="'/partials/main-tabs.tpl.html'" scope="app">
+
+        </md-content>
+
+      </perfect-scrollbar>
+      
+    </md-sidenav>
+
+
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- inject:js -->
+    <!-- endinject -->
+  </body>
+</html>

@@ -1,0 +1,399 @@
+body,
+html {
+  overflow: hidden;
+  position: absolute;
+  -webkit-transition: all 0.5s;
+          transition: all 0.5s;
+  width: 100%;
+  height: 100%;
+}
+html {
+  opacity: 0;
+}
+.hide-selectable tr td:first-child,
+.hide-selectable tr th:first-child {
+  display: none !important;
+}
+.hide-selectable tr td:nth-child(2),
+.hide-selectable tr th:nth-child(2) {
+  padding-left: 13px !important;
+}
+.show-selectable tr td:nth-child(2),
+.show-selectable tr th:nth-child(2) {
+  padding-left: 0 !important;
+}
+.activate-main-menu-button {
+  -webkit-transition: all 0.5s;
+          transition: all 0.5s;
+  margin: 0 !important;
+  position: absolute;
+  top: 5px;
+}
+.activatedmenubutton {
+  top: -5px;
+  left: -7px;
+}
+.mainmenu {
+  height: 100% !important;
+  background: #4558c1;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.mainmenu .contentmenu {
+  margin-top: 32px;
+}
+.loginimage {
+  background: url("../images/login-background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  -webkit-transition: all 0.6s ease-in-out;
+          transition: all 0.6s ease-in-out;
+  font-family: 'Roboto', sans-serif;
+}
+default-footer {
+  background: #37495d;
+  color: #fff;
+  margin-top: 20px;
+}
+default-footer a {
+  color: #00a1ff;
+  text-decoration: none;
+}
+md-backdrop {
+  position: fixed;
+}
+basic-filtrator md-select .md-select-value {
+  border-bottom-color: #fff;
+}
+basic-filtrator md-select .md-select-value.md-select-placeholder {
+  color: #fff;
+}
+basic-filtrator .search-button {
+  margin-top: 5px !important;
+  margin-left: 10px !important;
+  position: absolute;
+  top: 10px;
+}
+basic-filtrator .search-button svg {
+  margin-left: -2px;
+  margin-top: -5px;
+}
+basic-filtrator .search-field input {
+  background: #fff;
+  border-bottom: none;
+  border-radius: 2px;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.14), 0px 6px 10px 0px rgba(0,0,0,0.098), 0px 1px 18px 0px rgba(0,0,0,0.084);
+  position: absolute;
+  margin-top: 10px;
+  top: 13px;
+  width: 100%;
+}
+.repeat-animation {
+  -webkit-transition: all 1s;
+          transition: all 1s;
+}
+.repeat-animation.ng-leave {
+  -webkit-animation: fadeOutUp 1s;
+          animation: fadeOutUp 1s;
+}
+.repeat-animation.ng-enter {
+  -webkit-animation: fadeInDown 1s;
+          animation: fadeInDown 1s;
+}
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.design-toolbar-icon {
+  position: relative;
+  overflow: hidden;
+}
+.design-toolbar-icon .design-icon {
+  fill: rgba(255,255,255,0.17) !important;
+  position: absolute;
+  right: 50px;
+  top: -6px;
+}
+.loaded {
+  opacity: 1;
+}
+.icon-fill-white {
+  fill: #fff !important;
+}
+.icon-fill-gray {
+  fill: #808080 !important;
+}
+.main-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.add-action-button {
+  background-color: #0c9c49 !important;
+  position: fixed;
+  bottom: 20px;
+  right: 35px;
+}
+.add-action-button svg {
+  margin-top: -4px;
+  margin-left: -3px;
+}
+.main-toolbar {
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+}
+.main-toolbar.ng-enter.ng-enter-active {
+  -webkit-animation: fadeInDown 0.8s;
+          animation: fadeInDown 0.8s;
+}
+.main-toolbar.ng-leave.ng-leave-active {
+  -webkit-animation: fadeOutUp 0.6s;
+          animation: fadeOutUp 0.6s;
+}
+.user-menu-button {
+  text-align: left;
+  text-overflow: ellipsis;
+}
+.user-menu-button img {
+  border-radius: 50%;
+  box-sizing: content-box;
+  height: 35px;
+  vertical-align: middle;
+  -webkit-transition: all 0.5s;
+          transition: all 0.5s;
+  width: 35px;
+}
+.user-menu-button span {
+  margin-left: 7px;
+  vertical-align: middle;
+}
+.user-menu-toolbar,
+.menu-toolbar-default {
+  margin-top: 0;
+}
+.user-menu-toolbar img,
+.menu-toolbar-default img {
+  border-radius: 50%;
+  height: 45px;
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 45px;
+}
+.user-menu-toolbar span,
+.menu-toolbar-default span {
+  font-size: 17px;
+  margin-left: 11px;
+  margin-top: 20px;
+  vertical-align: middle;
+}
+.user-menu-options {
+  padding: 0;
+}
+.user-menu-options svg {
+  margin-top: -1px;
+}
+.menu-default-content {
+  padding: 0;
+}
+.menu-default-messages {
+  position: relative;
+}
+.menu-default-messages * {
+  text-overflow: ellipsis !important;
+}
+.menu-default-messages .desc {
+  font-size: 15px;
+  display: inline-block;
+  vertical-align: top;
+}
+.menu-default-messages .desc .name {
+  font-size: 15px;
+  color: #6495ed;
+  display: block;
+  margin-top: -4px;
+  text-overflow: ellipsis;
+}
+.menu-default-messages .desc .msg {
+  font-size: 14px;
+  display: block;
+  margin-top: -18px;
+  color: #515151;
+  text-align: left;
+}
+.menu-default-messages .thumb {
+  background: #d3d3d3;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 2px;
+  overflow: hidden;
+  height: 45px;
+  vertical-align: middle;
+  width: 45px;
+}
+.menu-default-messages .thumb img {
+  width: 100%;
+  max-width: 100%;
+}
+.delay.1s {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
+.delay.1-3s {
+  -webkit-animation-delay: 1.3s;
+          animation-delay: 1.3s;
+}
+.delay.1-6s {
+  -webkit-animation-delay: 1.6s;
+          animation-delay: 1.6s;
+}
+.delay.1-9s {
+  -webkit-animation-delay: 1.9s;
+          animation-delay: 1.9s;
+}
+.data-table-header {
+  background: #31adff;
+  color: #3c3c3c;
+}
+.number-notification {
+  background: #e64c40;
+  border-radius: 50%;
+  display: block;
+  font-size: 12px;
+  height: 23px;
+  line-height: 23px;
+  margin-left: 19px;
+  margin-top: 2px;
+  position: absolute;
+  width: 23px;
+}
+.image-in-tap {
+  width: 25px;
+}
+.image-in-tap.inbox {
+  width: 32px;
+}
+.main-tabs md-ink-bar {
+  background: #7986cb !important;
+  color: #7986cb !important;
+}
+.header-main-tabs {
+  height: 50px;
+  margin-top: -24px;
+}
+.header-main-tabs h3 {
+  font-weight: 100;
+  font-size: 24px;
+  line-height: 50px;
+  text-align: center;
+  -webkit-transition: all 0.5s;
+          transition: all 0.5s;
+}
+.initial-text {
+  text-transform: initial;
+  text-overflow: ellipsis;
+}
+.initial-text span {
+  text-overflow: ellipsis;
+}
+.bottom-radius-8 {
+  border-radius: 0 0 8px 8px;
+}
+.toolbar-design {
+  color: #fff;
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+}
+.toolbar-design.design-1 {
+  background: #465862 url("../images/design1.png") no-repeat right;
+  background-size: 25%;
+  color: #fff;
+}
+.toolbar-design.design-2 {
+  background: #154d55 url("../images/design2.png") no-repeat right;
+  background-size: 13% 222%;
+  color: #fff;
+}
+.toolbar-design.design-3 {
+  background: #00bacf url("../images/design3.jpg") no-repeat right;
+  background-size: 21% 101%;
+  color: #fff;
+}
+.toolbar-design.design-4 {
+  background: #251f39 url("../images/design4.jpg") no-repeat right;
+  background-size: 21%;
+  color: #fff;
+}
+.toolbar-design.design-5 {
+  background: #3e7ced url("../images/design5.jpg") no-repeat right;
+  background-size: 30%;
+  color: #fff;
+}
+.toolbar-design.design-6 {
+  background: #1f9cd6 url("../images/design6.jpg") no-repeat right;
+  background-size: 30%;
+  color: #fff;
+}
+.toolbar-design.design-7 {
+  background: #2d6e94 url("../images/design7.jpg") no-repeat right;
+  background-size: 30%;
+  color: #fff;
+}
+.toolbar-design.design-8 {
+  background: #242424 url("../images/design8.jpg") no-repeat right;
+  background-size: 30%;
+  color: #fff;
+}
+.toolbar-design.design-9 {
+  background: #4558c1 url("../images/design9.jpg") no-repeat right;
+  background-size: 50%;
+  background-position-x: 106%;
+}
+.toolbar-design.design-10 {
+  background: #4356bd url("../images/design10.jpg") no-repeat right;
+  background-size: 30%;
+  color: #fff;
+}
+.toolbar-design.redonded {
+  border-radius: 10px 10px 3px 3px;
+}
+.scroller {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  position: absolute;
+}
+.search-animation {
+  -webkit-transition: 0.6s all;
+          transition: 0.6s all;
+}
+.search-animation.ng-hide-add {
+  -webkit-animation: fadeOutUp 0.6s;
+          animation: fadeOutUp 0.6s;
+}
+.search-animation.ng-hide-remove {
+  -webkit-animation: fadeInDown 0.6s;
+          animation: fadeInDown 0.6s;
+}
+.text-title-animation {
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+  position: absolute;
+  top: 14px;
+}
+.text-title-animation.ng-hide-add {
+  -webkit-animation: fadeOutDown 0.6s;
+          animation: fadeOutDown 0.6s;
+}
+.text-title-animation.ng-hide-remove {
+  -webkit-animation: fadeInUp 0.6s;
+          animation: fadeInUp 0.6s;
+}
+.default-content table md-checkbox.md-checked .md-icon {
+  background: #0d679e;
+}

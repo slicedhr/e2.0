@@ -1,0 +1,45 @@
+<md-content class="default-content" ng-class="animation" layout-padding>
+    <md-data-table-toolbar class="data-table-header toolbar-design redonded md-whiteframe-z3" ng-class="design" ng-transclude>
+	  <h2 class="md-title fadeLeftText">{{ title }}</h2>
+	</md-data-table-toolbar>
+
+	<md-data-table-container class="md-whiteframe-z2 bottom-radius-8" ng-class="{'hide-selectable': !showSelectable, 'show-selectable': showSelectable}">
+	  <!-- <table md-data-table md-progress="deferred"> -->
+	  <table md-data-table md-progress="deferredprogress" md-row-select="defaultTemplate.selected">
+	    <thead md-order="query.order" md-trigger="onOrderChange">
+	      <tr>
+	        <th ng-repeat="item in columns" name="{{item.title}}"></th>
+	        <th name=""></th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="row in defaultTemplate.rows  | orderBy:'-id' | filter:searchFilter" class="repeat-animation">
+	        <td ng-repeat="column in columns">{{ row[column.key] }}</td>
+	        <td width="70px">
+	        	<div layout="row" style="width:70px">
+
+	        		<md-button class="md-icon-button" aria-label="Edit Button" ng-click="defaultTemplate.form($event, row)" flex>
+						<ng-md-icon icon="mode_edit" size="24" style="fill: orange"></ng-md-icon>
+		        	</md-button>
+
+		        	<md-button class="md-icon-button" aria-label="Delete Button" ng-click="defaultTemplate.delete(row.id, $event)" flex>
+						<ng-md-icon icon="delete" size="24" style="fill: red"></ng-md-icon>
+		        	</md-button>
+
+	        	</div>
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+
+	<md-data-table-pagination md-label="{ text: 'Registros Por Página' }" md-row-select="[10, 20, 30, 40, 50, 100]" md-limit="defaultTemplate.limit" md-page="defaultTemplate.page" md-total="{{ defaultTemplate.total }}" md-trigger="defaultTemplate.$get"></md-data-table-pagination>
+
+	</md-data-table-container>
+
+	 <!-- <button class="md-button md-raised md-primary" ng-morph-modal="morphSettings"> Fire </button> -->
+
+</md-content>
+
+<md-button class="md-fab md-primary add-action-button fadeUp" aria-label="Add Button" ng-click="defaultTemplate.form($event)">
+	<ng-md-icon icon="add" size="30" style="fill: white"></ng-md-icon>
+</md-button>

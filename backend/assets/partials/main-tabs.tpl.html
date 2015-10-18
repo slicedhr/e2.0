@@ -1,0 +1,46 @@
+<div class="toolbar-design header-main-tabs" ng-class="app.design">
+  <h3 class="animated fadeInLeft">{{ app.titletab || 'Tareas' }}</h3>
+</div>
+
+<md-tabs class="main-tabs" md-border-bottom md-dynamic-height md-stretch-tabs="always" md-swipe-content="true" md-selected="app.selectedMainTab">
+
+  <md-tab disabled md-on-select="app.generateDesign('Tareas')">
+
+    <md-tab-label>
+      <img src="/images/icons/task.png" class="image-in-tap" alt="">
+    </md-tab-label>
+
+    <md-tab-body>
+        <div ng-include="'/partials/body-tab-tasks.tpl.html'" scope="app"></div>
+    </md-tab-body>
+        <md-button class="initial-text" style="color:darkcyan;position:fixed;bottom: -7px;width:100%;background:white" ng-if="app.initData.tareas.length > 0">
+          <ng-md-icon icon="add_circle_outline" size="24" style="fill:darkcyan"></ng-md-icon> Ver todas
+        </md-button>
+
+  </md-tab>
+
+  <md-tab disabled md-on-select="app.generateDesign('Mensajes');">
+
+    <md-tab-label>
+      <img src="/images/icons/inbox.png" class="image-in-tap inbox" alt="">
+    </md-tab-label>
+
+    <md-tab-body>
+      <div ng-include="'/partials/body-tab-messages.tpl.html'" scope="app"></div>
+    </md-tab-body>
+
+  </md-tab>
+
+  <md-tab disabled md-on-select="app.generateDesign('Notificaciones');">
+
+    <md-tab-label>
+      <img src="/images/icons/notificacion.png" class="image-in-tap" alt="">
+    </md-tab-label>
+
+    <md-tab-body>
+      <div ng-include="'/partials/body-tab-notifications.tpl.html'" scope="app"></div>
+    </md-tab-body>
+
+  </md-tab>
+
+</md-tabs>

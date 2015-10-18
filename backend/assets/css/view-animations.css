@@ -1,0 +1,111 @@
+/*
+  Steps
+    - .anim-in-setup
+    - .anim-in
+    - .anim-out-setup
+    - .anim-out
+*/
+.anim-in-out.anim-in-setup.fadeLeft,
+.anim-in-out.anim-in-setup .fadeLeft {
+  display: none;
+}
+.anim-in-out.anim-in.fadeLeft,
+.anim-in-out.anim-in .fadeLeft {
+  -webkit-animation: fadeInLeft 0.6s ease-in;
+          animation: fadeInLeft 0.6s ease-in;
+}
+.anim-in-out.anim-out-setup.fadeLeft,
+.anim-in-out.anim-out-setup .fadeLeft {
+  display: block;
+}
+.anim-in-out.anim-out.fadeLeft,
+.anim-in-out.anim-out .fadeLeft {
+  -webkit-animation: fadeOutLeft 0.6s ease-out;
+          animation: fadeOutLeft 0.6s ease-out;
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+  opacity: 0;
+}
+.anim-in-out.anim-in-setup.fadeRight,
+.anim-in-out.anim-in-setup .fadeRight {
+  display: none;
+}
+.anim-in-out.anim-in.fadeRight,
+.anim-in-out.anim-in .fadeRight {
+  -webkit-animation: fadeInRight 0.6s ease-in;
+          animation: fadeInRight 0.6s ease-in;
+}
+.anim-in-out.anim-out-setup.fadeRight,
+.anim-in-out.anim-out-setup .fadeRight {
+  display: block;
+}
+.anim-in-out.anim-out.fadeRight,
+.anim-in-out.anim-out .fadeRight {
+  -webkit-animation: fadeOutRight 0.6s ease-out;
+          animation: fadeOutRight 0.6s ease-out;
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+  opacity: 0;
+}
+.anim-in-out.anim-in-setup.fadeUp,
+.anim-in-out.anim-in-setup .fadeUp {
+  display: none;
+}
+.anim-in-out.anim-in.fadeUp,
+.anim-in-out.anim-in .fadeUp {
+  -webkit-animation: fadeInUp 0.6s ease-in;
+          animation: fadeInUp 0.6s ease-in;
+}
+.anim-in-out.anim-out-setup.fadeUp,
+.anim-in-out.anim-out-setup .fadeUp,
+.anim-in-out.anim-out.fadeUp,
+.anim-in-out.anim-out .fadeUp {
+  -webkit-animation: fadeOutDown 0.6s ease-out;
+          animation: fadeOutDown 0.6s ease-out;
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+  opacity: 0;
+}
+.anim-in-out.anim-in-setup.fadeDown,
+.anim-in-out.anim-in-setup .fadeDown {
+  display: none;
+}
+.anim-in-out.anim-in.fadeDown,
+.anim-in-out.anim-in .fadeDown {
+  -webkit-animation: fadeInDown 0.6s ease-in;
+          animation: fadeInDown 0.6s ease-in;
+}
+.anim-in-out.anim-out-setup.fadeDown,
+.anim-in-out.anim-out-setup .fadeDown,
+.anim-in-out.anim-out.fadeDown,
+.anim-in-out.anim-out .fadeDown {
+  -webkit-animation: fadeOutDown 0.6s ease-out;
+          animation: fadeOutDown 0.6s ease-out;
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+  opacity: 0;
+}
+.anim-in-out.anim-in-setup.fadeLeftText,
+.anim-in-out.anim-in-setup .fadeLeftText {
+  display: none;
+  opacity: 0;
+  -webkit-transition: all 2s;
+          transition: all 2s;
+}
+.anim-in-out.anim-in.fadeLeftText,
+.anim-in-out.anim-in .fadeLeftText {
+  -webkit-animation: fadeInLeft 3s linear;
+          animation: fadeInLeft 3s linear;
+}
+.anim-in-out.anim-out-setup.fadeLeftText,
+.anim-in-out.anim-out-setup .fadeLeftText {
+  display: block;
+}
+.anim-in-out.anim-out.fadeLeftText,
+.anim-in-out.anim-out .fadeLeftText {
+  -webkit-animation: fadeOutLeft 0.6s ease-out;
+          animation: fadeOutLeft 0.6s ease-out;
+  -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+  opacity: 0;
+}

@@ -1,0 +1,23 @@
+<div layout="row">
+	<div flex="95" layout="row">
+		<h2 class="md-title fadeLeftText text-title-animation" ng-show="!basicFiltrator.showInput">{{ title }}</h2>
+
+		<div class="search-container search-animation" ng-show="basicFiltrator.showInput" layout="row" flex>
+
+			<md-select placeholder="Buscar Por:" ng-model="basicFiltrator.searchBy" >
+		        <md-option ng-repeat="item in basicFiltrator.columns" value="{{ item.key }}" ng-selected="item.selected">
+		        {{ item.title }}
+		        </md-option>
+		     </md-select>
+
+			<md-input-container class="search-field" flex>
+		      <input type="search" ng-model="basicFiltrator.searchvalue" ng-enter="basicFiltrator.search()" aria-label="Search" autofocus>
+		    </md-input-container>
+
+		</div>
+	</div>
+
+	<md-button class="md-icon-button search-button" aria-label="Action search button" ng-click="basicFiltrator.toggleSearch()" flex>
+		<ng-md-icon icon="{{basicFiltrator.icon}}" size="30" style="fill: white"></ng-md-icon>
+	</md-button>	
+</div>
