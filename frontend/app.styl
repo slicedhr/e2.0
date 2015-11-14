@@ -1,4 +1,3 @@
-
 body, html
 	overflow hidden
 	position absolute
@@ -17,6 +16,11 @@ html
 	tr
 		td:nth-child(2), th:nth-child(2)
 			padding-left 0 !important
+		td:first-child, th:first-child
+			padding 0 15px 0 10px !important
+.show-selectable
+	.color-cliente
+		left -16px
 .activate-main-menu-button
 	transition all .5s
 	margin 0 !important
@@ -53,40 +57,96 @@ default-footer
 md-backdrop
 	position fixed
 
-basic-filtrator
+basic-filtrator, .filtrator
 	md-select 
 		.md-select-value
 			border-bottom-color white
 			&.md-select-placeholder
 				color white
 	.search-button
+		right 8px
 		margin-top 5px !important
 		margin-left 10px !important
 		position absolute
-		top 10px
+		top 12px
 		svg
 			margin-left -2px
 			margin-top -5px
+	.toolbar-button-list
+		right 8px
+		margin-top 5px !important
+		margin-left 10px !important
+		position absolute
+		top 12px
+		.column-icon
+			margin-left -15px
+			margin-top -6px
+		svg
+			margin-left -2px
+			margin-top -5px
+		
 	.search-field
-		input
-			background white
-			border-bottom none
-			border-radius 2px
-			box-shadow 0px 3px 5px -1px rgba(0, 0, 0, 0.14), 0px 6px 10px 0px rgba(0, 0, 0, 0.098), 0px 1px 18px 0px rgba(0, 0, 0, 0.084)
+		position relative
+		md-input-container
+			input
+				background white
+				border-bottom none
+				border-radius 2px
+				box-shadow 0px 3px 5px -1px rgba(0, 0, 0, 0.14), 0px 6px 10px 0px rgba(0, 0, 0, 0.098), 0px 1px 18px 0px rgba(0, 0, 0, 0.084)
+				position absolute
+				margin-top 10px
+				top 13px
+				width 98%
+		md-autocomplete
+			left 4%
 			position absolute
-			margin-top 10px
-			top 13px
-			width 100%
+			top 23%
+			width 95%
+	.inputs-margin-left
+		margin-left 5%
+.counter-clientes
+	color: white !important
+	background #607D8B !important
+	padding 5px !important
+	border-radius 50% !important
+	font-size 14px !important
+	
+.toLowercase
+	text-transform lowercase
+.label-items
+	background #2ecc71
+	border-radius 4px
+	color white
+	display block
+	font-size 13px
+	margin 0 auto
+	padding 4px 6px
+	&.orange-label
+		background #e67e22
 .repeat-animation
 	transition all 1s
-	&.ng-leave
-		animation fadeOutUp 1s
 	&.ng-enter
 		animation fadeInDown 1s
+	&.ng-leave
+		animation fadeOutUp 1s
+.repeat-fade-right-animation
+	transition all 1s
+	&.ng-enter
+		animation fadeInRight 1s
+	&.ng-leave
+		animation fadeOutLeft 1s
 .text-center
-	text-align center
+	text-align center !important
 .text-left
 	text-align left
+.text-right
+	text-align right
+.text-justify
+	text-align justify
+.relative
+	position relative
+.color-white
+	color white !important
 .design-toolbar-icon
 	position relative
 	overflow hidden
@@ -109,18 +169,27 @@ basic-filtrator
 .add-action-button
 	background-color #0C9C49 !important
 	position fixed
-	bottom 20px
-	right 35px
+	bottom 2%
+	right 2%
 	svg
 		margin-top -4px
 		margin-left -3px
 .main-toolbar
+	position fixed
+	top 0
+	padding-right 16px
 	transition all .6s
 	&.ng-enter.ng-enter-active
 		animation fadeInDown .8s
 	&.ng-leave.ng-leave-active
 		animation fadeOutUp .6s
+	.generate
+		margin-top -3px
+.principal-md-content
+	.main-container
+		margin-top 64px
 .user-menu-button
+	top -4px
 	text-align left
 	text-overflow ellipsis
 	img
@@ -304,5 +373,51 @@ basic-filtrator
 			&.md-checked 
 				.md-icon
 					background #0D679E
-		
-			
+.dialog-base.terminosdepago
+	width 400px
+md-dialog
+	.rg-left, .rg-right, .rg-top, .rg-bottom
+		cursor w-resize
+		height 100%
+		position absolute
+		top 0
+		width 6px
+		z-index 9
+	.rg-top, .rg-bottom
+		cursor n-resize
+		height 6px
+		width 100%
+	.rg-right
+		right 0
+	.rg-bottom
+		bottom 0
+.fixed-table
+	.fixed-table-header
+		animation fadeInDown .8s
+		background #4558C1
+		position fixed
+		top 0
+		width 99%
+		z-index 1
+		th
+			div
+				color white
+.table-font
+	font-size 12px
+	font-family 'Open Sans', sans-serif
+	td
+		padding 5px !important
+.options-table-button
+	width 36px !important
+.justify-center
+	justify-content center
+.justify-center-into-div
+	div
+		justify-content center
+.discount-green-input, .discount-red-input
+	background #2ecc71 !important
+	border-radius 5px !important
+	color white !important
+	text-align center
+.discount-red-input
+	background #e74c3c !important

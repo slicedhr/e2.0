@@ -1,225 +1,586 @@
 'use strict';
 
 (function () {
-      'use strict';
+  'use strict';
 
-      /**
-       * @ngdoc service
-       * @name enterprise.factory:App
-       *
-       * @description
-       *
-       */
-      angular.module('enterprise').factory('AppService', AppService);
+  /**
+   * @ngdoc service
+   * @name enterprise.factory:App
+   *
+   * @description
+   *
+   */
+  angular.module('enterprise').factory('AppService', AppService);
 
-      function AppService($q, $http, $filter, $rootScope, $mdToast, $mdDialog, apiUrl) {
+  function AppService($q, $http, $filter, $compile, $rootScope, $mdToast, $mdDialog, apiUrl) {
 
-            var AppBase = {},
-                self = AppBase;
+    var AppBase = {},
+        self = AppBase;
 
-            // Set prefix to url
+    AppBase.base_tinymce = 'http://wilcatec.com/enterprise_files/tinymce';
 
-            AppBase.setPrefix = function (url) {
+    // Set prefix to url
 
-                  return url.contains(apiUrl.serverUrl) ? url : apiUrl.prefix + url;
-            };
+    AppBase.setPrefix = function (url) {
 
-            // If server url then set server address & prefix
+      return url.contains(apiUrl.serverUrl) ? url : apiUrl.prefix + url;
+    };
 
-            AppBase.setServerUrl = function (url) {
-                  var prefix = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+    // If server url then set server address & prefix
 
-                  if (prefix) return url.contains(apiUrl.serverUrl) ? apiUrl.serverUrl + url : apiUrl.serverUrl + apiUrl.prefix + url;else return apiUrl.serverUrl + '/' + url;
-            };
+    AppBase.setServerUrl = function (url) {
+      var prefix = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 
-            // Filter Item By Condition
+      if (prefix) return url.contains(apiUrl.serverUrl) ? apiUrl.serverUrl + url : apiUrl.serverUrl + apiUrl.prefix + url;else return apiUrl.serverUrl + '/' + url;
+    };
 
-            AppBase.filter = function (options) {
+    // Filter Item By Condition
 
-                  var filter = $filter('filter')(options.array, options.condicion || {}, true)[0];
+    AppBase.filter = function (options) {
 
-                  var index = options.array.indexOf(filter);
+      var filter = $filter('filter')(options.array, options.condicion || {}, true)[0];
 
-                  return index;
-            };
+      var index = options.array.indexOf(filter);
 
-            // Default Dialog
+      return index;
+    };
 
-            AppBase.showFormDialog = function (options) {
+    // Default Dialog
 
-                  return $mdDialog.show({
+    AppBase.showFormDialog = function (options) {
 
-                        controller: DialogController,
+      var template = {};
 
-                        templateUrl: options.template,
+      var scope = options.scope;
 
-                        clickOutsideToClose: true,
+      var config = {
 
-                        escapeToClose: true,
+        url: '/partials/default-dialog-base.tpl.html',
 
-                        scope: options.scope,
+        method: 'GET'
 
-                        preserveScope: true,
+      };
 
-                        parent: angular.element(document.body),
+      return self.http(config).then(function (success) {
 
-                        disableParentScroll: true,
+        var stringify = JSON.stringify(options.dataToForm ? options.dataToForm : scope.defaultTemplate.dataToForm);
 
-                        targetEvent: options.targetEvent
+        var title = options.title ? options.title : scope.options.data.info.title;
 
-                  });
+        var source = options.source ? options.source : scope.options.data.info.source;
 
-                  function DialogController($rootScope, $mdDialog) {
+        var template = options.template ? options.template : scope.options.template;
 
-                        $rootScope.$on('SavedInDialog', function ($event, data) {
+        var data = success.data.replace('13-title-13', title);
 
-                              $mdDialog.hide(data);
-                        });
-                  }
-            };
+        data = data.replace('13-class-13', source);
 
-            // Broadcasting of data from Default Dialog
+        data = data.replace('13-directive-13', '<' + template + ' data=\'' + stringify + '\'></' + template + '>');
 
-            AppBase.broadcastDialog = function (dialogData) {
+        return $mdDialog.show({
 
-                  $rootScope.$broadcast('SavedInDialog', dialogData);
-            };
+          controller: DialogController,
 
-            // Broadcasting of ERROR from Default Dialog
+          template: data,
 
-            AppBase.broadcastError = function (err) {
+          clickOutsideToClose: true,
 
-                  $rootScope.$broadcast('ServerError', dialogData);
-            };
+          escapeToClose: true,
 
-            //Default HTTP CALL
+          scope: scope,
 
-            AppBase.http = function (config) {
+          preserveScope: true,
 
-                  return $http(config);
-            };
+          parent: angular.element(document.body),
 
-            // Add promise to HTTP Request
-            // In case of change route then the request they are cancelled
+          disableParentScroll: true,
 
-            AppBase.setConfig = function (config) {
+          targetEvent: options.targetEvent
 
-                  var deferred = $q.defer(),
-                      promise = deferred.promise;
+        });
+      })['catch'](function (error) {
 
-                  config.timeout = promise;
+        self.randomError(error);
+      });
 
-                  config.cancel = deferred;
+      function DialogController($rootScope, $mdDialog) {
 
-                  $rootScope.deferredprogress = promise;
+        $rootScope.$on('SavedInDialog', function ($event, data) {
 
-                  return config;
-            };
-
-            // Get Initial Data
-
-            AppBase.initialData = function (id) {
-                  var prefix = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
-
-                  var config = self.setConfig({
-
-                        url: self.setPrefix('auth/initialdata?id=' + id, prefix),
-
-                        method: 'GET'
-
-                  });
-
-                  return self.http(config);
-            };
-
-            // GET
-
-            AppBase.get = function (options) {
-
-                  options.limit = options.limit || 20;
-
-                  options.page = options.page || 1;
-
-                  options.pagination = options.pagination || true;
-
-                  var limit = options.limit * options.page;
-
-                  var skip = options.page && options.page == 1 ? 0 : limit / options.page * (options.page - 1);
-
-                  var order = options.order || 'id%20DESC';
-
-                  options.url += options.query ? '?' + options.query + '&' : options.pagination ? '?' : '';
-
-                  options.url += options.pagination ? 'skip=' + skip + '&limit=' + limit + '&sort=' + order : '';
-                  console.log(options.url);
-
-                  var config = self.setConfig({
-
-                        url: self.setPrefix(options.url, options.prefix),
-
-                        method: 'GET'
-
-                  });
-
-                  return self.http(config);
-            };
-
-            // POST PUT
-            AppBase.save = function (data, url) {
-                  var prefix = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
-
-                  var config = {
-
-                        url: self.setPrefix(url, prefix) + (data.id ? '/' + data.id : ''),
-
-                        data: data,
-
-                        method: data.id ? 'PUT' : 'POST'
-
-                  };
-
-                  return self.http(config);
-            };
-
-            //DELETE
-            AppBase['delete'] = function (url, id) {
-                  var prefix = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
-
-                  url += '/' + id;
-
-                  var config = self.setConfig({
-
-                        url: self.setPrefix(url, prefix),
-
-                        method: 'DELETE'
-
-                  });
-
-                  return self.http(config);
-            };
-
-            // RANDOM DESIGN
-            AppBase.randomDesign = function () {
-                  var toRoot = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-
-                  var from = 1;
-
-                  var to = 10;
-
-                  var random = self.getRandom(from, to);
-
-                  if (random == 9) random = self.getRandom(from, to);
-                  if (toRoot) $rootScope.generatedrandomdesign = 'design-' + random;
-
-                  return 'design-' + random;
-            };
-
-            AppBase.getRandom = function (from, to) {
-
-                  return Math.floor(Math.random(from, to) * to + 1);
-            };
-
-            return AppBase;
+          $mdDialog.hide(data);
+        });
       }
+    };
+
+    // Broadcasting of data from Default Dialog
+
+    AppBase.broadcastDialog = function (dialogData) {
+
+      $rootScope.$broadcast('SavedInDialog', dialogData);
+    };
+
+    // Broadcasting of ERROR from Default Dialog
+
+    AppBase.broadcastError = function (err) {
+
+      $rootScope.$broadcast('ServerError', dialogData);
+    };
+
+    //Default HTTP CALL
+
+    AppBase.http = function (config) {
+
+      return $http(config);
+    };
+
+    // Add promise to HTTP Request
+    // In case of change route then the request they are cancelled
+
+    AppBase.setConfig = function (config) {
+
+      var deferred = $q.defer(),
+          promise = deferred.promise;
+
+      config.timeout = promise;
+
+      config.cancel = deferred;
+
+      $rootScope.$broadcast('deferred', deferred);
+
+      $rootScope.deferred = deferred;
+
+      return config;
+    };
+
+    // Get Initial Data
+
+    AppBase.initialData = function (id) {
+      var prefix = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+
+      var config = self.setConfig({
+
+        url: self.setPrefix('auth/initialdata?id=' + id, prefix),
+
+        method: 'GET'
+
+      });
+
+      return self.http(config);
+    };
+
+    // GET
+
+    AppBase.get = function (options) {
+
+      options.limit = options.limit || 20;
+
+      options.page = options.page || 1;
+
+      options.pagination = options.pagination || true;
+
+      var limit = options.limit * options.page;
+
+      var skip = options.page && options.page == 1 ? 0 : limit / options.page * (options.page - 1);
+
+      var order = options.order || 'id%20DESC';
+
+      options.url += options.query ? '?' + options.query + '&' : options.pagination ? '?' : '';
+
+      options.url += options.pagination ? 'skip=' + skip + '&limit=' + limit + '&sort=' + order : '';
+
+      var config = self.setConfig({
+
+        url: self.setPrefix(options.url, options.prefix),
+
+        method: 'GET'
+
+      });
+
+      return self.http(config);
+    };
+
+    // POST PUT
+    AppBase.save = function (data, url) {
+      var prefix = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
+      var config = {
+
+        url: self.setPrefix(url, prefix) + (data.id ? '/' + data.id : ''),
+
+        data: data,
+
+        method: data.id ? 'PUT' : 'POST'
+
+      };
+
+      return self.http(config);
+    };
+
+    //DELETE
+    AppBase['delete'] = function (url, id) {
+      var prefix = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
+      url += '/' + id;
+
+      var config = self.setConfig({
+
+        url: self.setPrefix(url, prefix),
+
+        method: 'DELETE'
+
+      });
+
+      return self.http(config);
+    };
+
+    // RANDOM DESIGN
+    AppBase.randomDesign = function () {
+      var toRoot = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+      var from = 1;
+
+      var to = 10;
+
+      var random = self.getRandom(from, to);
+
+      if (random == 9) random = self.getRandom(from, to);
+      if (toRoot) $rootScope.generatedrandomdesign = 'design-' + random;
+
+      return 'design-' + random;
+    };
+
+    AppBase.getRandom = function (from, to) {
+
+      return Math.floor(Math.random(from, to) * to + 1);
+    };
+
+    AppBase.randomError = function (error) {
+
+      $mdToast.simple().content('Ocurrio un error: \r\n Detalle: ' + JSON.stringify(error)).position('bottom left');
+    };
+
+    AppBase.scrollToTop = function (where) {
+
+      $(where).stop().animate({
+
+        scrollTop: 0
+
+      }, '800', 'swing');
+    };
+
+    AppBase.deleteDialog = function ($event) {
+      var confirm = $mdDialog.confirm().title('Confirmación').content('¿Realmente deseas eliminar este item?').ariaLabel('Delete Confirm').ok('Confirmar').cancel('Cancelar').targetEvent($event);
+
+      return $mdDialog.show(confirm);
+    };
+
+    AppBase.dataModels = {
+
+      areas: {
+        info: {
+          source: 'areas',
+          title: 'AREAS'
+        },
+        columns: [{
+          title: 'AREA',
+          key: 'area',
+          selected: true,
+          show: true
+        }]
+      },
+
+      arp: {
+        info: {
+          source: 'arp',
+          title: 'ARP'
+        },
+        columns: [{
+          title: 'ARP',
+          key: 'proveedor_de_servicio',
+          selected: true,
+          show: true
+        }]
+      },
+
+      eps: {
+        info: {
+          source: 'eps',
+          title: 'EPS'
+        },
+        columns: [{
+          title: 'EPS',
+          key: 'eps',
+          selected: true,
+          show: true
+        }]
+      },
+
+      dianretefuente: {
+        info: {
+          source: 'dianretefuente',
+          title: 'DIAN RETE FUENTE'
+        },
+        columns: [{
+          title: 'Detalle',
+          key: 'detalle_del_impuesto',
+          selected: true,
+          show: true
+        }, {
+          title: 'Porcentaje',
+          key: 'porcentaje',
+          selected: false,
+          show: true,
+          sufix: '%',
+          align_center: true
+        }, {
+          title: 'Resolución',
+          key: 'resolucion',
+          selected: false,
+          show: true
+        }]
+      },
+
+      iva: {
+        info: {
+          source: 'iva',
+          title: 'IVA'
+        },
+        columns: [{
+          title: 'Impuesto',
+          key: 'impuesto',
+          selected: true,
+          show: true,
+          sufix: '%'
+        }]
+      },
+
+      mediosdepago: {
+        info: {
+          source: 'mediosdepago',
+          title: 'MEDIOS DE PAGO'
+        },
+        columns: [{
+          title: 'Medio de pago',
+          key: 'medios_de_pago',
+          selected: true,
+          show: true
+        }]
+      },
+
+      marcas: {
+        info: {
+          source: 'marcas',
+          title: 'MARCAS'
+        },
+        columns: [{
+          title: 'Marca',
+          key: 'nombre',
+          selected: true,
+          show: true
+        }]
+      },
+
+      otrosimpuestos: {
+        info: {
+          source: 'otrosimpuestos',
+          title: 'OTROS IMPUESTOS'
+        },
+        columns: [{
+          title: 'Detalle',
+          key: 'detalle_del_impuesto',
+          selected: true,
+          show: true
+        }, {
+          title: 'Porcentaje',
+          key: 'porcentaje',
+          selected: false,
+          show: true,
+          sufix: '%'
+        }, {
+          title: 'Resolución',
+          key: 'resolucion',
+          selected: false,
+          show: true
+        }, {
+          title: 'Vigencia',
+          key: 'vigencia_del_impuesto',
+          selected: false,
+          show: true
+        }]
+      },
+
+      terminosdepago: {
+        info: {
+          source: 'terminosdepago',
+          title: 'TERMINOS DE PAGO'
+        },
+        columns: [{
+          title: 'Termino de pago',
+          key: 'terminos_de_pago',
+          selected: true,
+          show: true
+        }]
+      },
+
+      tiemposdeentrega: {
+        info: {
+          source: 'tiemposdeentrega',
+          title: 'TIEMPOS DE ENTREGA'
+        },
+        columns: [{
+          title: 'Tiempo de entrega',
+          key: 'tiempo_de_entrega',
+          selected: true,
+          show: true
+        }]
+      },
+
+      vigencia: {
+        info: {
+          source: 'vigencia',
+          title: 'VIGENCIAS'
+        },
+        columns: [{
+          title: 'Vigencia',
+          key: 'vigencia',
+          selected: true,
+          show: true
+        }]
+      },
+
+      paises: {
+        info: {
+          source: 'paises',
+          title: 'PAISES'
+        },
+        columns: [{
+          title: 'País',
+          key: 'nombre',
+          selected: true,
+          show: true
+        }]
+      },
+      ciudades: {
+        info: {
+          source: 'ciudades',
+          title: 'CIUDADES'
+        },
+        columns: [{
+          title: 'Nombre',
+          key: 'nombre',
+          selected: true,
+          show: true,
+          align_center: true
+        }, {
+          title: 'País',
+          key: 'pais>nombre',
+          show: true,
+          align_center: true
+        }]
+      },
+
+      categoriasproductos: {
+        info: {
+          source: 'categoriasproductos',
+          title: 'Categorías Productos'
+        },
+        columns: [{
+          title: 'Nombre Categoría',
+          key: 'nombre_categoria',
+          selected: true,
+          show: true
+        }]
+      },
+
+      productos: {
+        info: {
+          source: 'productos',
+          title: 'PRODUCTOS'
+        },
+        columns: [{
+          title: 'Nombre',
+          key: 'nombre',
+          selected: true,
+          show: true
+        }, {
+          title: 'U. Medida',
+          key: 'unidad_de_medida',
+          show: true,
+          align_center: true
+        }, {
+          title: 'Referencia',
+          key: 'referencia',
+          show: true,
+          align_center: true
+        }, {
+          title: 'Medidas',
+          key: 'medidas_del_producto',
+          show: true,
+          align_center: true
+        }, {
+          title: 'Color',
+          key: 'color',
+          show: true,
+          align_center: true
+        }, {
+          title: 'Cantidad',
+          key: 'cantidad',
+          show: true,
+          align_center: true
+        }, {
+          title: 'Precio',
+          key: 'precio_de_compra',
+          show: true,
+          align_center: true,
+          prefix: '$'
+        }, {
+          title: 'Utilidad Bruta',
+          key: 'utilidad_bruta',
+          show: true,
+          align_center: true,
+          sufix: '%'
+        }, {
+          title: 'IVA',
+          key: 'iva',
+          show: true,
+          align_center: true,
+          sufix: '%'
+        }, {
+          title: 'Total',
+          key: 'precio_de_compra',
+          show: true,
+          operation: true,
+          align_center: true,
+          prefix: '$',
+          regex: '((((producto.utilidad_bruta*producto.precio_de_compra)/100)+producto.precio_de_compra))*(producto.iva/100)+((((producto.precio_de_compra*producto.utilidad_bruta)/100)+producto.precio_de_compra))'
+        }]
+      }
+
+    };
+
+    AppBase.defaultWYSIWYGConfig = {
+      inline: false,
+      plugins: 'advlist autolink link image lists charmap print preview fullscreen textcolor table',
+      skin_url: self.base_tinymce + '/skins/lightgray',
+      theme_url: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.2.6/themes/modern/theme.min.js',
+      language_url: self.base_tinymce + '/langs/es.js',
+      external_plugins: {
+        "advlist": self.base_tinymce + "/plugins/advlist/plugin.min.js",
+        "autolink": self.base_tinymce + "/plugins/autolink/plugin.min.js",
+        "image": self.base_tinymce + "/plugins/image/plugin.min.js",
+        "lists": self.base_tinymce + "/plugins/lists/plugin.min.js",
+        "charmap": self.base_tinymce + "/plugins/charmap/plugin.min.js",
+        "print": self.base_tinymce + "/plugins/print/plugin.min.js",
+        "link": self.base_tinymce + "/plugins/link/plugin.min.js",
+        "preview": self.base_tinymce + "/plugins/preview/plugin.min.js",
+        "fullscreen": self.base_tinymce + "/plugins/fullscreen/plugin.min.js",
+        "textcolor": self.base_tinymce + "/plugins/textcolor/plugin.min.js",
+        "table": self.base_tinymce + "/plugins/table/plugin.min.js"
+      },
+      toolbar: "bold italic underline strikethrough subscript superscript | alignleft aligncenter alignright alignjustify | bullist numlist styleselect formatselect fontselect fontsizeselect textcolor | link autolink image | preview fullscreen"
+    };
+
+    return AppBase;
+  }
 })();
 //# sourceMappingURL=app-factory.js.map

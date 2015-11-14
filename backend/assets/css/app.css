@@ -22,6 +22,13 @@ html {
 .show-selectable tr th:nth-child(2) {
   padding-left: 0 !important;
 }
+.show-selectable tr td:first-child,
+.show-selectable tr th:first-child {
+  padding: 0 15px 0 10px !important;
+}
+.show-selectable .color-cliente {
+  left: -16px;
+}
 .activate-main-menu-button {
   -webkit-transition: all 0.5s;
           transition: all 0.5s;
@@ -66,23 +73,51 @@ default-footer a {
 md-backdrop {
   position: fixed;
 }
-basic-filtrator md-select .md-select-value {
+basic-filtrator md-select .md-select-value,
+.filtrator md-select .md-select-value {
   border-bottom-color: #fff;
 }
-basic-filtrator md-select .md-select-value.md-select-placeholder {
+basic-filtrator md-select .md-select-value.md-select-placeholder,
+.filtrator md-select .md-select-value.md-select-placeholder {
   color: #fff;
 }
-basic-filtrator .search-button {
+basic-filtrator .search-button,
+.filtrator .search-button {
+  right: 8px;
   margin-top: 5px !important;
   margin-left: 10px !important;
   position: absolute;
-  top: 10px;
+  top: 12px;
 }
-basic-filtrator .search-button svg {
+basic-filtrator .search-button svg,
+.filtrator .search-button svg {
   margin-left: -2px;
   margin-top: -5px;
 }
-basic-filtrator .search-field input {
+basic-filtrator .toolbar-button-list,
+.filtrator .toolbar-button-list {
+  right: 8px;
+  margin-top: 5px !important;
+  margin-left: 10px !important;
+  position: absolute;
+  top: 12px;
+}
+basic-filtrator .toolbar-button-list .column-icon,
+.filtrator .toolbar-button-list .column-icon {
+  margin-left: -15px;
+  margin-top: -6px;
+}
+basic-filtrator .toolbar-button-list svg,
+.filtrator .toolbar-button-list svg {
+  margin-left: -2px;
+  margin-top: -5px;
+}
+basic-filtrator .search-field,
+.filtrator .search-field {
+  position: relative;
+}
+basic-filtrator .search-field md-input-container input,
+.filtrator .search-field md-input-container input {
   background: #fff;
   border-bottom: none;
   border-radius: 2px;
@@ -90,25 +125,82 @@ basic-filtrator .search-field input {
   position: absolute;
   margin-top: 10px;
   top: 13px;
-  width: 100%;
+  width: 98%;
+}
+basic-filtrator .search-field md-autocomplete,
+.filtrator .search-field md-autocomplete {
+  left: 4%;
+  position: absolute;
+  top: 23%;
+  width: 95%;
+}
+basic-filtrator .inputs-margin-left,
+.filtrator .inputs-margin-left {
+  margin-left: 5%;
+}
+.counter-clientes {
+  color: #fff !important;
+  background: #607d8b !important;
+  padding: 5px !important;
+  border-radius: 50% !important;
+  font-size: 14px !important;
+}
+.toLowercase {
+  text-transform: lowercase;
+}
+.label-items {
+  background: #2ecc71;
+  border-radius: 4px;
+  color: #fff;
+  display: block;
+  font-size: 13px;
+  margin: 0 auto;
+  padding: 4px 6px;
+}
+.label-items.orange-label {
+  background: #e67e22;
 }
 .repeat-animation {
   -webkit-transition: all 1s;
           transition: all 1s;
 }
-.repeat-animation.ng-leave {
-  -webkit-animation: fadeOutUp 1s;
-          animation: fadeOutUp 1s;
-}
 .repeat-animation.ng-enter {
   -webkit-animation: fadeInDown 1s;
           animation: fadeInDown 1s;
 }
+.repeat-animation.ng-leave {
+  -webkit-animation: fadeOutUp 1s;
+          animation: fadeOutUp 1s;
+}
+.repeat-fade-right-animation {
+  -webkit-transition: all 1s;
+          transition: all 1s;
+}
+.repeat-fade-right-animation.ng-enter {
+  -webkit-animation: fadeInRight 1s;
+          animation: fadeInRight 1s;
+}
+.repeat-fade-right-animation.ng-leave {
+  -webkit-animation: fadeOutLeft 1s;
+          animation: fadeOutLeft 1s;
+}
 .text-center {
-  text-align: center;
+  text-align: center !important;
 }
 .text-left {
   text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+.relative {
+  position: relative;
+}
+.color-white {
+  color: #fff !important;
 }
 .design-toolbar-icon {
   position: relative;
@@ -137,14 +229,17 @@ basic-filtrator .search-field input {
 .add-action-button {
   background-color: #0c9c49 !important;
   position: fixed;
-  bottom: 20px;
-  right: 35px;
+  bottom: 2%;
+  right: 2%;
 }
 .add-action-button svg {
   margin-top: -4px;
   margin-left: -3px;
 }
 .main-toolbar {
+  position: fixed;
+  top: 0;
+  padding-right: 16px;
   -webkit-transition: all 0.6s;
           transition: all 0.6s;
 }
@@ -156,7 +251,14 @@ basic-filtrator .search-field input {
   -webkit-animation: fadeOutUp 0.6s;
           animation: fadeOutUp 0.6s;
 }
+.main-toolbar .generate {
+  margin-top: -3px;
+}
+.principal-md-content .main-container {
+  margin-top: 64px;
+}
 .user-menu-button {
+  top: -4px;
   text-align: left;
   text-overflow: ellipsis;
 }
@@ -396,4 +498,74 @@ basic-filtrator .search-field input {
 }
 .default-content table md-checkbox.md-checked .md-icon {
   background: #0d679e;
+}
+.dialog-base.terminosdepago {
+  width: 400px;
+}
+md-dialog .rg-left,
+md-dialog .rg-right,
+md-dialog .rg-top,
+md-dialog .rg-bottom {
+  cursor: w-resize;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 6px;
+  z-index: 9;
+}
+md-dialog .rg-top,
+md-dialog .rg-bottom {
+  cursor: n-resize;
+  height: 6px;
+  width: 100%;
+}
+md-dialog .rg-right {
+  right: 0;
+}
+md-dialog .rg-bottom {
+  bottom: 0;
+}
+.fixed-table .fixed-table-header {
+  -webkit-animation: fadeInDown 0.8s;
+          animation: fadeInDown 0.8s;
+  background: #4558c1;
+  position: fixed;
+  top: 0;
+  width: 99%;
+  z-index: 1;
+}
+.fixed-table .fixed-table-header th div {
+  color: #fff;
+}
+.table-font {
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+}
+.table-font td {
+  padding: 5px !important;
+}
+.options-table-button {
+  width: 36px !important;
+}
+.justify-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.justify-center-into-div div {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.discount-green-input,
+.discount-red-input {
+  background: #2ecc71 !important;
+  border-radius: 5px !important;
+  color: #fff !important;
+  text-align: center;
+}
+.discount-red-input {
+  background: #e74c3c !important;
 }

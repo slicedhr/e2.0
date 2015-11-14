@@ -7,44 +7,60 @@
     <meta name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes'>
 
     <base href="/">
+
     <!-- inject:head:js -->
     <!-- endinject -->
     <!-- inject:html -->
     <!-- endinject -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="vendor/angular-material/angular-material.css">
-    <link rel="stylesheet" href="vendor/angular-chart.js/dist/angular-chart.css">
-    <link rel="stylesheet" href="vendor/angular-material-icons/angular-material-icons.css">
-    <link rel="stylesheet" href="vendor/angular-material-data-table/dist/md-data-table.min.css">
-    <link rel="stylesheet" href="vendor/animate.css/animate.css">
-    <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.css">
-    <link rel="stylesheet" href="vendor/perfect-scrollbar/src/perfect-scrollbar.css">
+    <link rel='stylesheet' href='vendor/angular-material/angular-material.css'>
+    <link rel='stylesheet' href='vendor/angular-chart.js/dist/angular-chart.css'>
+    <link rel='stylesheet' href='vendor/angular-material-icons/angular-material-icons.css'>
+    <link rel='stylesheet' href='vendor/angular-material-data-table/dist/md-data-table.min.css'>
+    <link rel='stylesheet' href='vendor/animate.css/animate.css'>
+    <link rel='stylesheet' href='vendor/angular-loading-bar/build/loading-bar.css'>
+    <link rel='stylesheet' href='vendor/perfect-scrollbar/src/perfect-scrollbar.css'>
     <!-- endbower -->
     <!-- inject:css -->
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/view-animations.css">
     <link rel="stylesheet" href="css/areas/areas.css">
     <link rel="stylesheet" href="css/arp/arp.css">
+    <link rel="stylesheet" href="css/categoriasproductos/categoriasproductos.css">
+    <link rel="stylesheet" href="css/ciudades/ciudades.css">
+    <link rel="stylesheet" href="css/clientes/clientes.css">
+    <link rel="stylesheet" href="css/cotizacion/cotizacion.css">
+    <link rel="stylesheet" href="css/cotizaciones/cotizaciones.css">
+    <link rel="stylesheet" href="css/dianretefuente/dianretefuente.css">
+    <link rel="stylesheet" href="css/eps/eps.css">
     <link rel="stylesheet" href="css/home/home.css">
+    <link rel="stylesheet" href="css/iva/iva.css">
     <link rel="stylesheet" href="css/login/login.css">
+    <link rel="stylesheet" href="css/marcas/marcas.css">
+    <link rel="stylesheet" href="css/mediosdepago/mediosdepago.css">
+    <link rel="stylesheet" href="css/otrosimpuestos/otrosimpuestos.css">
+    <link rel="stylesheet" href="css/paises/paises.css">
+    <link rel="stylesheet" href="css/productos/productos.css">
+    <link rel="stylesheet" href="css/terminosdepago/terminosdepago.css">
+    <link rel="stylesheet" href="css/tiemposdeentrega/tiemposdeentrega.css">
     <link rel="stylesheet" href="css/user/user.css">
+    <link rel="stylesheet" href="css/vigencia/vigencia.css">
     <!-- endinject -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600' rel='stylesheet' type='text/css'>
   </head>
   <body data-ng-controller="AppCtrl as app">
 
     <div layout="column" layout-fill>
 
-      <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5" class="main-toolbar toolbar-design design-9 md-whiteframe-z5" ng-if="auth.user">
+      <md-content class="principal-md-content" ng-class="{'loginimage': toState == 'login'}" flex>
 
-          <div class="md-toolbar-tools animated fadeIn" ng-include="'partials/top-menu.tpl.html'" scope="app"></div>
+        <perfect-scrollbar id="mainContent" class="scroller" wheel-propagation="true" wheel-speed="0.5" min-scrollbar-length="20">
 
-      </md-toolbar>
+          <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5" class="main-toolbar toolbar-design design-9 md-whiteframe-z5" ng-if="auth.user" headroom tolerance='5' offset='32' scroller=".scroller" classes="{pinned:'swingInX',unpinned:'swingOutX',initial:'animated'}">
 
-        
+              <div class="md-toolbar-tools animated fadeIn" ng-include="'partials/top-menu.tpl.html'" scope="app"></div>
 
-      <md-content ng-class="{'loginimage': toState == 'login'}" flex>
-
-        <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+          </md-toolbar>
 
           <div class="main-container anim-in-out" data-anim-sync="true" data-ui-view>
               
@@ -72,7 +88,6 @@
       
     </md-sidenav>
 
-
     <!-- bower:js -->
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/angular/angular.js"></script>
@@ -92,21 +107,86 @@
     <script src="vendor/angular-ui-router-anim-in-out/anim-in-out.js"></script>
     <script src="vendor/perfect-scrollbar/src/perfect-scrollbar.js"></script>
     <script src="vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script src="vendor/angular-svg-round-progressbar/build/roundProgress.min.js"></script>
+    <script src="vendor/angular-bindonce/bindonce.js"></script>
+    <script src="vendor/tinymce/tinymce.min.js"></script>
+    <script src="vendor/moment/moment.js"></script>
     <!-- endbower -->
+    <script src="/js/app-directives/headroom.min.js"></script>
+    <script src="/js/app-directives/angular.headroom.min.js"></script>
+    <script src="/js/app-directives/angular-tinymce-directive.js"></script>
     <!-- inject:js -->
+    <script src="js/vigencia/vigencia-module.js"></script>
+    <script src="js/vigencia/vigencia-routes.js"></script>
+    <script src="js/vigencia/vigencia-form-directive.js"></script>
+    <script src="js/vigencia/vigencia-controller.js"></script>
     <script src="js/user/user-module.js"></script>
     <script src="js/user/user-routes.js"></script>
     <script src="js/user/user-controller.js"></script>
-    <script src="js/app-module.js"></script>
-    <script src="js/partials/default-template-directive.js"></script>
+    <script src="js/tiemposdeentrega/tiemposdeentrega-module.js"></script>
+    <script src="js/tiemposdeentrega/tiemposdeentrega-routes.js"></script>
+    <script src="js/tiemposdeentrega/tiemposdeentrega-form-directive.js"></script>
+    <script src="js/tiemposdeentrega/tiemposdeentrega-controller.js"></script>
+    <script src="js/terminosdepago/terminosdepago-module.js"></script>
+    <script src="js/terminosdepago/terminosdepago-routes.js"></script>
+    <script src="js/terminosdepago/terminosdepago-form-directive.js"></script>
+    <script src="js/terminosdepago/terminosdepago-controller.js"></script>
+    <script src="js/productos/productos-module.js"></script>
+    <script src="js/productos/productos-routes.js"></script>
+    <script src="js/productos/productos-form-directive.js"></script>
+    <script src="js/productos/productos-controller.js"></script>
+    <script src="js/paises/paises-module.js"></script>
+    <script src="js/paises/paises-routes.js"></script>
+    <script src="js/paises/paises-form-directive.js"></script>
+    <script src="js/paises/paises-controller.js"></script>
+    <script src="js/otrosimpuestos/otrosimpuestos-module.js"></script>
+    <script src="js/otrosimpuestos/otrosimpuestos-routes.js"></script>
+    <script src="js/otrosimpuestos/otrosimpuestos-form-directive.js"></script>
+    <script src="js/otrosimpuestos/otrosimpuestos-controller.js"></script>
+    <script src="js/mediosdepago/mediosdepago-module.js"></script>
+    <script src="js/mediosdepago/mediosdepago-routes.js"></script>
+    <script src="js/mediosdepago/mediosdepago-form-directive.js"></script>
+    <script src="js/mediosdepago/mediosdepago-controller.js"></script>
+    <script src="js/marcas/marcas-module.js"></script>
+    <script src="js/marcas/marcas-routes.js"></script>
+    <script src="js/marcas/marcas-form-directive.js"></script>
+    <script src="js/marcas/marcas-controller.js"></script>
     <script src="js/login/login-module.js"></script>
     <script src="js/login/login-routes.js"></script>
     <script src="js/login/login-controller.js"></script>
     <script src="js/login/auth-factory.js"></script>
+    <script src="js/iva/iva-module.js"></script>
+    <script src="js/iva/iva-routes.js"></script>
+    <script src="js/iva/iva-form-directive.js"></script>
+    <script src="js/iva/iva-controller.js"></script>
     <script src="js/home/home-module.js"></script>
-    <script src="js/home/main-menu-directive.js"></script>
     <script src="js/home/home-routes.js"></script>
     <script src="js/home/home-controller.js"></script>
+    <script src="js/eps/eps-module.js"></script>
+    <script src="js/eps/eps-routes.js"></script>
+    <script src="js/eps/eps-form-directive.js"></script>
+    <script src="js/eps/eps-controller.js"></script>
+    <script src="js/dianretefuente/dianretefuente-module.js"></script>
+    <script src="js/dianretefuente/dianretefuente-routes.js"></script>
+    <script src="js/dianretefuente/dianretefuente-form-directive.js"></script>
+    <script src="js/dianretefuente/dianretefuente-controller.js"></script>
+    <script src="js/cotizaciones/cotizaciones-module.js"></script>
+    <script src="js/cotizaciones/cotizaciones-routes.js"></script>
+    <script src="js/cotizaciones/cotizaciones-controller.js"></script>
+    <script src="js/cotizacion/cotizacion-module.js"></script>
+    <script src="js/cotizacion/cotizacion-routes.js"></script>
+    <script src="js/cotizacion/cotizacion-controller.js"></script>
+    <script src="js/clientes/clientes-module.js"></script>
+    <script src="js/clientes/clientes-routes.js"></script>
+    <script src="js/clientes/clientes-controller.js"></script>
+    <script src="js/ciudades/ciudades-module.js"></script>
+    <script src="js/ciudades/ciudades-routes.js"></script>
+    <script src="js/ciudades/ciudades-form-directive.js"></script>
+    <script src="js/ciudades/ciudades-controller.js"></script>
+    <script src="js/categoriasproductos/categoriasproductos-module.js"></script>
+    <script src="js/categoriasproductos/categoriasproductos-routes.js"></script>
+    <script src="js/categoriasproductos/categoriasproductos-form-directive.js"></script>
+    <script src="js/categoriasproductos/categoriasproductos-controller.js"></script>
     <script src="js/arp/arp-module.js"></script>
     <script src="js/arp/arp-routes.js"></script>
     <script src="js/arp/arp-form-directive.js"></script>
@@ -116,12 +196,20 @@
     <script src="js/areas/areas-form-directive.js"></script>
     <script src="js/areas/areas-factory.js"></script>
     <script src="js/areas/areas-controller.js"></script>
+    <script src="js/app-module.js"></script>
     <script src="js/app-directives/right-click-directive.js"></script>
+    <script src="js/app-directives/resizable-directive.js"></script>
+    <script src="js/app-directives/progress-count-directive.js"></script>
     <script src="js/app-directives/ng-enter-directive.js"></script>
+    <script src="js/app-directives/headroom.min.js"></script>
+    <script src="js/app-directives/fixed-table-header-directive.js"></script>
+    <script src="js/app-directives/default-template-directive.js"></script>
+    <script src="js/app-directives/default-footer-directive.js"></script>
     <script src="js/app-directives/count-to-directive.js"></script>
+    <script src="js/app-directives/basic-filtrator-directive.js"></script>
+    <script src="js/app-directives/angular.headroom.min.js"></script>
+    <script src="js/app-directives/angular-tinymce-directive.js"></script>
     <script src="js/error-interceptor-factory.js"></script>
-    <script src="js/default-footer-directive.js"></script>
-    <script src="js/basic-filtrator-directive.js"></script>
     <script src="js/app-routes.js"></script>
     <script src="js/app-factory.js"></script>
     <script src="js/api-url-constant.js"></script>

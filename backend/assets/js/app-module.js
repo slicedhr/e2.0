@@ -114,18 +114,26 @@ String.prototype.contains = function (it) {
             });
       }
 
-      function AppCtrl($rootScope, $scope, $timeout, AppService, AuthService, $mdSidenav) {
+      function AppCtrl($rootScope, $scope, $timeout, $mdDialog, AppService, AuthService, $mdSidenav) {
 
             var self = this;
 
+            this.selectedMainTab = 1;
+
             this.activatedmenu = false;
 
-            $rootScope.generatedDesign = AppService.randomDesign();
+            if (sessionStorage['JWT']) {
 
-            $rootScope.$on('initialData', function ($event, data) {
+                  AuthService.verify().then(function (response) {
 
-                  self.getInitialData();
-            });
+                        $rootScope.auth.user = response.data.user;
+
+                        self.getInitialData();
+                  }, function (err) {
+
+                        alert('Ocurrio un error! \r\n Detalle: \r\n ' + JSON.stringify(err));
+                  });
+            }
 
             $scope.mainMenuSettings = {
                   closeEl: '.close',
@@ -158,19 +166,6 @@ String.prototype.contains = function (it) {
                   });
             };
 
-            if (sessionStorage['JWT']) {
-
-                  AuthService.verify().then(function (response) {
-
-                        $rootScope.auth.user = response.data.user;
-
-                        self.getInitialData();
-                  }, function (err) {
-
-                        alert('Ocurrio un error! \r\n Detalle: \r\n ' + JSON.stringify(err));
-                  });
-            }
-
             this.openNotificationsSideNav = function (tab) {
 
                   $timeout(function () {
@@ -178,8 +173,18 @@ String.prototype.contains = function (it) {
                   });
                   $mdSidenav('profilenotifications').toggle().then(function () {});
             };
+
+            //ROOTSCOPE FUNCTIONS
+            //
+
+            $rootScope.generatedDesign = AppService.randomDesign();
+
+            $rootScope.$on('initialData', function ($event, data) {
+
+                  self.getInitialData();
+            });
       }
 
-      angular.module('enterprise', ['md.data.table', 'ngMaterial', 'ngMorph', 'ngAnimate', 'angular-jwt', 'angular-loading-bar', 'ngMdIcons', 'ui.router', 'anim-in-out', 'perfect_scrollbar', 'home', 'login', 'user', 'areas', 'arp']).controller('AppCtrl', AppCtrl).config(AppConfig).run(RunApp);
+      angular.module('enterprise', ['md.data.table', 'ngMaterial', 'ngMorph', 'ngAnimate', 'angular-jwt', 'angular-loading-bar', 'ngMdIcons', 'ui.router', 'anim-in-out', 'perfect_scrollbar', 'angular-svg-round-progress', 'pasvaz.bindonce', 'headroom', 'ui.tinymce', 'home', 'login', 'user', 'areas', 'arp', 'eps', 'dianretefuente', 'iva', 'mediosdepago', 'marcas', 'otrosimpuestos', 'terminosdepago', 'tiemposdeentrega', 'vigencia', 'paises', 'ciudades', 'categoriasproductos', 'productos', 'cotizacion', 'cotizaciones', 'clientes']).controller('AppCtrl', AppCtrl).config(AppConfig).run(RunApp);
 })();
 //# sourceMappingURL=app-module.js.map

@@ -1,45 +1,66 @@
-<md-content class="default-content" ng-class="animation" layout-padding>
+<md-content class="default-content" ng-class="options.animation" headroom tolerance='5' offset='64' scroller=".scroller" classes="{unpinned:'fixed-table'}" layout-padding>
     <md-data-table-toolbar class="data-table-header toolbar-design redonded md-whiteframe-z3" ng-class="design" ng-transclude>
-	  <h2 class="md-title fadeLeftText">{{ title }}</h2>
+	  <h2 class="md-title fadeLeftText">{{ options.data.info.title }}</h2>
 	</md-data-table-toolbar>
 
-	<md-data-table-container class="md-whiteframe-z2 bottom-radius-8" ng-class="{'hide-selectable': !showSelectable, 'show-selectable': showSelectable}">
-	  <!-- <table md-data-table md-progress="deferred"> -->
-	  <table md-data-table md-progress="deferredprogress" md-row-select="defaultTemplate.selected">
+	<md-data-table-container class="md-whiteframe-z2 bottom-radius-8" ng-class="{'hide-selectable': !options.showSelectable, 'show-selectable': options.showSelectable}">
+
+	  <table fixed-header md-data-table md-progress="defaultTemplate.deferred" md-row-select="defaultTemplate.selected">
 	    <thead md-order="query.order" md-trigger="onOrderChange">
-	      <tr>
-	        <th ng-repeat="item in columns" name="{{item.title}}"></th>
-	        <th name=""></th>
+	      <tr class="md-whiteframe-z1 fixed-table-header">
+	        <th class="justify-center-into-div" ng-repeat="item in options.data.columns" name="{{ item.title }}"></th>
+	        <th name="" class="options-table-button"></th>
 	      </tr>
 	    </thead>
 	    <tbody>
-	      <tr ng-repeat="row in defaultTemplate.rows  | orderBy:'-id' | filter:searchFilter" class="repeat-animation">
-	        <td ng-repeat="column in columns">{{ row[column.key] }}</td>
-	        <td width="70px">
-	        	<div layout="row" style="width:70px">
+	      <tr bindonce ng-repeat="row in defaultTemplate.rows | orderBy:'-id' | filter:searchFilter" class="repeat-animation">
+	        <td bindonce ng-repeat="column in options.data.columns" ng-class="{'text-center': column.align_center}">{{ column.prefix }}{{ defaultTemplate.keysToString(column.key, row) }}{{ column.sufix }}</td>
+	        <td class="options-table-button">
+	        	<div layout="row" style="width:30px">
+					<md-menu>
+			        	<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Actions">
+			        	   <ng-md-icon icon="more_vert" size="24" style="fill: green"></ng-md-icon>
+			        	</md-button>
+			        	<md-menu-content>
+			        	    <md-menu-item>
+			        	   		<md-button aria-label="Edit Button" ng-click="defaultTemplate.form($event, row)" flex>
+									<ng-md-icon icon="mode_edit" size="24" style="fill: orange"></ng-md-icon> Editar
+					        	</md-button>
+			        	    </md-menu-item>
 
-	        		<md-button class="md-icon-button" aria-label="Edit Button" ng-click="defaultTemplate.form($event, row)" flex>
-						<ng-md-icon icon="mode_edit" size="24" style="fill: orange"></ng-md-icon>
-		        	</md-button>
+							<md-menu-item>
+			        	   		<md-button aria-label="Duplication Button" ng-click="defaultTemplate.form($event, row, true)" flex>
+									<ng-md-icon icon="filter_2" size="24" style="fill: green"></ng-md-icon> Duplicar
+			        			</md-button>
+			        	    </md-menu-item>
 
-		        	<md-button class="md-icon-button" aria-label="Delete Button" ng-click="defaultTemplate.delete(row.id, $event)" flex>
-						<ng-md-icon icon="delete" size="24" style="fill: red"></ng-md-icon>
-		        	</md-button>
+			        	    <md-menu-item>
+			        	   		<md-button aria-label="Delete Button" ng-click="defaultTemplate.delete($event, row.id)" flex>
+									<ng-md-icon icon="delete" size="24" style="fill: red"></ng-md-icon> Eliminar
+			        			</md-button>
+			        	    </md-menu-item>
 
+			        	</md-menu-content>
+		        	</md-menu>
 	        	</div>
+	        	 
 	        </td>
 	      </tr>
 	    </tbody>
 	  </table>
+	  <div ng-show="defaultTemplate.rows.length < 1" class="text-center">No hay registros disponibles.</div>
 
-	<md-data-table-pagination md-label="{ text: 'Registros Por Página' }" md-row-select="[10, 20, 30, 40, 50, 100]" md-limit="defaultTemplate.limit" md-page="defaultTemplate.page" md-total="{{ defaultTemplate.total }}" md-trigger="defaultTemplate.$get"></md-data-table-pagination>
+	<md-data-table-pagination md-label="{ text: 'Registros Por Página' }" md-row-select="[10, 20, 30, 40, 50, 100, 200]" md-limit="defaultTemplate.limit" md-page="defaultTemplate.page" md-total="{{ defaultTemplate.total }}" md-trigger="defaultTemplate.$get"></md-data-table-pagination>
 
 	</md-data-table-container>
 
 	 <!-- <button class="md-button md-raised md-primary" ng-morph-modal="morphSettings"> Fire </button> -->
 
-</md-content>
 
-<md-button class="md-fab md-primary add-action-button fadeUp" aria-label="Add Button" ng-click="defaultTemplate.form($event)">
+</md-content>
+<default-footer class="fadeUp" layout="column" layout-align="center center" layout-padding></default-footer>
+
+
+<md-button class="md-fab md-primary add-action-button fadeUp" aria-label="Add Button" ng-click="defaultTemplate.form($event)" headroom tolerance='5' offset='32' scroller=".scroller" classes="{pinned:'zoomIn',unpinned:'zoomOutDown',initial:'animated'}">
 	<ng-md-icon icon="add" size="30" style="fill: white"></ng-md-icon>
 </md-button>

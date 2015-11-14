@@ -7,6 +7,7 @@
     <meta name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes'>
 
     <base href="/">
+
     <!-- inject:head:js -->
     <!-- endinject -->
     <!-- inject:html -->
@@ -15,22 +16,21 @@
     <!-- endbower -->
     <!-- inject:css -->
     <!-- endinject -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600' rel='stylesheet' type='text/css'>
   </head>
   <body data-ng-controller="AppCtrl as app">
 
     <div layout="column" layout-fill>
 
-      <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5" class="main-toolbar toolbar-design design-9 md-whiteframe-z5" ng-if="auth.user">
+      <md-content class="principal-md-content" ng-class="{'loginimage': toState == 'login'}" flex>
 
-          <div class="md-toolbar-tools animated fadeIn" ng-include="'partials/top-menu.tpl.html'" scope="app"></div>
+        <perfect-scrollbar id="mainContent" class="scroller" wheel-propagation="true" wheel-speed="0.5" min-scrollbar-length="20">
 
-      </md-toolbar>
+          <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.5" class="main-toolbar toolbar-design design-9 md-whiteframe-z5" ng-if="auth.user" headroom tolerance='5' offset='32' scroller=".scroller" classes="{pinned:'swingInX',unpinned:'swingOutX',initial:'animated'}">
 
-        
+              <div class="md-toolbar-tools animated fadeIn" ng-include="'partials/top-menu.tpl.html'" scope="app"></div>
 
-      <md-content ng-class="{'loginimage': toState == 'login'}" flex>
-
-        <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+          </md-toolbar>
 
           <div class="main-container anim-in-out" data-anim-sync="true" data-ui-view>
               
@@ -58,9 +58,11 @@
       
     </md-sidenav>
 
-
     <!-- bower:js -->
     <!-- endbower -->
+    <script src="/js/app-directives/headroom.min.js"></script>
+    <script src="/js/app-directives/angular.headroom.min.js"></script>
+    <script src="/js/app-directives/angular-tinymce-directive.js"></script>
     <!-- inject:js -->
     <!-- endinject -->
   </body>

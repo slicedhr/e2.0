@@ -24,13 +24,35 @@
   function arpForm() {
     return {
       restrict: 'EA',
-      scope: {},
+      scope: {
+        data: '@'
+      },
       templateUrl: 'arp/arp-form-directive.tpl.html',
       replace: false,
       controllerAs: 'arpForm',
-      controller: function controller() {
-        var vm = this;
-        vm.name = 'arpForm';
+      controller: function controller($scope, $rootScope, AppService) {
+
+        var self = this;
+
+        this.data = JSON.parse($scope.data) || {};
+
+        this.source = AppService.dataModels.arp.info.source;
+
+        this.save = function () {
+
+          var data = self.data,
+              url = self.source;
+
+          AppService.save(data, url).then(function (success) {
+
+            AppService.broadcastDialog(success.data);
+
+            $rootScope.$broadcast('saved:' + self.source, success.data);
+          })['catch'](function (err) {
+
+            AppService.broadcastError(err);
+          });
+        };
       },
       link: function link(scope, element, attrs) {
         /* jshint unused:false */

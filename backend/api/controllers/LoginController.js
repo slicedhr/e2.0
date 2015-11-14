@@ -103,7 +103,6 @@ module.exports = {
       .then(function (mensajes){
 
         final_data.mensajes = mensajes
-          console.log(final_data)
         return res.send(final_data);
 
       })

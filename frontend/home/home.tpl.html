@@ -1,50 +1,12 @@
-<md-content class="fadeLeft" layout-padding>
+<md-content class="fadeUp" layout-padding>
 
-    <md-data-table-toolbar class="data-table-header toolbar-design design-7 redonded md-whiteframe-z3">
-	  <h2 class="md-title">Areas</h2>
-	</md-data-table-toolbar>
+   <!-- Numero de clientes -->
+   <!-- Tareas pendientes -->
+   <!-- Clientes sin seguimiento red -->
+   <div layout="row" class="home-first-row">
+   		<md-card class="home-normal-card clientes-card md-whiteframe-z5">
+   		 	<progress-count total="{{ app.initData.total }}" duration="3" id-element="1"></progress-count>
+   		</md-card>
+   </div>
 
-	<md-data-table-container class="md-whiteframe-z2 bottom-radius-8">
-	  <!-- <table md-data-table md-progress="deferred"> -->
-	  <table md-data-table>
-	    <thead md-order="query.order" md-trigger="onOrderChange">
-	      <tr>
-	        <th name="Area"></th>
-	        <th name=""></th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	    	<tr>
-	    		<td><input type="text" ng-model="searchFilter.area"></td>
-	    		<td width="70px"></td>
-	    	</tr>
-	      <tr ng-repeat="item in areas.rows | orderBy:'-id'  | filter:searchFilter" class="repeat-animation">
-	        <td>{{ item.area }}</td>
-	        <td width="70px">
-	        	<div layout="row" style="width:70px">
-
-	        		<md-button class="md-icon-button" aria-label="Edit Button" ng-click="areas.form($event, item)" flex>
-						<ng-md-icon icon="mode_edit" size="24" style="fill: orange"></ng-md-icon>
-		        	</md-button>
-
-		        	<md-button class="md-icon-button" aria-label="Delete Button" ng-click="areas.delete(item.id, $event)" flex>
-						<ng-md-icon icon="delete" size="24" style="fill: red"></ng-md-icon>
-		        	</md-button>
-
-	        	</div>
-	        </td>
-	      </tr>
-	    </tbody>
-	  </table>
-
-	<md-data-table-pagination  md-limit="query.limit" md-page="query.page" md-total="{{desserts.total}}" md-trigger="onPaginationChange"></md-data-table-pagination>
-
-	</md-data-table-container>
-
-
-	<md-button class="md-fab md-primary add-action-button" aria-label="Add Button" ng-click="areas.form($event)">
-		<ng-md-icon icon="add" size="30" style="fill: white"></ng-md-icon>
-	</md-button>
-
-	 <!-- <button class="md-button md-raised md-primary" ng-morph-modal="morphSettings"> Fire </button> -->
 </md-content>

@@ -25,25 +25,29 @@
     return {
       restrict: 'EA',
       scope: {
-        area: '='
+        data: '@'
       },
-      templateUrl: 'areas/form-directive.tpl.html',
+      templateUrl: 'areas/areas-form-directive.tpl.html',
       replace: false,
       controllerAs: 'areasForm',
-      controller: function controller($scope, AppService) {
+      controller: function controller($scope, $rootScope, AppService) {
 
         var self = this;
 
-        self.area = $scope.$parent.defaultTemplate.dataToForm || {};
+        this.data = JSON.parse($scope.data) || {};
 
-        self.save = function () {
+        this.source = AppService.dataModels.areas.info.source;
 
-          var data = self.area,
-              url = 'areas';
+        this.save = function () {
+
+          var data = self.data,
+              url = self.source;
 
           AppService.save(data, url).then(function (success) {
 
             AppService.broadcastDialog(success.data);
+
+            $rootScope.$broadcast('saved:' + self.source, success.data);
           })['catch'](function (err) {
 
             AppService.broadcastError(err);

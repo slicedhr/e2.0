@@ -4,7 +4,7 @@
     'use strict';
     angular.module('enterprise').directive('countTo', CountTo);
 
-    function CountTo($timeout) {
+    function CountTo($timeout, $rootScope) {
         return {
             replace: false,
             scope: true,
@@ -27,31 +27,40 @@
                 };
 
                 var tick = function tick() {
+
+                    function numberWithCommas(x) {
+                        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
                     scope.timoutId = $timeout(function () {
                         num += increment;
                         step++;
+
+                        $rootScope.$broadcast('step:' + attrs.idElement, step);
+
                         if (step >= steps) {
                             $timeout.cancel(scope.timoutId);
                             num = countTo;
-                            e.textContent = countTo;
+                            e.textContent = numberWithCommas(countTo);
                         } else {
-                            e.textContent = Math.round(num);
+                            var Content = Math.round(num);
                             tick();
+                            e.textContent = numberWithCommas(Content);
                         }
                     }, refreshInterval);
                 };
 
                 var start = function start() {
-
-                    if (scope.timoutId) $timeout.cancel(scope.timoutId);
-
+                    if (scope.timoutId) {
+                        $timeout.cancel(scope.timoutId);
+                    }
                     calculate();
-
                     tick();
                 };
 
                 attrs.$observe('countTo', function (val) {
-                    if (val) start();
+                    if (val) {
+                        start();
+                    }
                 });
 
                 attrs.$observe('value', function (val) {

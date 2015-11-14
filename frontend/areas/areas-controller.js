@@ -9,16 +9,22 @@
    *
    */
 
-  function AreasCtrl($scope, AppService, $mdDialog) {
+  function AreasCtrl(AppService) {
 
-    this.columns = [{
-      title: 'Area',
-      key: 'area',
-      selected: true,
-      show: true
-    }]
+    var self = this
 
-   
+    this.options = {
+
+      data: AppService.dataModels.areas,
+
+      animation: 'fadeLeft',
+
+      showSelectable: false,
+
+      template: 'areas-form'
+
+    }
+    
   }
 
   angular

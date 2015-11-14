@@ -1,1 +1,16 @@
-<div>{{arpForm.name}}</div>
+<md-content layout-padding>
+    <form ng-submit="arpForm.save()">
+
+    	<md-input-container>
+	      <label>Proveedor de servicio</label>
+	      <input ng-model="arpForm.data.proveedor_de_servicio" required>
+	    </md-input-container>
+
+        <div layout="column">
+        	<md-button class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+	        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+	        </md-button>
+		</div>
+
+    </form>
+</md-content>
