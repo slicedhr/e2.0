@@ -1,0 +1,196 @@
+
+<md-content class="default-content fadeLeft"  tolerance='5' offset='64' scroller=".scroller" classes="{ unpinned: 'fixed-table' }" layout-padding>
+
+
+
+    <md-data-table-toolbar class="data-table-header toolbar-design redonded md-whiteframe-z3" ng-class="generatedrandomdesign">
+  		<div layout="row" class="filtrator" flex>
+			<div flex="90" layout="row">
+				<h2 class="md-title fadeLeftText text-title-animation" ng-show="!clientes.search.showInput">Clientes <span class="counter-clientes" ng-show="clientes.total">{{ clientes.total }}</span></h2>
+
+				<div class="search-container search-animation" ng-show="clientes.search.showInput" layout="row" flex>
+
+					<md-select placeholder="Buscar Por:" ng-model="clientes.search.by" flex="15" ng-change="clientes.search.check()">
+				        <md-option ng-repeat="item in clientes.search.listfilters | orderBy:'title'" value="{{ item.key }}" ng-selected="item.selected">
+				        {{ item.title }}
+				        </md-option>
+				    </md-select>
+
+				    <div class="search-field"  flex>
+						<!-- Vendedor -->
+					    <md-autocomplete ng-show="clientes.search.by == 'usuario'" md-selected-item="clientes.search.usuario" md-search-text="clientes.search.textusuario" md-items="item in clientes.search.autocomplete( clientes.search.textusuario, 'usuarios','first_name')" md-item-text="item.first_name" md-selected-item-change="clientes.search.checkAutocomplete(item)">
+					      <md-item-template>
+					      	<span md-highlight-text="clientes.search.textusuario">{{ item.first_name }} {{ item.last_name }}</span>
+					      </md-item-template>
+					      <md-not-found>
+					      	No se ha encontrado nada.
+					      </md-not-found>
+					    </md-autocomplete>
+
+
+					    <!-- Ciudad -->
+
+					    <md-autocomplete ng-show="clientes.search.by == 'ciudad'" md-selected-item="clientes.search.ciudad" md-search-text="clientes.search.textciudad" md-items="item in clientes.search.autocomplete( clientes.search.textciudad, 'ciudades','nombre')" md-item-text="item.nombre" md-selected-item-change="clientes.search.checkAutocomplete(item)">
+					      <md-item-template>
+					      	<span md-highlight-text="clientes.search.textciudad">{{ item.nombre }}</span>
+					      </md-item-template>
+					      <md-not-found>
+					      	No se ha encontrado nada.
+					      </md-not-found>
+					    </md-autocomplete>
+
+
+					    <!-- NIT - RAZON SOCIAL -->
+
+					    <md-input-container class="inputs-margin-left" ng-show="clientes.search.by == 'nit' || clientes.search.by == 'razon_social' " flex>
+					      <input type="search" ng-model="clientes.search.text" ng-enter="clientes.search.fire(clientes.search.text, true)" aria-label="Search" autofocus>
+					    </md-input-container>
+
+					    <!-- COLOR -->
+
+					    <md-select style="margin-left:5%" ng-show="clientes.search.by == 'color'" placeholder="COLOR" ng-model="clientes.search.color" flex="15" ng-change="clientes.search.fire()">
+					        <md-option ng-class="item" class="color-white" ng-repeat="item in clientes.colors | orderBy:'item'" value="{{ item }}" ng-selected="item.selected">
+					        {{ item }}
+					        </md-option>
+				    	</md-select>
+
+				    	<!-- Categoria cliente -->
+
+					    <md-select style="margin-left:5%" ng-show="clientes.search.by == 'categoriacliente'" placeholder="Categoría Cliente" ng-model="clientes.search.color" flex="15" ng-change="clientes.search.fire()">
+					        <md-option ng-class="item" ng-repeat="item in clientes.categoriasclientesArr | orderBy:'item'" value="{{ item.id }}">
+					        {{ item.nombre }}
+					        </md-option>
+				    	</md-select>
+
+				    	
+				    </div>
+
+				</div>
+			</div>
+
+			
+			<div layout="row" class="toolbar-button-list" flex="10">
+				<md-button class="md-icon-button" aria-label="Action search button" ng-click="clientes.search.toggleSearch()" >
+					<ng-md-icon icon="{{ clientes.search.icon }}" size="30" style="fill: white"></ng-md-icon>
+				</md-button>
+				<md-button class="md-icon-button" aria-label="Action search button" ng-click="clientes.showSelectable = !clientes.showSelectable" >
+					<ng-md-icon icon="format_list_bulleted" size="30" style="fill: white"></ng-md-icon>
+				</md-button>	
+				<md-button class="md-icon-button" aria-label="Action search button" ng-click="clientes.activedShowHide = !clientes.activedShowHide" >
+					<ng-md-icon class="column-icon" icon="view_column" size="36" style="fill: white"></ng-md-icon>
+				</md-button>
+			</div>
+		</div>
+	</md-data-table-toolbar>
+
+	<md-data-table-container class="md-whiteframe-z2 bottom-radius-8" ng-class="{'hide-selectable': !clientes.showSelectable, 'show-selectable': clientes.showSelectable}">
+
+	  <table md-data-table md-progress="deferred" md-row-select="clientes.selected">
+	    <thead md-order="clientes.order" md-trigger="clientes.onOrderChange">
+	      <tr class="md-whiteframe-z1 text-left">
+	        <th class="justify-center-into-div" name="NIT" ng-show="clientes.columns.nit.actived"></th>
+	        <th class="justify-center-into-div" name="Razón Social/Nombre" ng-show="clientes.columns.razon_social.actived" order-by="razon_social"></th>
+	        <th class="justify-center-into-div" name="Ciudad" ng-show="clientes.columns.ciudad.actived"></th>
+	        <th class="justify-center-into-div" name="Teléfonos" ng-show="clientes.columns.email.actived"></th>
+	        <th class="justify-center-into-div" name="Email" ng-show="clientes.columns.email.actived"></th>
+	        <th class="justify-center-into-div" name="Vendedor Asignado" ng-show="clientes.columns.vendedor_asignado.actived"></th>
+	        <th class="justify-center-into-div" name="Tags" ng-show="clientes.columns.tags.actived"></th>
+	        <th name="Representante Legal" ng-show="clientes.columns.representante.actived"></th>
+	        <th name="Responsable Delegado" ng-show="clientes.columns.responsable.actived"></th>
+	        <th name="Pais" ng-show="clientes.columns.pais.actived"></th>
+	        <th name="Dirección" ng-show="clientes.columns.direccion.actived"></th>
+	        <th name="Website" ng-show="clientes.columns.website.actived"></th>
+	        <th name="Comentarios" ng-show="clientes.columns.comentarios.actived"></th>
+	        <th name="" class="options-table-button"></th>
+	      </tr>
+	    </thead>
+	    <tbody>
+
+	      <tr bindonce ng-repeat="row in clientes.rows | orderBy:'-id' | filter:searchFilter" class="repeat-animation table-font">
+	        <td class="relative" ng-show="clientes.columns.nit.actived"><span ng-class="row.color" class="color-cliente"></span><a class="md-primary md-button" ui-sref="cliente( { razon_social: slug(row.razon_social), id: row.id } )" >{{ row.nit }}</a></td>
+	        <td class="text-center" ng-show="clientes.columns.razon_social.actived"><a class="md-primary md-button" ui-sref="cliente( { razon_social: slug(row.razon_social), id: row.id } )" >{{ row.razon_social }}</a></td>
+	        <td class="text-center" ng-show="clientes.columns.ciudad.actived">{{ row.ciudad.nombre }}</td>
+	        <td class="text-center" ng-show="clientes.columns.telefonos.actived">{{ row.telefono_fijo }}</td>
+	        <td class="toLowercase" ng-show="clientes.columns.email.actived">{{ row.email }}</td>
+	        <td class="text-center" ng-show="clientes.columns.vendedor_asignado.actived">{{ row.vendedor_asignado.first_name }} {{ row.vendedor_asignado.last_name }}</td>
+	        <td class="text-center" ng-show="clientes.columns.tags.actived">
+	        	<label 
+		        	class="label-items" 
+		        	style="background: {{ clientes.transformToCategoriacliente(item)[0].color }}" 
+		        	ng-repeat="item in clientes.removeDuplicateItems(row.categoriascliente)">
+	        		{{ clientes.transformToCategoriacliente(item)[0].nombre }}
+	        	</label>
+	        </td>
+	        <td ng-show="clientes.columns.representante.actived">{{ row.representante_legal }}</td>
+	        <td ng-show="clientes.columns.responsable.actived">{{ row.responsable_delegado }}</td>
+	        <td class="text-center" ng-show="clientes.columns.pais.actived">{{ row.pais.nombre }}</td>
+	        <td ng-show="clientes.columns.direccion.actived">{{ row.direccion }}</td>
+	        <td ng-show="clientes.columns.comentarios.actived">{{ row.comentarios }}</td>
+	        <td ng-show="clientes.columns.website.actived">{{ row.website }}</td>
+	        
+	        <td class="options-table-button">
+	        	<div layout="row" style="width:30px">
+					<md-menu>
+			        	<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Actions">
+			        	   <ng-md-icon icon="more_vert" size="24" style="fill: green"></ng-md-icon>
+			        	</md-button>
+			        	<md-menu-content>
+			        	    <md-menu-item>
+			        	   		<md-button aria-label="Edit Button" ng-click="clientes.form($event, row)" flex>
+									<ng-md-icon icon="mode_edit" size="24" style="fill: orange"></ng-md-icon> Editar
+					        	</md-button>
+			        	    </md-menu-item>
+
+							<md-menu-item>
+			        	   		<md-button aria-label="Duplication Button" ng-click="clientes.form($event, row, true)" flex>
+									<ng-md-icon icon="filter_2" size="24" style="fill: green"></ng-md-icon> Duplicar
+			        			</md-button>
+			        	    </md-menu-item>
+
+			        	    <md-menu-item>
+			        	   		<md-button aria-label="Delete Button" ng-click="clientes.delete($event, row.id)" flex>
+									<ng-md-icon icon="delete" size="24" style="fill: red"></ng-md-icon> Eliminar
+			        			</md-button>
+			        	    </md-menu-item>
+
+			        	</md-menu-content>
+		        	</md-menu>
+	        	</div>
+	        	 
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	  <div ng-show="clientes.rows.length < 1" class="text-center">No hay registros disponibles.</div>
+
+	<md-data-table-pagination md-label="{ text: 'Registros Por Página' }" md-row-select="[10, 20, 30, 40, 50, 100, 200]" md-limit="clientes.limit" md-page="clientes.page" md-total="{{ clientes.total }}" md-trigger="clientes.$get"></md-data-table-pagination>
+
+	</md-data-table-container>
+
+	 <!-- <button class="md-button md-raised md-primary" ng-morph-modal="morphSettings"> Fire </button> -->
+
+
+</md-content>
+<default-footer class="fadeUp" layout="column" layout-align="center center" layout-padding></default-footer>
+
+
+<md-button class="md-fab md-primary add-action-button fadeUp" aria-label="Add Button" ng-click="clientes.form($event)" headroom tolerance='5' offset='32' scroller=".scroller" classes="{ pinned:'zoomIn',unpinned:'zoomOutDown',initial:'animated' }">
+	<ng-md-icon icon="add" size="30" style="fill: white"></ng-md-icon>
+</md-button>
+
+
+<div class="side-menu-show-hide md-whiteframe-z4" ng-class="{ 'side-menu-show-hide--actived': clientes.activedShowHide }">
+<ng-md-icon icon="close" style="fill: red" size="24" class="close" ng-click="clientes.activedShowHide = false"></ng-md-icon> 
+	<md-list layout="column">
+	   	<md-subheader class="md-no-sticky">Mostrar / Ocutar Columnas</md-subheader>
+
+		  <md-list-item ng-repeat="item in clientes.columns | orderBy: 'title'">
+
+		    <p> {{item.title}} </p>
+
+		    <md-checkbox class="md-primary" ng-model="item.actived" aria-label="{{item.title}}"></md-checkbox>
+
+		  </md-list-item>
+
+   	</md-list>
+</div>

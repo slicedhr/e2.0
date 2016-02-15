@@ -17,7 +17,7 @@ module.exports = {
       Usuarios.comparePassword(password, user, function (err, valid) {
 
         if (err)
-          return res.json(403, {err: 'forbidden'});
+          return res.json(err);
 
         if (!valid)
           return res.json(401, {err: 'invalid email or password'});
@@ -51,17 +51,22 @@ module.exports = {
 
       req.token = token;
 
-      Usuarios.findOne({ id: token.id }).exec(function (err, user){
+      if (token)
 
-        sails.users[tokenauth.issue({id : user.id })] = user.id
+        Usuarios.findOne({ id: token.id }).exec(function (err, user){
 
-        req.session.user = user
+          sails.users[tokenauth.issue({id : user.id })] = user.id
 
-        if(err) return res.send(501, {err: 'Error find user!'})
+          req.session.user = user
 
-        return res.json(200, {user: user})
-      
-      })
+          if(err) return res.send(501, {err: 'Error find user!'})
+
+          return res.json(200, {user: user})
+        
+        })
+
+      else
+        return res.send(501, { err: 'Unauthorized'})
       
 
     });
@@ -70,6 +75,23 @@ module.exports = {
 
   logout: function(req, res){
 
+  },
+
+  homedata: function(req, res){
+
+    var id = req.param('id')
+
+    ClientesService.count(id)
+    .then(function(total){
+
+      return res.send({totalclientes: total })
+
+    })
+    .catch(function(err){
+
+      return res.send(err)
+
+    })
   },
 
   initialData: function(req, res){
@@ -83,7 +105,7 @@ module.exports = {
 
           isAdmin = user.permissions.admin ? true : false
 
-          callall()
+          callAll()
 
         })
         .catch(function(err){
@@ -91,12 +113,11 @@ module.exports = {
         })
         
     else
-      callall()
+      callAll()
     
-
-
-    function callall(){
-      ClientesService.count(id, isAdmin)
+    function callAll(){
+      // ClientesService.count(id, isAdmin)
+      getNotificaciones()
       .then(getNotificaciones)
       .then(getTasks)
       .then(getMessages)
@@ -115,7 +136,7 @@ module.exports = {
 
     function getNotificaciones( total ){
 
-      final_data.total = total
+      // final_data.total = total
 
       return Notifications.find( { to: id, seen: false } );
     }

@@ -1,0 +1,167 @@
+
+<form ng-submit="productosForm.save()" ng-init="productosForm.data.iva = 16;productosForm.data.cantidad = 1" layout="column" flex>
+	<div layout="row" flex>
+
+	    <md-autocomplete md-floating-label="Categoría" md-selected-item="productosForm.data.tempcategoria" md-search-text="productosForm.searchCategoria" md-items="item in productosForm.getAutocomplete(productosForm.searchCategoria, 'nombre_categoria', 'categoriasproductos')" md-item-text="item.nombre_categoria" placeholder="Categoría" md-min-length="0" md-selected-item-change="productosForm.validateSelection('categoria', item)" md-autoselect="true" required>
+	      	<span md-highlight-text="productosForm.searchCategoria">{{ item.nombre_categoria }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchCategoria }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <md-autocomplete md-floating-label="Marca" md-selected-item="productosForm.data.tempmarca" md-search-text="productosForm.searchMarca" md-items="item in productosForm.getAutocomplete(productosForm.searchMarca, 'nombre', 'marcas')" md-item-text="item.nombre" placeholder="Marca" md-min-length="0" md-selected-item-change="productosForm.validateSelection('marca', item)" md-autoselect="true" required>
+	      	<span md-highlight-text="productosForm.searchMarca">{{ item.nombre }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchMarca }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <md-autocomplete md-floating-label="Tiempo de entrega" md-selected-item="productosForm.data.temptiemposdeentrega" md-search-text="productosForm.searchTiempoEntrega" md-items="item in productosForm.getAutocomplete(productosForm.searchTiempoEntrega, 'tiempo_de_entrega', 'tiemposdeentrega')" md-item-text="item.tiempo_de_entrega" placeholder="Tiempo de entrega" md-min-length="0" md-selected-item-change="productosForm.validateSelection('tiempo_de_entrega', item)" md-autoselect="true" required>
+	      	<span md-highlight-text="productosForm.searchTiempoEntrega">{{ item.tiempo_de_entrega }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchTiempoEntrega }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <md-input-container>
+	      <label>Referencia</label>
+	      <input type="text" ng-model="productosForm.data.referencia" required>
+	    </md-input-container>
+
+
+	</div>
+
+	<div layout="row" flex>
+
+	    <md-input-container>
+	      <label>Nombre</label>
+	      <input type="text" ng-model="productosForm.data.nombre" required>
+	    </md-input-container>
+
+		<md-autocomplete md-floating-label="Unidad de medida" md-selected-item="productosForm.data.tempunidad_de_medida" md-search-text="productosForm.searchUnidadDeMedida" md-items="item in productosForm.getAutocomplete(productosForm.searchUnidadDeMedida, 'unidad', 'unidadesdemedida')" md-item-text="item.unidad" placeholder="Unidad de medida" md-min-length="0" md-selected-item-change="productosForm.validateSelection('unidad_de_medida', item,'unidad_de_medida')" md-autoselect="true" required>
+	      	<span md-highlight-text="productosForm.searchUnidadDeMedida">{{ item.unidad }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchUnidadDeMedida }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <md-input-container>
+	      <label>Medidas</label>
+	      <input type="text" ng-model="productosForm.data.medidas_del_producto" required>
+	    </md-input-container>
+
+	    <md-input-container>
+	      <label>Color</label>
+	      <input type="text" ng-model="productosForm.data.color" required>
+	    </md-input-container>
+
+	</div>
+
+	<div layout="row" flex>
+		<md-input-container>
+			<label>Precio de Compra</label>
+			<input type="number" min="0" ng-model="productosForm.data.precio_de_compra" required>
+	      	<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+          		<div ng-message>{{productosForm.data.precio_de_compra | currency:"$":0}}</div>
+        	</div>
+	    </md-input-container>
+	    <md-input-container>
+	      	<label>Utilidad Bruta</label>
+	      	<input type="number" min="0" ng-model="productosForm.data.utilidad_bruta" required>
+	      	<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+          		<div ng-message>{{ (((productosForm.data.utilidad_bruta*productosForm.data.precio_de_compra)/100) | currency:"$":0)}}</div>
+        	</div>
+	    </md-input-container>
+	    <md-input-container>
+	      	<label title="PRECIO BASE">PRECIO BASE</label>
+	      	<input type="text" disabled="false">
+	      	<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+          		<div ng-message>{{ (productosForm.data.precio_de_compra+((productosForm.data.utilidad_bruta*productosForm.data.precio_de_compra)/100) | currency:'$':0 ) }}</div>
+        	</div>
+	    </md-input-container>
+    	<md-input-container>
+
+	      	<label>IVA</label>
+
+	      	<input type="number" min="0" ng-model="productosForm.data.iva" required>
+
+			<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+			    <div ng-message>{{ ( ((((productosForm.data.utilidad_bruta*productosForm.data.precio_de_compra)/100)+productosForm.data.precio_de_compra))*(productosForm.data.iva/100)+((((productosForm.data.precio_de_compra*productosForm.data.utilidad_bruta)/100)+productosForm.data.precio_de_compra)) | currency:"$":0) }}</div>
+			</div>
+
+	    </md-input-container>
+	</div>
+
+	<div layout="row" flex>
+
+		<md-autocomplete md-floating-label="Proveedor" md-selected-item="productosForm.data.tempproveedor" md-search-text="productosForm.searchProveedor" md-items="item in productosForm.getAutocomplete(productosForm.searchProveedor, 'razon_social', 'proveedores')" md-item-text="item.razon_social" placeholder="Proveedor" md-min-length="0" md-selected-item-change="productosForm.validateSelection('proveedor', item)" md-autoselect="true" required flex="20">
+	      	<span md-highlight-text="productosForm.searchProveedor">{{ item.razon_social }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchProveedor }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <md-autocomplete md-floating-label="Proveedor 2" md-selected-item="productosForm.data.tempproveedor2" md-search-text="productosForm.searchProveedor2" md-items="item in productosForm.getAutocomplete(productosForm.searchProveedor2, 'razon_social', 'proveedores')" md-item-text="item.razon_social" placeholder="Proveedor 2" md-min-length="0" md-selected-item-change="productosForm.validateSelection('proveedor2', item)" md-autoselect="true" flex="20">
+	      	<span md-highlight-text="productosForm.searchProveedor2">{{ item.razon_social }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchProveedor2 }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <!-- <md-autocomplete md-floating-label="Proveedor 3" md-selected-item="productosForm.data.tempproveedor3" md-search-text="productosForm.searchProveedor3" md-items="item in productosForm.getAutocomplete(productosForm.searchProveedor3, 'razon_social', 'proveedores')" md-item-text="item.razon_social" placeholder="Proveedor 3" md-min-length="0" md-selected-item-change="productosForm.validateSelection('razon_social', item)" md-autoselect="true" flex="20">
+	      	<span md-highlight-text="productosForm.searchProveedor3">{{ item.razon_social }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ productosForm.searchProveedor3 }}".
+	        </md-not-found>
+	    </md-autocomplete> -->
+
+    	<md-input-container flex="20">
+			
+			<md-tooltip md-direction="top" md-autohide="true">
+		      Descuento Max. Ordinario
+		    </md-tooltip>
+	      	<input type="number" min="0" ng-model="productosForm.data.descuento" class="discount-green-input" required>
+	      	<div class="text-center" ng-messages="productosForm.data.descuento">
+			    <div ng-message>{{ productosForm.data.descuento  }}% </div>
+			</div>
+
+	    </md-input-container>
+
+	    <md-input-container flex="20">
+
+		    <md-tooltip md-direction="top" md-autohide="true">
+		      Descuento Max. Distribuidor
+		    </md-tooltip>
+	      	<input type="number" min="0" ng-model="productosForm.data.descuento_distribuidor" class="discount-red-input" required>
+	      	<div class="text-center" ng-messages="productosForm.data.descuento_distribuidor">
+			    <div ng-message>{{ productosForm.data.descuento_distribuidor }}% </div>
+			</div>
+
+	    </md-input-container>
+	</div>
+
+	<div ng-show="productosForm.validation" layout="column">
+	    <span style="color: red" class="md-subhead"><strong>{{ productosForm.validation }}</strong> no es un valor correcto.</span>
+	</div>
+
+    <div layout="column">
+    	<md-button ng-click="productosForm.save()" type="submit" class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+
+</form>

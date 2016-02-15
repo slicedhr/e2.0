@@ -1,0 +1,133 @@
+<md-content class="default-content fadeLeft"  tolerance='5' offset='64' scroller=".scroller" classes="{ unpinned: 'fixed-table' }" layout-padding>
+    <md-data-table-toolbar class="data-table-header toolbar-design redonded md-whiteframe-z3" ng-class="generatedrandomdesign">
+  		<div layout="row" class="filtrator" flex>
+			<div flex="95" layout="row">
+				<h2 class="md-title fadeLeftText text-title-animation" ng-show="!productos.search.showInput">Productos</h2>
+
+				<div class="search-container search-animation" ng-show="productos.search.showInput" layout="row" flex>
+
+					<md-select placeholder="Buscar Por:" ng-model="productos.search.by" >
+				        <md-option ng-repeat="item in productos.search.columns" value="{{ item.key }}" ng-selected="item.selected">
+				        {{ item.title }}
+				        </md-option>
+				    </md-select>
+
+				    <div class="search-field"  flex>
+
+					    <md-select class="inputs-margin-left" placeholder="Seleccionar Categoría:" ng-model="productos.search.value" ng-show="productos.search.by == 'categoria'" ng-change="productos.search.fire(productos.search.value, true)" flex>
+					        <md-option ng-repeat="item in productos.categoriasproductos" value="{{ item.id }}">
+					        {{ item.nombre_categoria }}
+					        </md-option>
+					    </md-select>
+
+					    <md-input-container class="inputs-margin-left" ng-hide="productos.search.by == 'categoria'" flex>
+					      <input type="search" ng-model="productos.search.value2" ng-enter="productos.search.fire(productos.search.value2)" aria-label="Search" autofocus>
+					    </md-input-container>
+
+				    	
+				    </div>
+
+				</div>
+			</div>
+
+			<md-button class="md-icon-button search-button" aria-label="Action search button" ng-click="productos.search.toggleSearch()" flex>
+				<ng-md-icon icon="{{ productos.search.icon }}" size="30" style="fill: white"></ng-md-icon>
+			</md-button>	
+		</div>
+	</md-data-table-toolbar>
+
+	<md-data-table-container class="md-whiteframe-z2 bottom-radius-8" ng-class="{'hide-selectable': !options.showSelectable, 'show-selectable': options.showSelectable}">
+
+	  <table md-data-table md-progress="deferred" md-row-select="productos.selected">
+	    <thead md-order="productos.order" md-trigger="productos.onOrderChange">
+	      <tr class="md-whiteframe-z1 fixed-table-header">
+	        <th class="justify-center-into-div" name="Nombre" order-by="nombre"></th>
+	        <th class="justify-center-into-div" name="U. Medida"></th>
+	        <th class="justify-center-into-div" name="Referencia"></th>
+	        <th class="justify-center-into-div" name="Medidas"></th>
+	        <th class="justify-center-into-div" name="Color"></th>
+	        <th class="justify-center-into-div" name="Cantidad"></th>
+	        <th class="justify-center-into-div" name="Precio"></th>
+	        <th class="justify-center-into-div" name="Utilidad"></th>
+	        <th class="justify-center-into-div" name="Iva"></th>
+	        <th class="justify-center-into-div" name="Total"></th>
+	        <th class="justify-center-into-div" name="Categoría"></th>
+	        <th class="justify-center-into-div" name="Proveedor"></th>
+	        <th class="justify-center-into-div" name="Proveedor 1"></th>
+	        <th class="justify-center-into-div" name="Proveedor 2"></th>
+	        <th name="" class="options-table-button"></th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr bindonce ng-repeat="row in productos.rows | orderBy:'-id' | filter:searchFilter" class="repeat-animation table-font">
+	        <td class="text-justify">{{ row.nombre }}</td>
+	        <td class="text-center">{{ row.unidad_de_medida }}</td>
+	        <td class="text-center">{{ row.referencia }}</td>
+	        <td class="text-center">{{ row.medidas_del_producto }}</td>
+	        <td class="text-center">{{ row.color }}</td>
+	        <td class="text-center">{{ row.cantidad }}</td>
+	        <td class="text-right">{{ row.precio_de_compra | currency:"$":0 }}</td>
+	        <td class="text-center">{{ row.utilidad_bruta }}%</td>
+	        <td class="text-center">{{ row.iva }}%</td>
+	        <td class="text-right">
+	        	{{ 
+
+                    ((((row.utilidad_bruta*row.precio_de_compra)/100)+row.precio_de_compra))*(row.iva/100)+((((row.precio_de_compra*row.utilidad_bruta)/100)+row.precio_de_compra)) | currency:"$":0
+
+                }}
+	        </td>
+	        <td class="text-center">{{ row.categoria.nombre_categoria }}</td>
+	        <td>{{ row.proveedor.razon_social }}</td>
+	        <td>{{ row.proveedor2.razon_social }}</td>
+	        <td>{{ row.proveedor3.razon_social }}</td>
+
+
+	        <td class="options-table-button">
+	        	<div layout="row" style="width:30px">
+					<md-menu>
+			        	<md-button ng-click="$mdOpenMenu()" class="md-icon-button" aria-label="Actions">
+			        	   <ng-md-icon icon="more_vert" size="24" style="fill: green"></ng-md-icon>
+			        	</md-button>
+			        	<md-menu-content>
+			        	    <md-menu-item>
+			        	   		<md-button aria-label="Edit Button" ng-click="productos.form($event, row)" flex>
+									<ng-md-icon icon="mode_edit" size="24" style="fill: orange"></ng-md-icon> Editar
+					        	</md-button>
+			        	    </md-menu-item>
+
+							<md-menu-item>
+			        	   		<md-button aria-label="Duplication Button" ng-click="productos.form($event, row, true)" flex>
+									<ng-md-icon icon="filter_2" size="24" style="fill: green"></ng-md-icon> Duplicar
+			        			</md-button>
+			        	    </md-menu-item>
+
+			        	    <md-menu-item>
+			        	   		<md-button aria-label="Delete Button" ng-click="productos.delete($event, row.id)" flex>
+									<ng-md-icon icon="delete" size="24" style="fill: red"></ng-md-icon> Eliminar
+			        			</md-button>
+			        	    </md-menu-item>
+
+			        	</md-menu-content>
+		        	</md-menu>
+	        	</div>
+	        	 
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	  <div ng-show="productos.rows.length < 1" class="text-center">No hay registros disponibles.</div>
+
+	<md-data-table-pagination md-label="{ text: 'Registros Por Página' }" md-row-select="[10, 20, 30, 40, 50, 100, 200]" md-limit="productos.limit" md-page="productos.page" md-total="{{ productos.total }}" md-trigger="productos.$get"></md-data-table-pagination>
+
+	</md-data-table-container>
+
+	 <!-- <button class="md-button md-raised md-primary" ng-morph-modal="morphSettings"> Fire </button> -->
+
+
+</md-content>
+<default-footer class="fadeUp" layout="column" layout-align="center center" layout-padding></default-footer>
+
+
+<md-button class="md-fab md-primary add-action-button fadeUp" aria-label="Add Button" ng-click="productos.form($event)" headroom tolerance='5' offset='32' scroller=".scroller" classes="{pinned:'zoomIn',unpinned:'zoomOutDown',initial:'animated'}">
+	<ng-md-icon icon="add" size="30" style="fill: white"></ng-md-icon>
+</md-button>

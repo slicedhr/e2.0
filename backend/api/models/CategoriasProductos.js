@@ -31,7 +31,12 @@ module.exports = {
     cotizaciones: {
         collection: 'Cotizaciones',
         via:'categorias'
+    },
+    cc2p: {
+      collection: 'CC2P',
+      via: 'categoriasproductos'
     }
+    
   }
 };
 

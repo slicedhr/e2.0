@@ -3,37 +3,37 @@
 </md-button>
 <span flex></span>
 
-<md-button class="md-icon-button generate animated fadeIn delay 1s" aria-label="Generate">
+<md-button class="md-icon-button generate animated fadeIn delay 1s top-menu-button" aria-label="Generate">
   <md-tooltip md-direction="bottom">
     Generar Cotización
   </md-tooltip>
   <img src="/images/icons/generar.png" width="30" style="vertical-align: middle" alt="">
 </md-button>
 
-<md-button class="md-icon-button animated fadeIn delay 1-3s" aria-label="Tasks" ng-click="app.openNotificationsSideNav(0)">
+<md-button class="md-icon-button animated fadeIn delay 1-3s top-menu-button" aria-label="Tasks" ng-click="app.openNotificationsSideNav(0)">
   <md-tooltip md-direction="bottom">
     Tareas
   </md-tooltip>
-  <span class="number-notification md-whiteframe-z2">{{app.initData.tareas.length}}</span>
+  <span class="number-notification md-whiteframe-z2" ng-if="app.initData.tareas.length">{{app.initData.tareas.length}}</span>
   <img src="/images/icons/task.png" width="24" style="vertical-align: middle" alt="">
 </md-button>
 
-<md-button class="md-icon-button animated fadeIn delay 1-6s" aria-label="Messages" ng-click="app.openNotificationsSideNav(1)">
+<md-button class="md-icon-button animated fadeIn delay 1-6s top-menu-button" aria-label="Messages" ng-click="app.openNotificationsSideNav(1)">
   <md-tooltip md-direction="bottom">
     Mensajes
   </md-tooltip>
-  <span class="number-notification md-whiteframe-z2">{{app.initData.mensajes.length}}</span>
+  <span class="number-notification md-whiteframe-z2" ng-if="app.initData.mensajes.length">{{ app.initData.mensajes.length }}</span>
   <img src="/images/icons/inbox.png" width="26" style="vertical-align: middle" alt="">
 </md-button>
 
-<md-button class="md-icon-button animated fadeIn delay 1-9s" aria-label="Notifications" ng-click="app.openNotificationsSideNav(2)">
+<md-button class="md-icon-button animated fadeIn delay 1-9s top-menu-button" aria-label="Notifications" ng-click="app.openNotificationsSideNav(2)">
   <md-tooltip md-direction="bottom">
     Notificaciones
   </md-tooltip>
-  <span class="number-notification md-whiteframe-z2">{{app.initData.notificaciones.length}}</span>
+  <span class="number-notification md-whiteframe-z2" ng-if="app.initData.notificaciones.length">{{ app.initData.notificaciones.length }}</span>
   <img src="/images/icons/notificacion.png" width="24" style="vertical-align: middle" alt="">
 </md-button>
 
 
-<div ng-include="'/partials/profile-menu-content.tpl.html'" flex="10" scope="app"></div>
+<div ng-include="'/partials/profile-menu-content.tpl.html'" class="profile-menu-content" flex="10" scope="app"></div>
   

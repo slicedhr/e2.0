@@ -1,0 +1,14 @@
+<form ng-submit="ivaForm.save()">
+
+	<md-input-container flex>
+      <label>Impuesto</label>
+      <input type="number" ng-model="ivaForm.data.impuesto" required>
+    </md-input-container>
+
+    <div layout="column">
+    	<md-button class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+
+</form>

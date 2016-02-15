@@ -1,0 +1,315 @@
+.color-cliente
+	background #34495e
+	width 6px
+	height 100%
+	position absolute
+	left 0
+	top 0
+	&.lightgreen
+		background #27ae60
+	&.lightyellow
+		background #f1c40f
+	&.lightred
+		background #e74c3c
+	
+md-select-menu
+	.lightgreen
+		background #27ae60 !important
+	.lightyellow
+		background #f1c40f !important
+	.lightred
+		background #e74c3c !important	
+	.black
+		background #34495e !important
+	md-content
+		padding 0
+.toolbar-cliente
+	.orangekawaiitag
+		background #e67e22
+		padding 5px
+		position relative
+	.greenkawaiitag
+		background #2ecc71
+		padding 5px
+		position relative
+.nuevoseguimiento-button
+	background #2ecc71 !important
+	color white !important
+.cancelarseguimiento-button
+	background #e74c3c !important
+	color white !important
+	&[disabled]
+		background rgba(0,0,0,.12) !important
+		color rgba(0,0,0,.26) !important
+
+.dialog-base.clientes
+	width 100%
+	.title-add-tags
+		background cadetblue
+		color white
+		position relative
+		h4
+			line-height 0
+			text-align center
+		span
+			margin-left 13px
+		.md-fab
+			position absolute
+			top 13px
+			right 13px
+.categoriasclientesaddsection
+	margin 0 auto
+	width 50%
+	transition .6s linear all
+.categoriasclientesaddsection.ng-hide-add
+	animation fadeOutUp .6s
+.categoriasclientesaddsection.ng-hide-remove
+	animation fadeInDown .6s
+.animation-repeat-opacity
+	transition .6s all
+	&.ng-leave-active
+		height 0 !important
+		padding-left 30px
+		opacity 0
+		transform scaleY(0)
+		
+	&.ng-enter
+		opacity .2
+		padding-left 30px
+	&.ng-enter-stagger
+		transition-delay .1s
+		transition-duration 0s
+	&.ng-enter-active
+		opacity 1
+		padding-left 0
+.md-red-bg
+	background #e74c3c !important
+.list-categorias-container
+	margin 0 auto
+	max-width 600px
+	width 100%
+	.md-button
+		background transparent
+		color #e74c3c
+		margin-top -5px
+		font-size 20px
+		font-weight bold
+.listProductsCategories
+	md-list-item.md-3-line
+		height 50px
+		min-height auto !important
+	md-list
+		margin 0 auto
+		margin-top -45px
+		width 90%
+		md-divider
+			border-top-color rgba(10, 90, 12, 0.75)
+		button
+			color red
+.listrepeat-enter, .listrepeat-leave
+	transition 400ms cubic-bezier(0.420, 0.000, 1.000, 1.000) all
+	position relative
+	display block
+.listrepeat-enter.listrepeat-enter-active, .listrepeat-leave
+	opacity 1
+	top 0
+	height 30px
+.listrepeat-leave.listrepeat-leave-active,.listrepeat-enter
+	opacity 0
+	top -50px
+	height 0px
+.side-menu-show-hide
+	background white
+	opacity 0
+	position fixed
+	overflow-y auto
+	height 100%
+	top 0
+	transition all .5s
+	left -300px
+	width 300px
+	z-index 9
+	.close
+		cursor pointer
+		position absolute
+		right 8px
+		top 6px
+		z-index 9
+.side-menu-show-hide--actived
+	left 0
+	opacity 1
+.label-profile-customer
+	overflow hidden
+	font-size 30px
+	margin 0
+	margin-left 6px
+	padding 8px 30px
+	ng-md-icon
+		margin-top -45px
+		opacity .6
+.customer-profile
+	background #EBEFF2
+.customer-profile-toolbar
+	background #1C7AD8 !important
+	height 30px
+	.customer-profile-toolbar-vendedor
+		background #34495E
+		border-radius 5px
+		padding 5px
+.customer-profile-tabs
+	md-tabs-wrapper
+		background #2196F3
+		margin-top -10px
+	md-tab-item
+		color white
+		h3
+			line-height 0
+			ng-md-icon
+				margin-top -20px
+				margin-right 5px
+				svg
+					margin-top 5px
+			.badge
+				background #E44A40
+				border-radius 50%
+				padding 5px
+		&.md-active
+			color rgb(68, 68, 70)
+			ng-md-icon
+				transition all .4s
+				fill rgb(63,81,181) !important
+			.badge
+				background yellow
+				transition all .4s
+	md-ink-bar
+		color yellow
+		background yellow
+	md-tab-content
+		background white
+		padding-bottom 10px
+		border-radius 0 0 6px 6px
+	md-tabs-content-wrapper
+		box-shadow 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12)
+.customer-profile-label
+	cursor pointer
+	margin 2% auto
+	color white
+	padding 13px 0px
+	padding-left 10%
+	border-radius 4px
+	min-width 250px
+	position relative
+	font-size 20px
+	box-sizing border-box
+	.badge
+		background #E44A40
+		padding 2px
+		border-radius 50%
+	ng-md-icon
+		position absolute
+		right 10%
+		opacity .3
+		top 0px
+	&.label-cotizaciones
+		background #34495e
+	&.label-vendidos
+		background #16a085
+	&.label-seguimientos
+		background #e67e22
+	&.label-referidos
+		background #4aa3df
+.vendido
+	position absolute
+	left 1.5%
+	
+timeline__date(x, y)
+	border-radius 50%
+	left x
+	height 40px
+	line-height 40px
+	margin-left y
+	margin-top -15px
+	padding 5px
+	position absolute
+	text-align center
+	width 40px
+	
+.timeline
+	background #E6E6E6
+	padding 1% 0
+	position relative
+	&__item
+		background white
+		box-sizing border-box
+		margin-left 5%
+		margin-top 5%
+		position relative
+		width 40%
+		&--left
+			.timeline__item__date
+				timeline__date(113%, -25px)
+			&:after
+				border-style solid
+				border-width 0 0 8px 15px
+				border-color transparent transparent transparent #1abc9c
+				content ""
+				height 0
+				position absolute
+				top 0
+				right -15px
+				width 0
+		&--right
+			margin-left 55%
+			.timeline__item__date
+				timeline__date(-25%, 45px)
+			&:after
+				border-style solid
+				border-width 0 15px 8px
+				border-color transparent #1abc9c transparent transparent
+				content ""
+				height 0
+				position absolute
+				top 0
+				left -30px
+				width 0				
+		&__date
+			background #e74c3c
+			color white
+			&__year
+				display none
+			&:hover
+				background #c0392b
+				.timeline__item__date
+					&__year
+						display block
+					&__day
+						display none
+		&__box
+			&__title
+				background #1abc9c
+				color white
+				margin 0
+				padding 10px
+			&__paragraph
+				margin 0
+				padding 10px
+			&__bottomtag
+				background rgb(63,81,181)
+				border-radius 3px
+				color white
+				display inline-block
+				padding 5px 6px
+				ng-md-icon
+					margin-bottom -7px
+	&__line
+		background #0065A7
+		position absolute
+		height 100%
+		left 50%
+		top 0%
+		width 3px
+.seguimientos
+	&__contactos
+		&__contacto
+			&--actived
+				z-index 1

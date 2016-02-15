@@ -77,6 +77,9 @@ module.exports = {
         collection: 'Minuta',
         via: 'cliente'
     },
+    referido_por: {
+        model: 'Clientes'
+    },
     ultimo_seguimiento: {
         type: 'date'
     },
@@ -86,23 +89,44 @@ module.exports = {
         type: 'boolean',
         defaultsTo: false
     },
+    categoriascliente: {
+        collection: 'CC2P',
+        via: 'cliente'
+    },
+    referidos: {
+        collection: 'Clientes',
+        via: 'referido_por'
+    },
+
+    seguimientosactivos: {
+        type: 'boolean',
+        defaultsTo: false
+    },
+
+    estado: {
+        model:'Estados'
+    },
+
+    categoria: {
+        model: 'CategoriasProductos'
+    }
 
   },
   beforeUpdate: function(data, next){
-    if (data.cambio_vendedor){
-        notification = {
-            to: data.vendedor_asignado,
-            text: 'Se te a asignado un nuevo cliente.',
-            href: '/cliente/'+data.id+'/!#',
-            seen: false,
-            type: 1,
-            addicional: {}
-        }
-        Notifications.create(notification).exec(function(err,notification){
-            sails.sockets.blast('notification',notification);
-        })
-    }
-    data.fecha_asignado = sails.moment().format();
+    // if (data.cambio_vendedor){
+    //     notification = {
+    //         to: data.vendedor_asignado,
+    //         text: 'Se te a asignado un nuevo cliente.',
+    //         href: '/cliente/'+data.id+'/!#',
+    //         seen: false,
+    //         type: 1,
+    //         addicional: {}
+    //     }
+    //     Notifications.create(notification).exec(function(err,notification){
+    //         sails.sockets.blast('notification',notification);
+    //     })
+    // }
+    // data.fecha_asignado = sails.moment().format();
     next()
 
   },

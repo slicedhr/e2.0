@@ -3,7 +3,6 @@
 		<h2 class="md-title fadeLeftText text-title-animation" ng-show="!basicFiltrator.showInput">{{ title }}</h2>
 
 		<div class="search-container search-animation" ng-show="basicFiltrator.showInput" layout="row" flex>
-
 			<md-select placeholder="Buscar Por:" ng-model="basicFiltrator.searchBy" >
 		        <md-option ng-repeat="item in basicFiltrator.columns" value="{{ item.key }}" ng-selected="item.selected">
 		        {{ item.title }}

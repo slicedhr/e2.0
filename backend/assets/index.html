@@ -26,11 +26,10 @@
     <link rel="stylesheet" href="css/view-animations.css">
     <link rel="stylesheet" href="css/areas/areas.css">
     <link rel="stylesheet" href="css/arp/arp.css">
-    <link rel="stylesheet" href="css/ciudades/ciudades.css">
     <link rel="stylesheet" href="css/categoriasproductos/categoriasproductos.css">
-    <link rel="stylesheet" href="css/clientes/clientes.css">
-    <link rel="stylesheet" href="css/cotizacion/cotizacion.css">
+    <link rel="stylesheet" href="css/ciudades/ciudades.css">
     <link rel="stylesheet" href="css/cotizaciones/cotizaciones.css">
+    <link rel="stylesheet" href="css/clientes/clientes.css">
     <link rel="stylesheet" href="css/dianretefuente/dianretefuente.css">
     <link rel="stylesheet" href="css/eps/eps.css">
     <link rel="stylesheet" href="css/home/home.css">
@@ -38,8 +37,8 @@
     <link rel="stylesheet" href="css/login/login.css">
     <link rel="stylesheet" href="css/marcas/marcas.css">
     <link rel="stylesheet" href="css/mediosdepago/mediosdepago.css">
-    <link rel="stylesheet" href="css/otrosimpuestos/otrosimpuestos.css">
     <link rel="stylesheet" href="css/paises/paises.css">
+    <link rel="stylesheet" href="css/otrosimpuestos/otrosimpuestos.css">
     <link rel="stylesheet" href="css/productos/productos.css">
     <link rel="stylesheet" href="css/terminosdepago/terminosdepago.css">
     <link rel="stylesheet" href="css/tiemposdeentrega/tiemposdeentrega.css">
@@ -94,6 +93,7 @@
     <script src="vendor/angular-animate/angular-animate.js"></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="vendor/angular-aria/angular-aria.js"></script>
+    <script src="vendor/angular-messages/angular-messages.js"></script>
     <script src="vendor/angular-material/angular-material.js"></script>
     <script src="vendor/Chart.js/Chart.js"></script>
     <script src="vendor/angular-chart.js/dist/angular-chart.js"></script>
@@ -113,6 +113,9 @@
     <script src="vendor/moment/moment.js"></script>
     <script src="vendor/qrcode-generator/js/qrcode.js"></script>
     <script src="vendor/angular-qrcode/angular-qrcode.js"></script>
+    <script src="vendor/d3/d3.js"></script>
+    <script src="vendor/ng-knob/dist/ng-knob.js"></script>
+    <script src="vendor/ngSanitize/index.js"></script>
     <!-- endbower -->
     <script src="/js/app-directives/headroom.min.js"></script>
     <script src="/js/app-directives/angular.headroom.min.js"></script>
@@ -122,13 +125,17 @@
     <script src="js/vigencia/vigencia-routes.js"></script>
     <script src="js/vigencia/vigencia-form-directive.js"></script>
     <script src="js/vigencia/vigencia-controller.js"></script>
-    <script src="js/user/user-module.js"></script>
-    <script src="js/user/user-routes.js"></script>
-    <script src="js/user/user-controller.js"></script>
+    <script src="js/arp/arp-module.js"></script>
+    <script src="js/arp/arp-routes.js"></script>
+    <script src="js/arp/arp-form-directive.js"></script>
+    <script src="js/arp/arp-controller.js"></script>
     <script src="js/tiemposdeentrega/tiemposdeentrega-module.js"></script>
     <script src="js/tiemposdeentrega/tiemposdeentrega-routes.js"></script>
     <script src="js/tiemposdeentrega/tiemposdeentrega-form-directive.js"></script>
     <script src="js/tiemposdeentrega/tiemposdeentrega-controller.js"></script>
+    <script src="js/user/user-module.js"></script>
+    <script src="js/user/user-routes.js"></script>
+    <script src="js/user/user-controller.js"></script>
     <script src="js/terminosdepago/terminosdepago-module.js"></script>
     <script src="js/terminosdepago/terminosdepago-routes.js"></script>
     <script src="js/terminosdepago/terminosdepago-form-directive.js"></script>
@@ -145,14 +152,14 @@
     <script src="js/otrosimpuestos/otrosimpuestos-routes.js"></script>
     <script src="js/otrosimpuestos/otrosimpuestos-form-directive.js"></script>
     <script src="js/otrosimpuestos/otrosimpuestos-controller.js"></script>
-    <script src="js/mediosdepago/mediosdepago-module.js"></script>
-    <script src="js/mediosdepago/mediosdepago-routes.js"></script>
-    <script src="js/mediosdepago/mediosdepago-form-directive.js"></script>
-    <script src="js/mediosdepago/mediosdepago-controller.js"></script>
     <script src="js/marcas/marcas-module.js"></script>
     <script src="js/marcas/marcas-routes.js"></script>
     <script src="js/marcas/marcas-form-directive.js"></script>
     <script src="js/marcas/marcas-controller.js"></script>
+    <script src="js/mediosdepago/mediosdepago-module.js"></script>
+    <script src="js/mediosdepago/mediosdepago-routes.js"></script>
+    <script src="js/mediosdepago/mediosdepago-form-directive.js"></script>
+    <script src="js/mediosdepago/mediosdepago-controller.js"></script>
     <script src="js/login/login-module.js"></script>
     <script src="js/login/login-routes.js"></script>
     <script src="js/login/login-controller.js"></script>
@@ -162,8 +169,12 @@
     <script src="js/iva/iva-form-directive.js"></script>
     <script src="js/iva/iva-controller.js"></script>
     <script src="js/home/home-module.js"></script>
+    <script src="js/home/slug-filter.js"></script>
+    <script src="js/home/max-length-filter.js"></script>
     <script src="js/home/home-routes.js"></script>
+    <script src="js/home/home-factory.js"></script>
     <script src="js/home/home-controller.js"></script>
+    <script src="js/home/get-by-id-filter.js"></script>
     <script src="js/eps/eps-module.js"></script>
     <script src="js/eps/eps-routes.js"></script>
     <script src="js/eps/eps-form-directive.js"></script>
@@ -175,11 +186,17 @@
     <script src="js/cotizaciones/cotizaciones-module.js"></script>
     <script src="js/cotizaciones/cotizaciones-routes.js"></script>
     <script src="js/cotizaciones/cotizaciones-controller.js"></script>
-    <script src="js/cotizacion/cotizacion-module.js"></script>
-    <script src="js/cotizacion/cotizacion-routes.js"></script>
-    <script src="js/cotizacion/cotizacion-controller.js"></script>
     <script src="js/clientes/clientes-module.js"></script>
+    <script src="js/clientes/timeline-directive.js"></script>
+    <script src="js/clientes/seguimientos-form-directive.js"></script>
+    <script src="js/clientes/list-referidos-directive.js"></script>
+    <script src="js/clientes/list-cotizaciones-directive.js"></script>
+    <script src="js/clientes/list-contactos-directive.js"></script>
+    <script src="js/app-module.js"></script>
+    <script src="js/clientes/contactos-form-directive.js"></script>
     <script src="js/clientes/clientes-routes.js"></script>
+    <script src="js/clientes/clientes-form-directive.js"></script>
+    <script src="js/clientes/clientes-factory.js"></script>
     <script src="js/clientes/clientes-controller.js"></script>
     <script src="js/ciudades/ciudades-module.js"></script>
     <script src="js/ciudades/ciudades-routes.js"></script>
@@ -189,16 +206,11 @@
     <script src="js/categoriasproductos/categoriasproductos-routes.js"></script>
     <script src="js/categoriasproductos/categoriasproductos-form-directive.js"></script>
     <script src="js/categoriasproductos/categoriasproductos-controller.js"></script>
-    <script src="js/arp/arp-module.js"></script>
-    <script src="js/arp/arp-routes.js"></script>
-    <script src="js/arp/arp-form-directive.js"></script>
-    <script src="js/arp/arp-controller.js"></script>
     <script src="js/areas/areas-module.js"></script>
     <script src="js/areas/areas-routes.js"></script>
     <script src="js/areas/areas-form-directive.js"></script>
     <script src="js/areas/areas-factory.js"></script>
     <script src="js/areas/areas-controller.js"></script>
-    <script src="js/app-module.js"></script>
     <script src="js/app-directives/right-click-directive.js"></script>
     <script src="js/app-directives/resizable-directive.js"></script>
     <script src="js/app-directives/progress-count-directive.js"></script>
@@ -212,6 +224,7 @@
     <script src="js/app-directives/angular.headroom.min.js"></script>
     <script src="js/app-directives/angular-tinymce-directive.js"></script>
     <script src="js/error-interceptor-factory.js"></script>
+    <script src="js/cancelable-http.js"></script>
     <script src="js/app-routes.js"></script>
     <script src="js/app-factory.js"></script>
     <script src="js/api-url-constant.js"></script>

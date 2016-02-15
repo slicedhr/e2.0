@@ -1,0 +1,31 @@
+
+<form ng-submit="otrosimpuestosForm.save()">
+	<div layout="row">
+		<md-input-container flex>
+	      <label>Porcentaje</label>
+	      <input type="number" ng-model="otrosimpuestosForm.data.porcentaje" required>
+	    </md-input-container>
+	    <md-input-container flex>
+	      <label>Vigencia</label>
+	      <input type="text" ng-model="otrosimpuestosForm.data.vigencia_del_impuesto" required>
+	    </md-input-container>
+	</div>
+	
+	<div layout="row">
+		<md-input-container>
+	      <label>Resolucion</label>
+	      <textarea md-maxlength="1000" rows="5" ng-model="otrosimpuestosForm.data.resolucion"></textarea>
+	    </md-input-container>
+	    <md-input-container>
+	      <label>Detalle</label>
+	      <textarea md-maxlength="1000" rows="5" ng-model="otrosimpuestosForm.data.detalle_del_impuesto"></textarea>
+	    </md-input-container>
+	</div>
+
+    <div layout="column">
+    	<md-button class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+
+</form>

@@ -12,7 +12,7 @@
     .module('login')
     .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl($http, $rootScope, $state, AuthService) {
+  function LoginCtrl($http, $rootScope, $state, $mdToast, AuthService) {
 
     var self = this;
 
@@ -32,6 +32,25 @@
 
       AuthService.login(self.loginData).then(function(response){
 
+        console.log(response)
+
+        if(response.data.err && response.data.err === 'No coinciden'){
+
+           $mdToast.show(
+
+              $mdToast.simple()
+
+                .textContent('Email y contraseña no coinciden!')
+
+                .position('bottom right')
+
+                .hideDelay(3000)
+
+            );
+
+           return
+        }
+
         sessionStorage['JWT'] = response.data.token;
 
         $rootScope.auth.logged = true
@@ -42,6 +61,7 @@
 
       }, function(err){
 
+        $rootScope.$broadcast('AuthError')
 
       })
     }

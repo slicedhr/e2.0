@@ -8,17 +8,17 @@
 		  <img ng-src="/images/profile_photos/{{ auth.user.profile_image || 'default_avatar.png' }}" alt="">
 		  <span>{{ auth.user.first_name + ' ' + auth.user.last_name }}</span>
 		</md-toolbar>
-		<md-menu-item>
+		<md-menu-item layout="row">
 		  <md-button ui-sref="areas">
 		      <ng-md-icon icon="account_circle" size="24" class="icon-fill-gray"></ng-md-icon> Perfil
 		  </md-button>
 		</md-menu-item>
-		<md-menu-item>
-		  <md-button>
+		<md-menu-item layout="row">
+		  <md-button> 
 		      <ng-md-icon icon="settings" size="24" class="icon-fill-gray"></ng-md-icon> Config
 		  </md-button>
 		</md-menu-item>
-		<md-menu-item>
+		<md-menu-item layout="row">
 		  <md-button ui-sref="home">
 		      <ng-md-icon icon="logout" size="24" class="icon-fill-gray"></ng-md-icon> Cerrar Sesión
 		  </md-button>

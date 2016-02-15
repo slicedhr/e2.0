@@ -1,4 +1,4 @@
-/**
+ /**
  * CotizacionesController
  *
  * @description :: Server-side logic for managing cotizaciones
@@ -6,18 +6,18 @@
  */
 
 module.exports = {
-	obtener: function(req,res){
+	// obtener: function(req,res){
 
-		var criteria = {}
+	// 	var criteria = {}
 
-		if (!req.session.user.permissions.admin) criteria.vendedor = req.session.user.id;
+	// 	if (!req.session.user.permissions.admin) criteria.vendedor = req.session.user.id;
 
-		Cotizaciones.find(criteria).populateAll().exec(function(err,cotizaciones){
-			if (err) return res.send(err);
+	// 	Cotizaciones.find(criteria).populateAll().exec(function(err,cotizaciones){
+	// 		if (err) return res.send(err);
 
-			return res.send(cotizaciones)
-		})
-	},
+	// 		return res.send(cotizaciones)
+	// 	})
+	// },
 	create_detalle: function(req,res){
 		DetalleCotizacion.create(req.body).exec(function(err,detalle){
 			if (err) return res.send(err);
@@ -46,8 +46,16 @@ module.exports = {
 	registrar_cotizacion: function(req,res){
 
 		Array.prototype.unique=function(a){
-		  return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
-		});
+
+		  return function(){
+		  	return this.filter(a)
+		  }
+		}
+
+		  (function(a,b,c){
+		  	return c.indexOf(a,b+1)<0
+		}
+		);
 		
 		var id_cotizacion;
 		var params = req.body
@@ -79,9 +87,10 @@ module.exports = {
 
 			categorias.forEach(function(categoria,index){
 				
-			    	cotizacion.categorias.add(categoria)
+			    cotizacion.categorias.add(categoria)
 
-			   	 cotizacion.save();
+			   	cotizacion.save();
+			   	
 			  })
 			
 
@@ -116,7 +125,7 @@ module.exports = {
 			})
 		})		
 	},
-	get: function(req,res,next){
+	getCotizaciones: function(req,res,next){
 		var criteria = {}
 		if (req.param('vendedor')) criteria.vendedor = req.param('vendedor');
 		Cotizaciones.find(criteria).populateAll().exec(function(err, data){

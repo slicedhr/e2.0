@@ -1,0 +1,31 @@
+
+<form ng-submit="ciudadesForm.save()">
+	<div layout="row">
+
+	    <md-autocomplete md-floating-label="País" md-selected-item="ciudadesForm.data.temppais" md-search-text="ciudadesForm.searchText" md-items="item in ciudadesForm.getAutocomplete(ciudadesForm.searchText, 'nombre', 'paises')" md-item-text="item.nombre" placeholder="País" md-min-length="0" md-selected-item-change="ciudadesForm.validateSelection('pais', item)" md-autoselect="true" required>
+	      	<span md-highlight-text="ciudadesForm.searchText">{{ item.nombre }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ ciudadesForm.searchText }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	    <md-input-container>
+	      <label>Ciudad</label>
+	      <input type="text" ng-model="ciudadesForm.data.nombre" required>
+	    </md-input-container>
+
+
+	</div>
+	<div ng-show="ciudadesForm.validation" layout="column" layout-padding>
+	    <span style="color: red" class="md-subhead"><strong>{{ ciudadesForm.validation }}</strong> no es un valor correcto.</span>
+	</div>
+
+    <div layout="column">
+    	<md-button ng-click="ciudadesForm.save()" class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+
+</form>

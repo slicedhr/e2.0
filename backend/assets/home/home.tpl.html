@@ -4,9 +4,16 @@
    <!-- Tareas pendientes -->
    <!-- Clientes sin seguimiento red -->
    <div layout="row" class="home-first-row">
-   		<md-card class="home-normal-card clientes-card md-whiteframe-z5">
+   		<!-- <md-card class="home-normal-card clientes-card md-whiteframe-z5">
    		 	<progress-count total="{{ app.initData.total }}" duration="3" id-element="1"></progress-count>
+   		</md-card> -->
+   		<md-card class="md-whiteframe-z3" layout-padding>
+
+   			<ui-knob ng-if="home.homedata.totalclientes" value="home.homedata.totalclientes.value" options="home.homedata.totalclientes.options"></ui-knob>
+
    		</md-card>
+
+
    </div>
 
 </md-content>

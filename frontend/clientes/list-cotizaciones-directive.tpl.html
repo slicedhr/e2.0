@@ -1,0 +1,52 @@
+<md-data-table-container class="bottom-radius-8" ng-show="cotizaciones.length" layout-padding>
+
+<table md-data-table>
+<thead md-order="query.order" md-trigger="onOrderChange">
+  <tr class="md-whiteframe-z1">
+    <th class="justify-center-into-div" name="Categoría(s)"></th>
+    <th class="justify-center-into-div" name="Generada Por"></th>
+    <th class="justify-center-into-div" name="Fecha creación"></th>
+    <th name="" class="options-table-button"></th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr bindonce ng-repeat="row in cotizaciones | orderBy:'-id'" class="repeat-animation">
+    <td class="text-center">
+  <span class="vendido" ng-if="row.vendido">
+    <md-tooltip>
+      Vendido
+    </md-tooltip>
+    <ng-md-icon icon="check_circle" size="24" style="fill: green"></ng-md-icon>
+  </span>
+    <span ng-repeat="item in row.categorias" data-item="{{row.id}}">{{ item.nombre_categoria }}</span></td>
+    <td class="text-center">{{ row.generadaPor.first_name + ' ' + row.generadaPor.last_name }}</td>
+    <td class="text-center">{{ row.createdAt | date }}</td>
+    <td>
+		<md-button aria-label="view" ng-click="listCotizaciones.ver(row, $event)" flex>
+			<ng-md-icon icon="add_circle_outline" size="24" style="fill: green"></ng-md-icon>
+		</md-button>
+    	 
+    </td>
+  </tr>
+</tbody>
+</table>
+
+</md-data-table-container>
+
+<div class="text-center" layout="row" ng-show="cotizaciones.length" layout-align="space-around center">
+  <div layout="column" flex="20">
+      <h3 class="md-title">Total vendido</h3>
+      <div>{{ listCotizaciones.sumaVendidos  | currency:'$':0 }}</div>
+  </div>
+  <div layout="column" flex="20">
+      <h3 class="md-title">Total cotizado</h3>
+      <div>{{ listCotizaciones.sumaNoVendidos  | currency:'$':0 }}</div>
+  </div>
+  <div layout="column" flex="20">
+      <h3 class="md-title">Total</h3>
+      <div>{{ listCotizaciones.sumaTodos  | currency:'$':0 }}</div>
+  </div>
+</div>
+
+<div ng-show="cotizaciones.length < 1" class="text-center" layout-padding>No hay registros disponibles.</div>

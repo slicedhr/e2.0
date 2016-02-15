@@ -1,28 +1,37 @@
-.home-first-row {
-  padding: 30px 20px;
+.home-first-row
+{
+    padding: 30px 20px;
 }
-.home-normal-card {
-  position: relative;
-  height: 200px;
-  width: 200px;
+.home-normal-card
+{
+    position: relative;
+
+    width: 200px;
+    height: 200px;
 }
-.home-normal-card progress-count {
-  left: 35%;
-  position: absolute;
-  top: 35%;
-  -webkit-transform: scale(3);
-      -ms-transform: scale(3);
-          transform: scale(3);
+.home-normal-card progress-count
+{
+    position: absolute;
+    top: 35%;
+    left: 35%;
+
+    -webkit-transform: scale(3);
+            transform: scale(3);
 }
-.home-normal-card progress-count div {
-  position: relative;
+.home-normal-card progress-count div
+{
+    position: relative;
 }
-.home-normal-card progress-count div span {
-  position: absolute;
-  text-align: center;
-  top: 35%;
-  width: 100%;
+.home-normal-card progress-count div span
+{
+    position: absolute;
+    top: 35%;
+
+    width: 100%;
+
+    text-align: center;
 }
-.home-normal-card progress-count md-progress-circular {
-  left: 2%;
+.home-normal-card progress-count md-progress-circular
+{
+    left: 2%;
 }

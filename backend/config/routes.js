@@ -50,13 +50,14 @@ module.exports.routes = {
   'POST /api/v1/auth/login': 'LoginController.logear',
   'POST /api/v1/auth/verify': 'LoginController.verify',
   'GET /api/v1/auth/initialdata': 'LoginController.initialData',
+  'GET /api/v1/homedata': 'LoginController.homeData',
 
   'POST /api/v1/mensajes/seen/:from/:idMessage': 'MensajesController.setSeen',
   'POST /api/v1/usuarios/imagen': 'UsuariosController.uploadImage',
   'PUT /api/v1/usuarios/password': 'UsuariosController.updatePassword',
   'GET /api/v1/mensajes/pendientes': 'MensajesController.getUnread',
   'GET /chat/:from/:to': 'MensajesController.getMessages',
-  'GET /api/v1/cotizacion': 'CotizacionesController.get',
+  'GET /api/v1/cotizacion': 'CotizacionesController.getCotizaciones',
   '/cotizacion': 'CotizacionesController.PDF',
   '/cotizacion/:id': 'CotizacionesController.PDFGenerator',
 
@@ -86,10 +87,12 @@ module.exports.routes = {
 
 
 
-  'GET /api/v1/clientes/:idVendedor/:pagina':'ClientesController.getAndPaginate',
-  'GET /api/v1/proveedores/:idVendedor/:pagina':'ProveedoresController.getAndPaginate',
-  'GET /api/v1/productos/:idVendedor/:pagina':'ProductosController.getAndPaginate',
-  'GET /api/v1/clientes/obtener/total/:id':'ClientesController.count',
+  'GET /api/v1/clientes/:idVendedor/:pagina': 'ClientesController.getAndPaginate',
+  'GET /api/v1/proveedores/:idVendedor/:pagina': 'ProveedoresController.getAndPaginate',
+  'GET /api/v1/productos/:idVendedor/:pagina': 'ProductosController.getAndPaginate',
+  'GET /api/v1/clientes/obtener/total/:id': 'ClientesController.count',
+  'GET /api/v1/clientes/categoria': 'ClientesController.clientesPorCategoria',
+  'POST /api/v1/clientes/crear': 'ClientesController.createCustomer',
   'PUT /api/v1/clientes/clientes/multiupdate/:id':'ClientesController.multiupdate',
   'GET /api/v1/consulta-cliente/:id':'ClientesController.consultaCliente',
 
@@ -104,12 +107,16 @@ module.exports.routes = {
 
   'POST /api/v1/registrar-cotizacion': 'CotizacionesController.registrar_cotizacion',
   'GET /api/v1/detalle-cotizacion/:id': 'CotizacionesController.populated_detalle',
-  'GET /api/v1/cotizaciones': 'CotizacionesController.obtener',
+  // 'GET /api/v1/cotizaciones': 'CotizacionesController.obtener',
   'POST /api/v1/detallecotizacion': 'CotizacionesController.create_detalle',
   'PUT /api/v1/detallecotizacion/:id': 'CotizacionesController.update_detalle',
   'POST /api/v1/enviar-email': 'CotizacionesController.sendEmail',
   'POST /api/v1/enviar-email-prueba': 'CotizacionesController.sendTestEmail',
 
+  'PUT /api/v1/seguimientos/cancelar/:cliente': 'MinutaController.cancelarSeguimientos',
+
+  'GET /api/v1/contactos/obtener-seguimientos': 'ContactosController.getAndPopulate',
+  'GET /api/v1/cliente/sorted': 'ClientesController.clienteSeguimientosOrdenados',
   // 'get /*(^.*)':{
   //   view:'app'
   // }

@@ -1,0 +1,238 @@
+
+<form ng-submit="clientesForm.save()" layout="column" flex>
+
+	<div layout="row" flex>
+		<md-input-container flex>
+			<label>NIT/CC</label>
+			<input type="text" ng-model="clientesForm.data.nit" ng-blur="clientesForm.validateNit($ev)" required>
+		</md-input-container>
+		<md-input-container flex>
+			<label>Razón Social/Nombre</label>
+			<input type="text" ng-model="clientesForm.data.razon_social" requried>
+		</md-input-container>
+		<md-input-container flex>
+			<label>Representante Legal</label>
+			<input type="text" ng-model="clientesForm.data.representante_legal">
+		</md-input-container>
+		<md-input-container flex>
+			<label>Responsable Delegado</label>
+			<input type="text" ng-model="clientesForm.data.responsable_delegado">
+		</md-input-container>
+	</div>
+	<div layout="row" flex>
+
+	    <md-autocomplete 
+	    	md-floating-label="País" 
+	    	md-selected-item="clientesForm.data.temppais" 
+	    	md-search-text="clientesForm.searchPais" 
+	    	md-items="item in clientesForm.getAutocomplete(clientesForm.searchPais, 'nombre', 'paises')" 
+	    	md-item-text="item.nombre" 
+	    	placeholder="País" 
+	    	md-min-length="0" 
+	    	md-selected-item-change="clientesForm.validateSelection('pais', item)" 
+	    	md-autoselect="false" flex required>
+	      	<span md-highlight-text="clientesForm.searchPais">{{ item.nombre }}</span>
+	      
+	        <md-not-found>
+	          No hay resultados para "{{ clientesForm.searchPais }}".
+	        </md-not-found>
+
+	    </md-autocomplete>
+
+	    <md-autocomplete md-floating-label="Ciudad" md-selected-item="clientesForm.data.tempciudad" md-search-text="clientesForm.searchCiudad" md-items="item in clientesForm.getAutocomplete(clientesForm.searchCiudad, 'nombre', 'ciudades')" md-item-text="item.nombre" placeholder="Ciudad" md-min-length="3" md-selected-item-change="clientesForm.validateSelection('ciudad', item)" md-autoselect="false" flex required>
+	      	<span md-highlight-text="clientesForm.searchCiudad">{{ item.nombre }}</span>
+	      	
+	      	
+	        <md-not-found>
+	          No hay resultados para "{{ clientesForm.searchCiudad }}".
+	        </md-not-found>
+	    </md-autocomplete>
+
+	   <md-input-container flex>
+			<label>Dirección</label>
+			<input type="text" ng-model="clientesForm.data.direccion">
+		</md-input-container>
+
+		<md-input-container flex>
+			<label>Teléfonos</label>
+			<input type="text" ng-model="clientesForm.data.telefono_fijo">
+		</md-input-container>
+
+	</div>
+
+	<div layout="row" flex>
+
+	    <md-input-container flex>
+			<label>Email</label>
+			<input type="email" ng-model="clientesForm.data.email">
+		</md-input-container>
+
+		<md-input-container flex>
+			<label>Website</label>
+			<input type="text" ng-model="clientesForm.data.website">
+		</md-input-container>
+
+		<md-autocomplete 
+	    	md-floating-label="Comercial" 
+	    	md-selected-item="clientesForm.data.tempvendedor_asignado" 
+	    	md-search-text="clientesForm.searchComercial" 
+	    	md-items="item in clientesForm.getAutocomplete(clientesForm.searchComercial, 'first_name', 'usuarios')" 
+	    	md-item-text="item.first_name+' '+item.last_name" 
+	    	placeholder="Comercial" 
+	    	md-min-length="0" 
+	    	md-selected-item-change="clientesForm.validateSelection('vendedor_asignado', item)" 
+	    	md-autoselect="false" ng-disabled="!clientesForm.user.permissions.asignar_clientes" flex required>
+	      	<span md-highlight-text="clientesForm.searchComercial">{{ item.first_name+' '+item.last_name }}</span>
+	      
+	        <md-not-found>
+	          No hay resultados para "{{ clientesForm.searchComercial }}".
+	        </md-not-found>
+
+	    </md-autocomplete>
+
+	    <md-autocomplete 
+	    	md-floating-label="Referido Por" 
+	    	md-selected-item="clientesForm.data.tempreferido_por" 
+	    	md-search-text="clientesForm.searchReferidoPor" 
+	    	md-items="item in clientesForm.getAutocomplete(clientesForm.searchReferidoPor, 'razon_social', 'clientes')" 
+	    	md-item-text="item.razon_social" 
+	    	placeholder="Referido Por" 
+	    	md-min-length="3" 
+	    	md-selected-item-change="clientesForm.validateSelection('referido_por', item)" 
+	    	md-autoselect="false" flex required>
+	      	<span md-highlight-text="clientesForm.searchReferidoPor">{{ item.razon_social }}</span>
+	      
+	        <md-not-found>
+	          No hay resultados para "{{ clientesForm.searchReferidoPor }}".
+	        </md-not-found>
+
+	    </md-autocomplete>
+
+	</div>
+	<div layout="row">
+		<md-autocomplete 
+	    	md-floating-label="Categoría" 
+	    	md-selected-item="clientesForm.data.tempcategoria" 
+	    	md-search-text="clientesForm.searchCategoria" 
+	    	md-items="item in clientesForm.getAutocomplete(clientesForm.searchCategoria, 'nombre_categoria', 'categoriasproductos')" 
+	    	md-item-text="item.nombre_categoria" 
+	    	placeholder="Categoría" 
+	    	md-min-length="3" 
+	    	md-selected-item-change="clientesForm.validateSelection('categoria', item)" 
+	    	md-autoselect="false" flex required>
+	      	<span md-highlight-text="clientesForm.searchCategoria">{{ item.nombre_categoria }}</span>
+	      
+	        <md-not-found>
+	          No hay resultados para "{{ clientesForm.searchCategoria }}".
+	        </md-not-found>
+
+	    </md-autocomplete>
+
+	    <md-input-container class="md-block" flex>
+          <label>Comentarios</label>
+          <textarea ng-model="clientesForm.data.comentarios" columns="1" md-maxlength="500" rows="5"></textarea>
+        </md-input-container>
+        
+	</div>
+
+	<div ng-show="clientesForm.validation" layout="column">
+	    <span style="color: red" class="md-subhead"><strong>{{ clientesForm.validation }}</strong> no es un valor correcto.</span>
+	</div>
+
+	<div layout="row" flex>
+
+		<div layout="column" layout-fill>
+			<div class="title-add-tags">
+				<h4 flex>
+				  <ng-md-icon icon="note_add" style="fill: white;margin-top:-13px" size="36"></ng-md-icon> 
+				  <span>Añadir Categorías</span>
+				</h4>
+				<md-button class="md-fab md-warn" type="button" aria-label="Add Tag" ng-click="clientesForm.addCategory()">
+				  <ng-md-icon icon="add" style="fill: white;margin-top: -6px;margin-left: -4px;" size="28"></ng-md-icon>
+				</md-button>
+			</div>
+	<br><br>
+			<md-content layout="column" class="categoriasclientesaddsection" ng-show="clientesForm.showSectionAddCategory" layout-padding>
+
+			    <md-select ng-model="clientesForm.selectedcategoriacliente" placeholder="Seleccionar Categoría" md-on-open="clientesForm.getCategoriasCliente()" ng-change="clientesForm.selectCategoriaCliente()">
+			      <md-select-label>Categorías para cliente</md-select-label>
+			      <md-option ng-value="item" ng-repeat="item in clientesForm.categoriascliente">{{ item.nombre }}</md-option>
+			    </md-select>
+
+
+			   <div class="listProductsCategories">
+			   	
+				    <md-autocomplete 
+				    	md-floating-label="Seleccionar Categoría Producto" 
+				    	md-selected-item="clientesForm.categoriasproductos" 
+				    	md-search-text="clientesForm.searchCategoriaProducto" 
+				    	md-items="item in clientesForm.getAutocomplete(clientesForm.searchCategoriaProducto, 'nombre_categoria', 'categoriasproductos')" 
+				    	md-item-text="item.nombre_categoria" 
+				    	placeholder="Seleccionar Categoría Producto" 
+				    	md-min-length="0" 
+				    	md-selected-item-change="clientesForm.validateSelectionCategoria(item)" 
+				    	md-autoselect="false" ng-show="clientesForm.categoriaProductoActived">
+				      	<span md-highlight-text="clientesForm.searchCategoriaProducto">{{ item.nombre_categoria }}</span>
+				      
+				        <md-not-found>
+				          No hay resultados para "{{ clientesForm.searchCategoriaProducto }}".
+				        </md-not-found>
+
+				    </md-autocomplete>
+
+
+				    <md-list>
+				      <md-list-item class="md-3-line animation-repeat-opacity" ng-repeat="item in clientesForm.categoriasproductosArr">
+				        
+				        <div class="md-list-item-text" layout="row" flex="70">
+				          <h3> {{item.nombre_categoria}}</h3>
+				        </div>
+				        <div class="md-list-item-text" layout="row" flex="20">
+				        	<md-button flex ng-click="clientesForm.deleteCategory(item, true)">X</md-button>
+				        </div>
+				        <md-divider ng-if="!$last"></md-divider>
+				      </md-list-item>
+				    </md-list>
+
+			   	</div>
+			    <md-button class="md-raised md-warn" type="button" aria-label="Add" ng-click="clientesForm.addCategoriaToCliente()" ng-disabled="!clientesForm.buttonAddCategoriaActived">Agregar</md-button>
+
+			</md-content>
+
+			<h3 ng-show="clientesForm.data.categoriascliente.length < 1" class="text-center">No se ha asignado ninguna categoría a este cliente.</h3>
+			<md-content ng-show="clientesForm.data.categoriascliente.length > 0" class="list-categorias-container">
+			    <md-list>
+			      <md-list-item class="md-3-line animation-repeat-opacity" ng-repeat="item in clientesForm.data.categoriascliente">
+			        <div class="md-list-item-text" layout="row" flex="40">
+			          <h3>{{item.categoriacliente.nombre}} </h3>
+			        </div>
+			        <div class="md-list-item-text" layout="row" flex="40">
+			          <h3 title=""> 
+						<span class="animation-repeat-opacity" ng-repeat="cat in item.categoriasproductos">
+							{{ cat.nombre_categoria }} - 
+						</span>
+			          </h3>
+			        </div>
+			        <div class="md-list-item-text" layout="row" flex="20">
+			        	<md-button flex ng-click="clientesForm.deleteCategory(item)">X</md-button>
+			        </div>
+			        <md-divider ng-if="!$last"></md-divider>
+			      </md-list-item>
+			    </md-list>
+			</md-content>
+		</div>
+
+		
+
+	</div>
+<br><br>
+
+    <div layout="column">
+    	<md-button type="submit" class="md-primary md-raised text-center" layout="column" flex="100" ng-hide="!clientesForm.formValidate" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+<br>
+<br>
+<br>
+</form>

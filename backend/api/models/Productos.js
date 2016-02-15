@@ -73,7 +73,11 @@ module.exports = {
     activado: {
   		type: 'boolean',
   		defaultsTo: true
-  	} 		
+  	}, 	
+    combinaciones: {
+      collection: 'Combinaciones',
+      via: 'productos'
+    }
   }
 };
 

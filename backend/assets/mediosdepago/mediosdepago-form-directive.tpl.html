@@ -1,0 +1,14 @@
+<form ng-submit="mediosdepagoForm.save()">
+
+	<md-input-container flex>
+      <label>Medio de pago</label>
+      <input type="text" ng-model="mediosdepagoForm.data.medios_de_pago" required>
+    </md-input-container>
+
+    <div layout="column">
+    	<md-button class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+
+</form>

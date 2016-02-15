@@ -1,6 +1,24 @@
+
 String.prototype.contains = function(it) { 
 
   return this.indexOf(it) != -1; 
+
+};
+
+
+Array.prototype.asyncForEach = function (each, done) {
+
+    var i = -1, a = this;
+
+    function iter() {
+
+      if (++i === a.length) { done && done(); return; }
+
+      each.call(a, a[i], iter);
+
+    }
+
+    iter();
 
 };
 
@@ -29,7 +47,7 @@ String.prototype.contains = function(it) {
 
     }
 
-    function RunApp($rootScope, $log, AuthService, AppService, $http, $state, $mdToast){
+    function RunApp($rootScope, $log, AuthService, AppService, $http, $state, $mdToast, CancelableHttpService){
 
       $rootScope.auth = {}
 
@@ -37,26 +55,15 @@ String.prototype.contains = function(it) {
   /////// Events
 
 
-      // When is loading
-      
-      $rootScope.$on('cfpLoadingBar:loading', data => {
-
-        $rootScope.loading = true
-
-      })
-
-      // On load completed
-
-      $rootScope.$on('cfpLoadingBar:completed', data => {
-
-        $rootScope.loading = false
-
-      })
+     
 
 
       //On route start Change
       
       $rootScope.$on('$stateChangeStart', (e, toState, toParams, fromState, fromParams) => {
+
+        if (toState != fromState)
+          CancelableHttpService.cancelAll()
 
         // Generate random design
         $rootScope.generatedDesign = AppService.randomDesign()
@@ -129,10 +136,16 @@ String.prototype.contains = function(it) {
 
         console.info(something)
 
-        $mdToast
-          .simple()
-          .content('Ocurrio un error en el servidor.!')
-          .position('bottom left')
+        $mdToast.show(
+
+          $mdToast.simple()
+
+            .textContent('Al parecer ocurrió un error.!')
+            .position('bottom left')
+            .hideDelay(5000)
+
+        );
+
 
       })
 
@@ -148,13 +161,15 @@ String.prototype.contains = function(it) {
 
       this.activatedmenu = false
 
+      this.loading = false
+
       if (sessionStorage['JWT']){
 
         AuthService.verify().then( response => {
 
           $rootScope.auth.user = response.data.user
 
-          self.getInitialData()
+          $rootScope.$broadcast('initialData')
 
         }, err => {
 
@@ -163,6 +178,8 @@ String.prototype.contains = function(it) {
         })
           
       }
+      else
+        $rootScope.$broadcast('AuthError')
 
       $scope.mainMenuSettings = {
         closeEl: '.close',
@@ -192,7 +209,9 @@ String.prototype.contains = function(it) {
             .initialData( $rootScope.auth.user.id )
             .then( response => {
 
+
               self.initData = response.data
+              console.log(self.initData)
 
             }, () => {
               console.log('error')
@@ -204,6 +223,7 @@ String.prototype.contains = function(it) {
         $timeout( () => {
           self.selectedMainTab = tab
         })
+
         $mdSidenav('profilenotifications')
           .toggle()
           .then(function(){
@@ -216,13 +236,65 @@ String.prototype.contains = function(it) {
       
       $rootScope.generatedDesign = AppService.randomDesign()
 
+      $rootScope.slug = (input) => {
+
+        return input.replace(/[\/\s]+/gi,'-')
+
+      }
+
       $rootScope.$on('initialData', ($event, data) => {
 
         self.getInitialData()
 
       })
 
+       // When is loading
+      
+      $rootScope.$on('cfpLoadingBar:loading', data => {
+
+        self.loading = true
+
+      })
+
+      // On load completed
+
+      $rootScope.$on('cfpLoadingBar:completed', data => {
+
+        self.loading = false
+
+      })
+
     }
+
+    function SlideAnimation() {
+
+      return {
+
+          enter: function (element, done) {
+
+            console.log('enter');
+
+              element.hide().slideDown(600, done);
+
+          },
+
+          move: function(element, done) {
+
+              console.log('move');
+
+              element.slideUp(600, done);
+
+          },
+          leave: function(element, done) {
+
+              console.log('leave');
+
+              element.slideUp(600, done);
+
+          }
+      };
+
+  }
 
 
     angular
@@ -241,6 +313,7 @@ String.prototype.contains = function(it) {
       'pasvaz.bindonce',
       'headroom',
       'ui.tinymce',
+      'ui.knob',
       'home',
       'login',
       'user',
@@ -259,14 +332,21 @@ String.prototype.contains = function(it) {
       'ciudades',
       'categoriasproductos',
       'productos',
-      'cotizacion',
       'cotizaciones',
       'clientes'
     ])
     .controller('AppCtrl', AppCtrl)
-    
+
+    .animation('.slide', SlideAnimation)
 
     .config(AppConfig)
+
+    .filter('renderHTML', $sce => {
+      return stringToParse => {
+        return $sce.trustAsHtml(stringToParse);
+      }
+    }
+       )
 
     .run(RunApp);
 

@@ -6,6 +6,18 @@
  */
 
 module.exports = {
-	
+	getAndPopulate: function(req, res){
+
+		Contactos
+			.find( { cliente: req.param('cliente') } )
+			.populate('minuta', { sort: 'id DESC' })
+			.then(function(contactos){
+				return res.send(contactos)
+			})
+			.catch(function(err){
+				return res.send(err)
+			})
+
+	}
 };
 

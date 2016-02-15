@@ -1,0 +1,24 @@
+<md-data-table-container class="md-whiteframe-z2 bottom-radius-8" ng-show="referidos.length" layout-padding>
+
+<table md-data-table>
+<thead md-order="query.order" md-trigger="onOrderChange">
+  <tr class="md-whiteframe-z1">
+    <th class="justify-center-into-div" name="Nombre"></th>
+    <th class="justify-center-into-div" name="Fecha creación"></th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr bindonce ng-repeat="row in referidos | orderBy:'-id'" class="repeat-animation">
+    <td class="text-center">
+    	
+    	<a style="color: #2196F3" ui-sref="cliente( { razon_social: slug(row.razon_social), id: row.id } )">{{ row.razon_social }}</a>
+
+    </td>
+    <td class="text-center">{{ row.createdAt | date }}</td>
+  </tr>
+</tbody>
+</table>
+
+</md-data-table-container>
+<div ng-show="referidos.length < 1" class="text-center" layout-padding>No hay registros disponibles.</div>

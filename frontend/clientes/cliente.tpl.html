@@ -1,0 +1,264 @@
+<md-content class="default-content fadeLeft customer-profile" layout-padding>
+	  <md-toolbar class="customer-profile-toolbar md-whiteframe-z2">
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>{{ cliente.datos.razon_social }}</span>
+        </h2>
+        <span flex></span>
+
+        <div class="customer-profile-toolbar-vendedor">
+        {{ cliente.datos.vendedor_asignado.first_name + ' ' + cliente.datos.vendedor_asignado.last_name  }}
+        </div>
+      </div>
+    </md-toolbar>
+    
+    <md-tabs class="customer-profile-tabs" md-border-bottom md-dynamic-height md-stretch-tabs="always" md-swipe-content="true" md-selected="cliente.selectedTab">
+
+
+    <!--Tab datos-->
+        <md-tab>
+          <md-tab-label>
+            <h3><ng-md-icon icon="list" size="30" style="fill: white"></ng-md-icon> Datos</h3>
+          </md-tab-label>
+          <md-tab-body>
+            
+            <div layout="row">
+
+              <div layout="column" flex>
+                  
+                <md-list>
+                  <md-list-item>
+                    <strong>NIT/CC: </strong>&nbsp;{{ cliente.datos.nit }}</span>
+                  </md-list-item>
+
+                  <md-list-item>
+                    <strong>EMAIL: </strong>&nbsp;{{ cliente.datos.email }}</span>
+                  </md-list-item>
+
+                  <md-list-item>
+                    <strong>PAIS: </strong>&nbsp;{{ cliente.datos.pais.nombre }}</span>
+                  </md-list-item>
+                  <md-list-item>
+                    <strong>CIUDAD: </strong>&nbsp;{{ cliente.datos.ciudad.nombre }}</span>
+                  </md-list-item>
+
+                  <md-list-item>
+                    <strong>WEBSITE: </strong> <a href="{{ cliente.datos.website }}" ng-if="cliente.datos.website">{{ cliente.datos.website }}</a>
+                  </md-list-item>
+                  
+                </md-list>
+
+              </div>
+              <div layout="column" flex>
+                  <md-list>
+                    <md-list-item>
+                    <strong>TELEFONOS: </strong>&nbsp;{{ cliente.datos.telefono_fijo }}</span>
+                  </md-list-item>
+                  <md-list-item>
+                    <strong>DIRECCION: </strong>&nbsp;{{ cliente.datos.direccion }}</span>
+                  </md-list-item>
+                  <md-list-item>
+                    <strong>REPRESENTANTE LEGAL: </strong>&nbsp;{{ cliente.datos.representante_legal }}</span>
+                  </md-list-item>
+                  <md-list-item>
+                    <strong>RESPONSABLE DELEGADO: </strong>&nbsp;{{ cliente.datos.responsable_delegado }}</span>
+                  </md-list-item>
+
+                  <md-list-item>
+                    <strong>COMENTARIOS: </strong>&nbsp;{{ cliente.datos.comentarios }}</span>
+                  </md-list-item>
+                  
+                  </md-list>
+              </div>
+
+              <div layout="column" flex>
+                  <label class="customer-profile-label label-cotizaciones" ng-click="cliente.selectedTab = 2">
+                    Cotizaciones <span class="badge">{{ cliente.datos.cotizaciones.length }}</span>
+                    <ng-md-icon icon="add_shopping_cart" size="50" style="fill:white"></ng-md-icon>
+                  </label>
+
+                  <label class="customer-profile-label label-vendidos" ng-click="cliente.selectedTab = 2">
+                    Ventas <span class="badge">{{ cliente.totalvendidos().length }}</span>
+                    <ng-md-icon icon="assignment_turned_in" size="50" style="fill:white"></ng-md-icon>
+                  </label>
+
+                  <label class="customer-profile-label label-seguimientos" ng-click="cliente.selectedTab = 1">
+                    Seguimientos <span class="badge">{{ cliente.datos.seguimientos.length }}</span>
+                    <ng-md-icon icon="favorite" size="50" style="fill:white"></ng-md-icon>
+                  </label>
+                  <label class="customer-profile-label label-referidos" ng-click="cliente.selectedTab = 3">
+                    Referidos <span class="badge">{{ cliente.datos.referidos.length }}</span>
+                    <ng-md-icon icon="group" size="50" style="fill:white"></ng-md-icon>
+                  </label>
+              </div>
+
+
+            </div>
+              <div layout="row">
+                 <label ng-repeat="item in cliente.datos.categoriascliente" class="label-items label-profile-customer" style="background: {{ cliente.transformToCategoriacliente(item)[0].color }}">
+                  {{ cliente.transformToCategoriacliente(item)[0].nombre }}
+                  <ng-md-icon icon="{{ cliente.transformToCategoriacliente(item)[0].icon }}" size="70" style="fill: white"></ng-md-icon>
+                </label>
+              </div>
+                  <div layout="row" ng-if="cliente.datos.referido_por" layout-padding>
+                    <strong>Referido por: </strong> <a style="color: #2196F3" ui-sref="cliente( { razon_social: slug(cliente.datos.referido_por.razon_social), id: cliente.datos.referido_por.id } )">{{cliente.datos.referido_por.razon_social}}</a>
+                </div>
+
+              
+
+          </md-tab-body>
+        </md-tab>
+        <!-- /tab datos -->
+
+<!-- Tab seguimientos -->
+        <md-tab md-on-select="cliente.getOnTabSelect('contactos/obtener-seguimientos?cliente', 'contactosCalled', 'contactos')">
+          <md-tab-label>
+            <h3><ng-md-icon icon="visibility" size="30" style="fill: white"></ng-md-icon> Seguimientos</h3>
+          </md-tab-label>
+          <md-tab-body>
+
+
+              <md-content layout-padding>
+
+                <div layout="row">
+                    
+                  <md-button ng-click="cliente.seguimientosDialog($event)" class="md-raised nuevoseguimiento-button" aria-label="description" flex>Nuevo seguimiento</md-button>
+
+                  <md-button class="md-raised cancelarseguimiento-button" aria-label="description" ng-click="cliente.toggleSeguimientos()" ng-disabled="!cliente.datos.seguimientosactivos" flex>Cancelar seguimientos</md-button>
+
+                  
+
+                </div>
+
+
+                <div class="text-center" ng-hide="cliente.datos.seguimientos.length">
+                  
+                 <h3> No se han hecho seguimientos. </h3>
+                  
+                </div>
+
+              </md-content>
+              
+
+              <md-list class="seguimientos__contactos" ng-if="cliente.datos.seguimientos.length">
+
+                <div>
+                  <md-list-item  class="seguimientos__contactos__contacto md-2-line" ng-click="cliente.actived_minuta = !cliente.actived_minuta" ng-class="{ 
+                    'md-whiteframe-z1': cliente.actived_minuta,
+                    'seguimientos__contactos__contacto--actived': cliente.actived_minuta
+                  }">
+
+                    <img ng-src="images/profile_photos/default_avatar.png" class="md-avatar" alt="" /> 
+
+                    <div class="md-list-item-text">
+                      <h3>Todo</h3>
+                      <p>Ultimos 30 seguimientos</p>
+                    </div>
+
+                    <ng-md-icon class="seguimientos__contactos__contacto__button" icon="{{ cliente.actived_minuta ? 'expand_more' : 'chevron_right' }}" style="fill:gray" size="24"></ng-md-icon>
+
+                    <md-divider></md-divider>
+
+                  </md-list-item>
+
+                  <div  ng-show="cliente.actived_minuta">
+
+                   <timeline categorias="cliente.categoriasproductos" estados="cliente.estados" seguimientos="cliente.datos.seguimientos"></timeline>
+
+                  </div>
+
+                </div>
+
+                <div ng-repeat="contacto in cliente.contactos.data">
+
+                  <md-list-item  class="seguimientos__contactos__contacto md-2-line" ng-click="contacto.actived_minuta = !contacto.actived_minuta" ng-class="{ 
+                    'md-whiteframe-z1': contacto.actived_minuta && contacto.minuta.length,
+                    'seguimientos__contactos__contacto--actived': contacto.actived_minuta
+                  }" ng-disabled="!contacto.minuta.length">
+
+                    <img ng-src="images/profile_photos/default_avatar.png" class="md-avatar" alt="" /> 
+
+                    <div class="md-list-item-text">
+                      <h3>{{ contacto.nombres_completos }}</h3>
+                      <p>{{ contacto.email_empresa }} - {{ contacto.telefono_fijo }}</p>
+                    </div>
+
+                    <ng-md-icon ng-if="contacto.minuta.length" class="seguimientos__contactos__contacto__button" icon="{{ contacto.actived_minuta ? 'expand_more' : 'chevron_right' }}" style="fill:gray" size="24"></ng-md-icon>
+
+                    <md-divider></md-divider>
+
+                  </md-list-item>
+
+                  <div ng-if="contacto.minuta.length" ng-show="contacto.actived_minuta">
+
+                   <timeline  categorias="cliente.categoriasproductos" estados="cliente.estados"seguimientos="contacto.minuta"></timeline>
+
+                  </div>
+
+                </div>
+
+              </md-list> 
+
+              
+
+          </md-tab-body>
+        </md-tab>
+
+        <!-- / Tab seguimientos -->
+
+
+<!-- Tab Cotizaciones -->
+        <md-tab md-on-select="cliente.getOnTabSelect('cotizaciones?cliente', 'cotizacionesCalled', 'cotizaciones')">
+          <md-tab-label>
+            <h3><ng-md-icon icon="loyalty" size="30" style="fill: white"></ng-md-icon> Cotizaciones <span class="badge">{{cliente.datos.cotizaciones.length }}</span></h3>
+          </md-tab-label>
+          <md-tab-body>
+            
+            <div layout="row" layout-align="space-around" ng-if="app.loading">
+              <md-progress-circular class="md-primary" md-mode='indeterminate' md-diameter="130"></md-progress-circular>
+            </div>
+
+            <list-cotizaciones cotizaciones="cliente.cotizaciones.data.results" ng-if="cliente.cotizaciones.data.results"></list-cotizaciones>
+
+          </md-tab-body>
+        </md-tab> 
+
+        <!-- /Tab cotizaciones -->
+
+
+
+        <!-- Tab Referidos -->
+        <md-tab md-on-select="cliente.getOnTabSelect('clientes?referido_por', 'referidosCalled', 'referidos')">
+          <md-tab-label>
+            <h3><ng-md-icon icon="group" size="30" style="fill: white"></ng-md-icon> Referidos <span class="badge">{{cliente.datos.referidos.length }}</span></h3>
+          </md-tab-label>
+          <md-tab-body>
+
+            <div layout="row" layout-align="space-around" ng-if="app.loading">
+              <md-progress-circular class="md-primary" md-mode='indeterminate' md-diameter="130"></md-progress-circular>
+            </div>
+
+            <list-referidos referidos="cliente.referidos.data.results" ng-if="cliente.referidos.data.results"></list-referidos>
+
+          </md-tab-body>
+        </md-tab>
+
+        <!-- / Tab referidos -->
+
+        <md-tab md-on-select="cliente.getOnTabSelect('contactos/obtener-seguimientos?cliente', 'contactosCalled', 'contactos')">
+          <md-tab-label>
+            <h3><ng-md-icon icon="star" size="30" style="fill: white"></ng-md-icon> Contactos <span class="badge">{{ cliente.datos.contactos.length }}</span></h3>
+          </md-tab-label>
+          <md-tab-body>
+            <div layout="row" layout-align="space-around" ng-if="app.loading">
+              <md-progress-circular class="md-primary" md-mode='indeterminate' md-diameter="130"></md-progress-circular>
+            </div>
+
+            <list-contactos contactos="cliente.contactos.data" ng-if="cliente.contactos.data"></list-contactos>
+            
+          </md-tab-body>
+        </md-tab>
+
+      </md-tabs>
+</md-content>
+<default-footer class="fadeUp" layout="column" layout-align="center center" layout-padding></default-footer>

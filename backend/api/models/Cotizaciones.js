@@ -75,6 +75,10 @@ module.exports = {
         type: 'json'
     },
 
+    mostrar_total: 'boolean',
+
+    vendido: 'boolean'
+
   },
   afterCreate : function(values,cb){
 

@@ -1,0 +1,52 @@
+
+<form ng-submit="contactosForm.save()" layout="column" flex>
+
+	<div layout="row" flex>
+		<md-input-container flex>
+			<label>Nombres</label>
+			<input type="text" ng-model="contactosForm.data.nombres_completos" required>
+		</md-input-container>
+		<md-input-container flex>
+			<label>Cargo</label>
+			<input type="text" ng-model="contactosForm.data.cargo">
+		</md-input-container>
+		<md-input-container flex>
+			<label>Teléfonos</label>
+			<input type="text" ng-model="contactosForm.data.telefono_fijo">
+		</md-input-container>
+	    <md-input-container flex>
+			<label>Email</label>
+			<input type="email" ng-model="contactosForm.data.email_empresa">
+		</md-input-container>
+	</div>
+	<div layout="row" flex>
+		<md-input-container flex>
+			<label>Dirección</label>
+			<input type="text" ng-model="contactosForm.data.direccion">
+		</md-input-container>
+		<md-input-container>
+	        <label>Comercial</label>
+	        <md-select ng-model="contactosForm.data.vendedor_asignado" ng-disabled="!contactosForm.user.permissions.asignar_clientes">
+	          <md-option ng-repeat="item in contactosForm.vendedores" value="{{ item.id }}">
+	            {{ item.first_name + ' ' + item.last_name }}
+	          </md-option>
+	        </md-select>
+	    </md-input-container>
+
+		<md-input-container class="md-block" flex>
+          <label>Comentarios</label>
+          <textarea ng-model="contactosForm.data.comentarios" columns="1" md-maxlength="500" rows="5"></textarea>
+        </md-input-container>
+	</div>
+</div>
+
+<br><br>
+    <div layout="column">
+    	<md-button type="submit" class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+<br>
+<br>
+<br>
+</form>

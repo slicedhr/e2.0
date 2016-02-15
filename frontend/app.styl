@@ -6,6 +6,8 @@ body, html
 	height 100%
 html
 	opacity 0
+body
+	background #EBEFF2
 .hide-selectable
 	tr
 		td:first-child, th:first-child
@@ -64,11 +66,9 @@ basic-filtrator, .filtrator
 			&.md-select-placeholder
 				color white
 	.search-button
-		right 8px
-		margin-top 5px !important
-		margin-left 10px !important
+		right 13px
 		position absolute
-		top 12px
+		top 20px
 		svg
 			margin-left -2px
 			margin-top -5px
@@ -86,24 +86,33 @@ basic-filtrator, .filtrator
 			margin-top -5px
 		
 	.search-field
-		position relative
-		md-input-container
-			input
-				background white
-				border-bottom none
-				border-radius 2px
-				box-shadow 0px 3px 5px -1px rgba(0, 0, 0, 0.14), 0px 6px 10px 0px rgba(0, 0, 0, 0.098), 0px 1px 18px 0px rgba(0, 0, 0, 0.084)
-				position absolute
-				margin-top 10px
-				top 13px
-				width 98%
-		md-autocomplete
-			left 4%
+		input
+			background white
+			border-bottom none
+			border-radius 2px
+			box-shadow 0px 3px 5px -1px rgba(0, 0, 0, 0.14), 0px 6px 10px 0px rgba(0, 0, 0, 0.098), 0px 1px 18px 0px rgba(0, 0, 0, 0.084)
 			position absolute
-			top 23%
-			width 95%
+			left 1%
+			// margin-top 10px
+			// top 13px
+			// margin-left 13px
+			// width 98%
+		md-autocomplete
+			margin-left 1%
+			// left 4%
+			// position absolute
+			// top 23%
+			// width 95%
+			margin-top 18px
+			md-autocomplete-wrap
+				input
+					background transparent
+					box-shadow none
+				button
+					display none
 	.inputs-margin-left
-		margin-left 5%
+		width 100%
+	
 .counter-clientes
 	color: white !important
 	background #607D8B !important
@@ -185,7 +194,14 @@ basic-filtrator, .filtrator
 		animation fadeOutUp .6s
 	.generate
 		margin-top -3px
+	.top-menu-button
+		margin 0
+		width 50px
+	.profile-menu-content
+		margin-right 10px
+		margin-top 7px
 .principal-md-content
+	background #EBEFF2
 	.main-container
 		margin-top 64px
 .user-menu-button
@@ -217,6 +233,9 @@ basic-filtrator, .filtrator
 		vertical-align middle
 .user-menu-options
 	padding 0
+	a.md-button
+		display block
+		padding-top 5px
 	svg
 		margin-top -1px
 
@@ -362,12 +381,14 @@ basic-filtrator, .filtrator
 .text-title-animation
 	transition all .6s
 	position absolute
+	left 25px
 	top 14px
 .text-title-animation.ng-hide-add
 	animation fadeOutDown .6s
 .text-title-animation.ng-hide-remove
 	animation fadeInUp .6s
 .default-content
+	z-index 0
 	table
 		md-checkbox
 			&.md-checked 
@@ -421,3 +442,9 @@ md-dialog
 	text-align center
 .discount-red-input
 	background #e74c3c !important
+.animate-show
+	opacity 1
+.animate-show.ng-hide-add, .animate-show.ng-hide-remove
+	transition all 0.5s
+.animate-show.ng-hide
+	opacity 0

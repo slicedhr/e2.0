@@ -17,12 +17,10 @@ module.exports = {
     	model: 'Clientes'
     },
     nombres_completos: {
-    	type: 'string',
-    	required: true
+    	type: 'string'
     },
     cargo: {
-    	type: 'string',
-    	required: true
+    	type: 'string'
     },
     comentarios: {
     	type: 'text',

@@ -14,7 +14,7 @@
 
   function AppService($q, $http, $filter, $compile, $rootScope, $mdToast, $mdDialog, apiUrl) {
 
-    var AppBase = {}, self = AppBase;
+    let AppBase = {}, canceler, self = AppBase;
 
     AppBase.base_tinymce = 'http://wilcatec.com/enterprise_files/tinymce';
 
@@ -146,7 +146,7 @@
     
     AppBase.broadcastError = err => {
 
-      $rootScope.$broadcast('ServerError', dialogData)
+      $rootScope.$broadcast('ServerError', err)
 
     }
 
@@ -165,20 +165,22 @@
 
     AppBase.setConfig = config => {
 
-      var deferred = $q.defer(), 
-          promise = deferred.promise
+      canceler = $q.defer()
+
+      let promise = canceler.promise
 
       config.timeout = promise
 
-      config.cancel = deferred
+      config.cancel = canceler
 
-      $rootScope.$broadcast('deferred', deferred)
+      $rootScope.$broadcast('deferred', canceler)
 
-      $rootScope.deferred = deferred
+      $rootScope.deferred = canceler
 
       return config
 
     }
+
 
 
     // Get Initial Data

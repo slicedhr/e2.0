@@ -1,0 +1,18 @@
+<md-content class="fadeLeft md-whiteframe-z3 dialog-base contactos" layout-padding>
+	<h1 class="text-center">¿Deseas crear un contacto para el cliente?</h1>
+	<div layout="row">
+		<md-button class="md-raised md-primary" aria-label="Add" flex ng-click="cotizaciones.showFormContactos = true"><ng-md-icon icon="create" fill="icon-fill-white" size="24"></ng-md-icon> Crear</md-button>
+
+		<md-button class="md-raised md-primary" aria-label="Skip" ui-sref="generar.detalle({ cliente: cotizaciones.cliente.id, contacto: 'none' })" flex><ng-md-icon icon="exit_to_app" fill="icon-fill-white" size="24"></ng-md-icon> Omitir</md-button>
+	</div>
+
+	<div ng-show="cotizaciones.showFormContactos">
+
+		<h1>Crear Contacto</h1>
+
+		<contactos-form data='{}'></contactos-form>
+		
+	</div>
+	
+
+</md-content>

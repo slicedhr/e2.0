@@ -4,7 +4,12 @@ var _ = require('underscore.string')
   , fs = require('fs')
   , path = require('path')
 
-  , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep;
+  , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep
+  , poststylus = require('poststylus')
+  , rucksack = require('rucksack-css')
+  , postcsssorting = require('postcss-sorting')
+  , csscomb = require('gulp-csscomb')
+  ;
 
 module.exports = function (gulp, $, config) {
   var isProd = $.yargs.argv.stage === 'prod';
@@ -38,7 +43,14 @@ module.exports = function (gulp, $, config) {
         this.emit('end');
       }}))
       .pipe($.stylus({
-        use: $.nib()
+        use: [
+          $.nib(),
+          poststylus([
+            rucksack
+            ], function (message){
+              console.info(message)
+          })
+        ]
       }))
       .pipe($.autoprefixer())
       .pipe($.if(isProd, $.cssRebaseUrls()))
@@ -63,6 +75,7 @@ module.exports = function (gulp, $, config) {
         }
       })))
       .pipe($.if(isProd, $.concat('app.css')))
+      .pipe(csscomb())
       .pipe($.if(isProd, $.cssmin()))
       .pipe($.if(isProd, $.rev()))
       .pipe(gulp.dest(config.buildCss));

@@ -1,0 +1,62 @@
+
+<form>
+	<div layout="row" ng-if="seguimientosForm.contactos.length">
+		<div flex>
+				
+
+			<md-checkbox ng-model="seguimientosForm.data.general" class="md-primary checkboxseguimientogeneral" aria-label="Seguimiento general" ng-change="seguimientosForm.data.contacto = {}">
+				¿Es un seguimiento general?
+			</md-checkbox>
+
+		</div>
+		<md-input-container style="margin-top: -10px" flex>
+	        <label>Contacto</label>
+	        <md-select ng-model="seguimientosForm.data.contacto" placeholder="Contacto" ng-show="!seguimientosForm.data.general" required="{{!seguimientosForm.data.general }}"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+		      <md-select-label>Seleccionar Contacto</md-select-label>
+		      <md-option ng-value="item.id" ng-repeat="item in seguimientosForm.contactos | orderBy:'nombre'">{{ item.nombres_completos + ' - ' + item.cargo  }}</md-option>
+		    </md-select>
+      	</md-input-container>
+		
+	</div>
+	<div layout="row">
+		<md-input-container flex>
+	      <label>Titulo</label>
+	      <input type="text" ng-model="seguimientosForm.data.titulo" required>
+	    </md-input-container>
+
+	    
+	    
+		
+	</div>
+	<div layout="row">
+		<md-select ng-model="seguimientosForm.data.estado" placeholder="Estado" flex> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+	      <md-select-label>Seleccionar Estado</md-select-label>
+	      <md-option ng-value="item.id" ng-repeat="item in seguimientosForm.estados | orderBy:'nombre'"style="background: {{item.color}}">{{ item.nombre }}</md-option>
+	    </md-select>
+	    <md-select ng-model="seguimientosForm.data.categoria" placeholder="Categoría" flex> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+	      <md-select-label>Seleccionar Categoría</md-select-label>
+	      <md-option ng-value="item.id" ng-repeat="item in seguimientosForm.categoriasproductos | orderBy: 'nombre_categoria'">{{ item.nombre_categoria }}</md-option>
+	    </md-select>
+	</div>
+	
+	<div layout="column">
+		<label>Descripción</label>
+		<textarea ui-tinymce="seguimientosForm.optionsWYSIWYG" ng-model="seguimientosForm.data.minuta"></textarea>
+	</div>
+<br>
+	<div layout="row">
+			<md-checkbox ng-model="seguimientosForm.data.programar" class="md-primary" aria-label="Seguimiento general" ng-change="seguimientosForm.data.programar_visita = undefined">
+				¿Quieres programar seguimiento?
+			</md-checkbox>
+
+			<md-datepicker placeholder="Fecha siguiente seguimiento" ng-model="seguimientosForm.data.programar_visita" md-min-date="seguimientosForm.today" ng-show="seguimientosForm.data.programar" style="margin-top:-13px"></md-datepicker>
+	</div>
+
+    <div layout="row">
+    	<md-button class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading" ng-click="seguimientosForm.save()">
+        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+        </md-button>
+	</div>
+
+</form>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/tinymce/4.1.2/skins/lightgray/skin.ie7.min.css">
