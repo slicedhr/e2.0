@@ -105,6 +105,19 @@
 
             };
 
+            $scope.setVendido = function () {
+
+              AppService.http({
+                method: 'PUT',
+                url: AppService.setPrefix('cotizaciones/' + idcotizacion),
+                data: {
+                  vendido: true
+                }
+              }).then(function (success) {
+                $scope.data.vendido = true;
+              });
+            };
+
             $scope.sumar = function (arr) {
               var suma = 0;
 

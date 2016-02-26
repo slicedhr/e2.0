@@ -9,10 +9,66 @@
    		</md-card> -->
    		<md-card class="md-whiteframe-z3" layout-padding>
 
-   			<ui-knob ng-if="home.homedata.totalclientes" value="home.homedata.totalclientes.value" options="home.homedata.totalclientes.options"></ui-knob>
+            <ui-knob ng-if="home.homedata.totalclientes" value="home.homedata.totalclientes.value" options="home.homedata.totalclientes.options"></ui-knob>
 
-   		</md-card>
+         </md-card>
 
+         <md-card class="md-whiteframe-z3" layout-padding>
+
+            <div layout="row">
+               <md-button class="md-raised md-primary" ng-click="home.getRep('week')" flex>WEEK</md-button>
+            <md-button class="md-raised md-primary" ng-click="home.getRep('month')" flex>MONTH</md-button>
+            <md-button class="md-raised md-primary" ng-click="home.getRep('year')" flex>YEAR</md-button>
+            </div>
+            <div layout="row">
+               <md-input-container>
+                  <label>Vendedor</label>
+                  <input type="number" ng-model="home.vendedor">
+               </md-input-container>
+               <md-checkbox ng-model="home.vendido" aria-label="string">
+                  Vendido
+               </md-checkbox>
+            </div>
+
+         </md-card>
+         
+         <md-card class="md-whiteframe-z3" layout-padding flex>
+             <!--  <angular-chart options="home.graphics.byWeek.data"></angular-chart> -->
+
+            <canvas id="line" class="chart chart-line" chart-data="home.graphicsByWeekData"
+              chart-labels="home.graphicsByWeekLabels" chart-legend="true" chart-series="home.graphicsByWeekSeries">
+            </canvas> 
+
+
+         </md-card>
+         
+
+
+
+        <!--  <md-card flex>
+            <canvas id="line" class="chart chart-line" chart-data="home.data"
+              chart-labels="home.labels" chart-legend="true" chart-series="home.series">
+            </canvas> 
+         </md-card> -->
+
+
+   </div>
+
+   <div layout="row">
+         
+   <md-card class="md-whiteframe-z3" layout-padding>
+            <md-input-container>
+               <label>From </label>
+               <input type="date" ng-model="home.date.from">
+            </md-input-container>
+            <md-input-container>
+               <label>To </label>
+               <input type="date" ng-model="home.date.to">
+            </md-input-container>
+            <md-button class="md-fab md-mini" ng-click="home.getByDate()">
+               <ng-md-icon icon="send" fill="icon-fill-white" size="20" style="margin-left: 5px"></ng-md-icon>
+            </md-button>
+         </md-card>
 
    </div>
 

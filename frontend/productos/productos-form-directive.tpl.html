@@ -2,6 +2,11 @@
 <form ng-submit="productosForm.save()" ng-init="productosForm.data.iva = 16;productosForm.data.cantidad = 1" layout="column" flex>
 	<div layout="row" flex>
 
+		<md-input-container flex>
+	      <label>Nombre</label>
+	      <input type="text" ng-model="productosForm.data.nombre" required>
+	    </md-input-container>
+
 	    <md-autocomplete md-floating-label="Categoría" md-selected-item="productosForm.data.tempcategoria" md-search-text="productosForm.searchCategoria" md-items="item in productosForm.getAutocomplete(productosForm.searchCategoria, 'nombre_categoria', 'categoriasproductos')" md-item-text="item.nombre_categoria" placeholder="Categoría" md-min-length="0" md-selected-item-change="productosForm.validateSelection('categoria', item)" md-autoselect="true" required>
 	      	<span md-highlight-text="productosForm.searchCategoria">{{ item.nombre_categoria }}</span>
 	      	
@@ -20,29 +25,21 @@
 	        </md-not-found>
 	    </md-autocomplete>
 
-	    <md-autocomplete md-floating-label="Tiempo de entrega" md-selected-item="productosForm.data.temptiemposdeentrega" md-search-text="productosForm.searchTiempoEntrega" md-items="item in productosForm.getAutocomplete(productosForm.searchTiempoEntrega, 'tiempo_de_entrega', 'tiemposdeentrega')" md-item-text="item.tiempo_de_entrega" placeholder="Tiempo de entrega" md-min-length="0" md-selected-item-change="productosForm.validateSelection('tiempo_de_entrega', item)" md-autoselect="true" required>
-	      	<span md-highlight-text="productosForm.searchTiempoEntrega">{{ item.tiempo_de_entrega }}</span>
-	      	
-	      	
-	        <md-not-found>
-	          No hay resultados para "{{ productosForm.searchTiempoEntrega }}".
-	        </md-not-found>
-	    </md-autocomplete>
 
-	    <md-input-container>
-	      <label>Referencia</label>
-	      <input type="text" ng-model="productosForm.data.referencia" required>
-	    </md-input-container>
+
+	    
 
 
 	</div>
 
 	<div layout="row" flex>
 
-	    <md-input-container>
-	      <label>Nombre</label>
-	      <input type="text" ng-model="productosForm.data.nombre" required>
+		<md-input-container>
+	      <label>Referencia</label>
+	      <input type="text" ng-model="productosForm.data.referencia" required>
 	    </md-input-container>
+
+	    
 
 		<md-autocomplete md-floating-label="Unidad de medida" md-selected-item="productosForm.data.tempunidad_de_medida" md-search-text="productosForm.searchUnidadDeMedida" md-items="item in productosForm.getAutocomplete(productosForm.searchUnidadDeMedida, 'unidad', 'unidadesdemedida')" md-item-text="item.unidad" placeholder="Unidad de medida" md-min-length="0" md-selected-item-change="productosForm.validateSelection('unidad_de_medida', item,'unidad_de_medida')" md-autoselect="true" required>
 	      	<span md-highlight-text="productosForm.searchUnidadDeMedida">{{ item.unidad }}</span>
@@ -69,21 +66,21 @@
 		<md-input-container>
 			<label>Precio de Compra</label>
 			<input type="number" min="0" ng-model="productosForm.data.precio_de_compra" required>
-	      	<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+	      	<div class="text-center">
           		<div ng-message>{{productosForm.data.precio_de_compra | currency:"$":0}}</div>
         	</div>
 	    </md-input-container>
 	    <md-input-container>
 	      	<label>Utilidad Bruta</label>
 	      	<input type="number" min="0" ng-model="productosForm.data.utilidad_bruta" required>
-	      	<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+	      	<div class="text-center" >
           		<div ng-message>{{ (((productosForm.data.utilidad_bruta*productosForm.data.precio_de_compra)/100) | currency:"$":0)}}</div>
         	</div>
 	    </md-input-container>
 	    <md-input-container>
 	      	<label title="PRECIO BASE">PRECIO BASE</label>
 	      	<input type="text" disabled="false">
-	      	<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+	      	<div class="text-center" >
           		<div ng-message>{{ (productosForm.data.precio_de_compra+((productosForm.data.utilidad_bruta*productosForm.data.precio_de_compra)/100) | currency:'$':0 ) }}</div>
         	</div>
 	    </md-input-container>
@@ -93,7 +90,7 @@
 
 	      	<input type="number" min="0" ng-model="productosForm.data.iva" required>
 
-			<div class="text-center" ng-messages="productosForm.data.precio_de_compra">
+			<div class="text-center">
 			    <div ng-message>{{ ( ((((productosForm.data.utilidad_bruta*productosForm.data.precio_de_compra)/100)+productosForm.data.precio_de_compra))*(productosForm.data.iva/100)+((((productosForm.data.precio_de_compra*productosForm.data.utilidad_bruta)/100)+productosForm.data.precio_de_compra)) | currency:"$":0) }}</div>
 			</div>
 
@@ -128,7 +125,7 @@
 	          No hay resultados para "{{ productosForm.searchProveedor3 }}".
 	        </md-not-found>
 	    </md-autocomplete> -->
-
+<!-- 
     	<md-input-container flex="20">
 			
 			<md-tooltip md-direction="top" md-autohide="true">
@@ -151,15 +148,58 @@
 			    <div ng-message>{{ productosForm.data.descuento_distribuidor }}% </div>
 			</div>
 
-	    </md-input-container>
+	    </md-input-container> -->
 	</div>
 
 	<div ng-show="productosForm.validation" layout="column">
 	    <span style="color: red" class="md-subhead"><strong>{{ productosForm.validation }}</strong> no es un valor correcto.</span>
 	</div>
 
+	<div layout="row">
+		<div layout="column" layout-fill>
+
+		  <md-toolbar class="md-lightgreen small-toolbar">
+		    <h2 class="text-center">
+		      <span>Descuentos</span>
+		    </h2>
+		  </md-toolbar>
+
+		  <md-content layout-padding style="overflow-y: hidden">
+
+			<md-list>
+			  	<md-list-item class="md-2-line" class="repeat-animation" style="height:50px">
+			  		
+			  		<md-input-container flex="50">
+			  			Descuento Ordinario
+			  		</md-input-container>
+
+			  	 	 <md-input-container flex=50>
+		  				<label>Descuento</label>
+		  				<input type="number" ng-model="productosForm.data.descuento" required>
+		  			</md-input-container>
+
+			  	</md-list-item>
+			  	<md-list-item class="md-2-line"  ng-repeat="item in productosForm.categoriascliente" class="repeat-animation" style="height:50px">
+			  		
+			  		<md-input-container flex="50">
+			  			{{ item.nombre }}
+			  		</md-input-container>
+
+			  	 	 <md-input-container flex=50>
+		  				<label>Descuento</label>
+		  				<input type="number" ng-model="productosForm.data.tempDescuentos['id_' + item.id]" ng-change="productosForm.discountChange(item, productosForm.data.tempDescuentos['id_' + item.id])" required>
+		  			</md-input-container>
+
+			  	</md-list-item>
+			  
+			</md-list>
+		  </md-content>
+
+		</div>
+	</div>
+
     <div layout="column">
-    	<md-button ng-click="productosForm.save()" type="submit" class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading">
+    	<md-button type="submit" class="md-primary md-raised text-center" layout="column" flex="100" ng-disabled="loading" type="submit">
         	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
         </md-button>
 	</div>

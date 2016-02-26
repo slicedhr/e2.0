@@ -18,6 +18,10 @@ module.exports = {
     prioridad: 'boolean',
     nombre: 'string',
     color: 'string',
+    requireDiscount: {
+      type: 'boolean',
+      defaultsTo: 'false'
+    },
     requireProduct: {
       type: 'boolean',
       defaultsTo: 'false'

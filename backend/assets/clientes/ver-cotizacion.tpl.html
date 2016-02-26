@@ -140,7 +140,7 @@
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button>
+      <md-button ng-hide="data.vendido" ng-click="setVendido()">
         Marcar como vendido
       </md-button>
       <span flex></span>

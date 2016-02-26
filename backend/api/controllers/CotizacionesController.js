@@ -44,86 +44,36 @@ module.exports = {
 		})
 	},
 	registrar_cotizacion: function(req,res){
-
-		Array.prototype.unique=function(a){
-
-		  return function(){
-		  	return this.filter(a)
-		  }
-		}
-
-		  (function(a,b,c){
-		  	return c.indexOf(a,b+1)<0
-		}
-		);
 		
 		var id_cotizacion;
+
 		var params = req.body
 
-		var categorias = params.categorias.unique() || [];
+		var data = req.body.data
 
+		var detalle = req.body.detalle
 
-		var cotizacion_data = {
-			cliente: params.cliente,
-			vigencia: params.vigencia,
-			vendedor: params.vendedor,
-			fecha_probable_compra: new Date(params.fecha_probable_compra),
-			terminos_de_negociacion: params.terminos_de_negociacion,
-			tiempo_de_entrega: params.tiempo_de_entrega,
-			ingresos_estimados: params.ingresos_estimados,
-			generadaPor: params.generadaPor,
-			contacto: params.contacto || 2,
-			
-			minuta: params.minuta,
-			texto_adicional: params.texto_adicional || '',
-			valor_total: params.valor_total,
+		Cotizaciones
+			.create(data)
+			.exec(function(err, cotizacion){
 
-		}
-		Cotizaciones.create(cotizacion_data).exec(function(err,cotizacion){
+				if (err) return res.send(err)
 
-			if (err) return res.send(err);
-
-			id_cotizacion = cotizacion.id
-
-			categorias.forEach(function(categoria,index){
+				for (var i = detalle.length - 1; i >= 0; i--) 
+					detalle[i].cotizacion = cotizacion.id
 				
-			    cotizacion.categorias.add(categoria)
+				DetalleCotizacion
+					.create(detalle)
+					.exec(function(err, data){
+						
+						if (err) return res.send(err)
 
-			   	cotizacion.save();
-			   	
-			  })
-			
+						return res.send({ok: true, cotizacion: cotizacion, data: data})
 
-			var data_detalle = []
+					})
 
-			for (var i = req.body.detalle.length - 1; i >= 0; i--) {
-				var temp = req.body.detalle[i]
-				detalle = {
-				    producto: temp.producto,
-				    cantidad: temp.cantidad,
-				    precio: temp.precio_de_compra,
-				    iva: temp.iva,
-				    utilidad_bruta: temp.utilidad_bruta,
-				    descuento: temp.descuento,
-				    cotizacion:cotizacion.id
-				}
-				data_detalle.push(detalle)
-			};
-
-			DetalleCotizacion.create(data_detalle).exec(function(err,data){
-					
-				if(err) return res.send(err)
-
-				Cotizaciones.findOne({ id: id_cotizacion }).populateAll().exec(function(err, d){
-					if (err) return res.send(err);
-
-					return res.send(d)
-				})
-				
-
-				
 			})
-		})		
+	
 	},
 	getCotizaciones: function(req,res,next){
 		var criteria = {}
@@ -161,7 +111,7 @@ module.exports = {
 		}
 		Configs.findOne({id:1}).exec(function(err,configs){
 			
-			configs = configs
+			configs.showTotal = req.param('showTotal') || false
 		
 
 		Cotizaciones.findOne({id:id}).populateAll().exec(function(err,cotizacion){

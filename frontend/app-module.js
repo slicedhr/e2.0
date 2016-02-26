@@ -163,6 +163,8 @@ Array.prototype.asyncForEach = function (each, done) {
 
       this.loading = false
 
+      moment.locale('es')
+
       if (sessionStorage['JWT']){
 
         AuthService.verify().then( response => {
@@ -296,7 +298,6 @@ Array.prototype.asyncForEach = function (each, done) {
 
   }
 
-
     angular
     .module('enterprise', [
       'md.data.table',
@@ -314,6 +315,8 @@ Array.prototype.asyncForEach = function (each, done) {
       'headroom',
       'ui.tinymce',
       'ui.knob',
+      'chart.js',
+      'angularChart',
       'home',
       'login',
       'user',
@@ -333,7 +336,10 @@ Array.prototype.asyncForEach = function (each, done) {
       'categoriasproductos',
       'productos',
       'cotizaciones',
-      'clientes'
+      'clientes',
+      'combinaciones',
+      'descuentos',
+      'seguimientos'
     ])
     .controller('AppCtrl', AppCtrl)
 

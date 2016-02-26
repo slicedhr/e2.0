@@ -202,7 +202,7 @@
 
     // GET
     
-    AppBase.get = (options) => {
+    AppBase.get = options => {
 
       options.limit = options.limit || 20
 
@@ -224,7 +224,8 @@
 
         url: self.setPrefix(options.url, options.prefix),
 
-        method: 'GET',
+        method: 'GET'
+
 
       })
 

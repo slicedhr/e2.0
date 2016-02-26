@@ -1,15 +1,66 @@
 
-<md-content class="default-content fadeLeft" layout-padding>
+<md-content class="default-content fadeLeft backgroundgray" style="min-height: 100vh">
 
-	<div ui-view>
+	<div ui-view class="anim-in-out anim-fade" data-anim-sync="true">
 		
-		<md-content class="fadeLeft md-whiteframe-z3 dialog-base clientes" layout-padding>
-			<h1>Crear Cliente</h1>
-			<clientes-form data="{}"></clientes-form>
+		<md-content class="fadeLeft md-whiteframe-z3 dialog-base clientes clientescotizacion">
+
+			<div layout-padding>
+			
+				<!-- <h1 class="text-center">¿Deseas crear un contacto para el cliente?</h1> -->
+				<div layout="row" layout-padding>
+					<md-button class="md-raised md-primary" aria-label="Search" flex ng-click="cotizaciones.showSearchCliente = true"><ng-md-icon icon="search" fill="icon-fill-white" size="24"></ng-md-icon> Buscar Cliente</md-button>
+
+					<md-button class="md-raised md-primary" aria-label="Create" flex ng-click="cotizaciones.showClientesForm = true"><ng-md-icon icon="create" fill="icon-fill-white" size="24"></ng-md-icon> Crear Cliente</md-button>
+				</div>
+
+			</div>
+
+			<div layout-padding ng-show="cotizaciones.showSearchCliente" class="animate-show">
+				<div layout="row" layout-padding>
+					<md-autocomplete 
+				    	md-floating-label="Buscar Cliente" 
+				    	md-selected-item="cotizaciones.searchCliente" 
+				    	md-search-text="cotizaciones.findCliente" 
+				    	md-items="item in cotizaciones.getAutocomplete(cotizaciones.findCliente, 'razon_social', 'clientes')" 
+				    	md-item-text="item.razon_social" 
+				    	placeholder="Buscar Cliente..." 
+				    	md-min-length="3" 
+				    	md-selected-item-change="cotizaciones.validateCliente(item)" 
+				    	md-autoselect="false" flex required>
+				      	<span md-highlight-text="cotizaciones.findCliente">{{ item.razon_social }}</span>
+				      
+				        <md-not-found>
+				          No hay resultados para "{{ cotizaciones.findCliente }}".
+				        </md-not-found>
+
+				    </md-autocomplete>
+				</div>
+			</div>
+
+			<div ng-show="cotizaciones.showClientesForm" class="animate-show">
+				<md-toolbar class="md-lightgreen">
+
+				    <h2 class="text-center">
+				      <span>Crear Cliente</span>
+				    </h2>
+
+				</md-toolbar>
+				<md-content layout-padding >
+
+				    <clientes-form data="{}"></clientes-form>
+
+				  </md-content>
+			</div>
+
+			
 
 		</md-content>
 
 	</div>
+
+<default-footer class="fadeUp" layout="column" layout-align="center center" layout-padding></default-footer>
+	
 
 
 </md-content>

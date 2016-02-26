@@ -14,17 +14,14 @@
 			<label>Teléfonos</label>
 			<input type="text" ng-model="contactosForm.data.telefono_fijo">
 		</md-input-container>
-	    <md-input-container flex>
-			<label>Email</label>
-			<input type="email" ng-model="contactosForm.data.email_empresa">
-		</md-input-container>
+	    
 	</div>
 	<div layout="row" flex>
 		<md-input-container flex>
-			<label>Dirección</label>
-			<input type="text" ng-model="contactosForm.data.direccion">
+			<label>Email</label>
+			<input type="email" ng-model="contactosForm.data.email_empresa">
 		</md-input-container>
-		<md-input-container>
+		<md-input-container flex>
 	        <label>Comercial</label>
 	        <md-select ng-model="contactosForm.data.vendedor_asignado" ng-disabled="!contactosForm.user.permissions.asignar_clientes">
 	          <md-option ng-repeat="item in contactosForm.vendedores" value="{{ item.id }}">

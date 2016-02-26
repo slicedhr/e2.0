@@ -77,6 +77,11 @@ module.exports = {
     combinaciones: {
       collection: 'Combinaciones',
       via: 'productos'
+    },
+    ordenamiento: 'string',
+    descuentos: {
+      collection: 'Descuentos',
+      via: 'producto'
     }
   }
 };

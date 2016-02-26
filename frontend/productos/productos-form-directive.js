@@ -30,11 +30,41 @@
       templateUrl: 'productos/productos-form-directive.tpl.html',
       replace: false,
       controllerAs: 'productosForm',
-      controller: function ($scope, $rootScope, AppService) {
+      controller: function ($scope, $rootScope, AppService, $filter) {
         
         var self = this;
-          
-        this.data = JSON.parse($scope.data) || { bodega: 1 }
+
+        this.data = JSON.parse($scope.data) || { }
+
+        this.data.tempDescuentos = {}
+
+        this.data.bodega = 1;
+
+        if (this.data.descuentos && this.data.descuentos.length) 
+          for(var i = 0, length1 = self.data.descuentos.length; i < length1; i++)
+            self.data.tempDescuentos['id_'+self.data.descuentos[i].categoriacliente] = self.data.descuentos[i].descuento
+
+        else this.data.descuentos = []
+
+
+        this.getCategoriasCliente = () => {
+
+          let config = {
+            method: 'GET',
+            url: AppService.setPrefix('categoriacliente?requireDiscount=1')
+          }
+
+          AppService
+            .http(config)
+            .then(success => {
+
+                self.categoriascliente = success.data.results
+
+            })
+
+        }
+
+        this.getCategoriasCliente()
 
         this.validations = [
           {
@@ -46,11 +76,6 @@
             key: 'marca',
             required: true,
             title: 'Marca'
-          },
-          {
-            key: 'tiemposdeentrega',
-            required: true,
-            title: 'Tiempo de entrega'
           },
           {
             key: 'unidad_de_medida',
@@ -78,11 +103,27 @@
             if (self.data[self.validations[i].key])
               self.data[self.validations[i].key] = self.data[self.validations[i].key].id
 
+
           }
         }
 
         this.source = 'productos'
 
+        this.discountChange = (item, value) => {
+          
+          var found = $filter('filter')(self.data.descuentos, { categoriacliente: item.id })[0]
+
+
+          if(found)
+            self.data.descuentos[self.data.descuentos.indexOf(found)].descuento = value
+
+          else
+            self.data.descuentos.push({
+              descuento: value,
+              categoriacliente: item.id
+            })
+
+        }
 
         this.save = () => {
 
@@ -107,12 +148,46 @@
             .save(data, url)
             .then(success => {
               
-                for (var i = 0; i < self.validations.length; i++)
-                  success.data[ self.validations[i].key ] = self.data['temp' + self.validations[i].key]
 
-                self.data.unidad_de_medida = self.data.tempunidad_de_medida.unidad
+              if (self.data.id){
 
-                $rootScope.$broadcast('saved:' + self.source, self.data)
+                 AppService.http({
+                  method:'PUT',
+                  data: {
+                    descuentos: self.data.descuentos
+                  },
+                  url: AppService.setPrefix('productos/modificar/descuentos')
+                }).then(thesuccess => {
+
+                  success.data.descuentos = thesuccess.data
+
+                  self.afterSave(success)
+
+                })
+
+              }
+              else{
+
+                AppService.http({
+                  method:'POST',
+                  data: {
+                    descuentos: self.data.descuentos,
+                    producto: success.data.id
+                  },
+                  url: AppService.setPrefix('productos/crear/descuentos')
+                }).then(thesuccess => {
+
+                  success.data.descuentos = thesuccess.data
+
+                  self.afterSave(success)
+
+
+                })
+
+              }
+                
+
+                
 
             })
             .catch(err => {
@@ -123,17 +198,24 @@
 
         }
 
-        this.validateSelection = (field, item, unidad_de_medida) => {
+        this.afterSave = success => {
 
-          if (item){
+          for (var i = 0; i < self.validations.length; i++)
+            self.data[ self.validations[i].key ] = self.data['temp' + self.validations[i].key]
+
+                self.data.id = success.data.id
+
+                AppService.broadcastDialog(self.data)
+
+                $rootScope.$broadcast('saved:' + self.source, self.data)
+
+        }
+
+        this.validateSelection = (field, item) => {
+
+          if (item)
             
             self.data[field] = item.id
-
-            if (unidad_de_medida)
-              
-              self.data['unidad_de_medida'] = item.unidad
-
-          }
 
 
           else

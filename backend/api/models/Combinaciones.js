@@ -19,6 +19,12 @@ module.exports = {
 
     descripcion: 'text',
 
+    categoria: {
+
+      model: 'CategoriasProductos'
+
+    },
+
     productos: {
     	collection: 'Productos',
     	via: 'combinaciones'

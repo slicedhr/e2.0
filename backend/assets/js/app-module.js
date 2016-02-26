@@ -129,6 +129,8 @@ Array.prototype.asyncForEach = function (each, done) {
 
     this.loading = false;
 
+    moment.locale('es');
+
     if (sessionStorage['JWT']) {
 
       AuthService.verify().then(function (response) {
@@ -239,7 +241,7 @@ Array.prototype.asyncForEach = function (each, done) {
     };
   }
 
-  angular.module('enterprise', ['md.data.table', 'ngMaterial', 'ngMorph', 'ngAnimate', 'angular-jwt', 'angular-loading-bar', 'ngMdIcons', 'ui.router', 'anim-in-out', 'perfect_scrollbar', 'angular-svg-round-progress', 'pasvaz.bindonce', 'headroom', 'ui.tinymce', 'ui.knob', 'home', 'login', 'user', 'areas', 'arp', 'eps', 'dianretefuente', 'iva', 'mediosdepago', 'marcas', 'otrosimpuestos', 'terminosdepago', 'tiemposdeentrega', 'vigencia', 'paises', 'ciudades', 'categoriasproductos', 'productos', 'cotizaciones', 'clientes']).controller('AppCtrl', AppCtrl).animation('.slide', SlideAnimation).config(AppConfig).filter('renderHTML', function ($sce) {
+  angular.module('enterprise', ['md.data.table', 'ngMaterial', 'ngMorph', 'ngAnimate', 'angular-jwt', 'angular-loading-bar', 'ngMdIcons', 'ui.router', 'anim-in-out', 'perfect_scrollbar', 'angular-svg-round-progress', 'pasvaz.bindonce', 'headroom', 'ui.tinymce', 'ui.knob', 'chart.js', 'angularChart', 'home', 'login', 'user', 'areas', 'arp', 'eps', 'dianretefuente', 'iva', 'mediosdepago', 'marcas', 'otrosimpuestos', 'terminosdepago', 'tiemposdeentrega', 'vigencia', 'paises', 'ciudades', 'categoriasproductos', 'productos', 'cotizaciones', 'clientes', 'combinaciones', 'descuentos', 'seguimientos']).controller('AppCtrl', AppCtrl).animation('.slide', SlideAnimation).config(AppConfig).filter('renderHTML', function ($sce) {
     return function (stringToParse) {
       return $sce.trustAsHtml(stringToParse);
     };

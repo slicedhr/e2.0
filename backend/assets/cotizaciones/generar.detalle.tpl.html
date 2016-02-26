@@ -1,11 +1,251 @@
-<md-content layout-padding layout-wrap>
-    
-	<form ng-submit="cotizaciones.generar()">
+<md-content class="detalle anim-slide-left" >
 
-		<md-button type="submit" class="md-primary md-raised text-center" layout="column" flex="100" ng-hide="!clientesForm.formValidate" ng-disabled="loading">
-        	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
-        </md-button>
+	<div layout="column" layout-fill>
+
+	  <md-toolbar class="md-darkgreen detalle__toolbar">
+	    <h2 class="text-center">
+	      <span>Generar Cotización</span>
+	    </h2>
+		<md-button class="md-fab md-warn detalle__toolbar__combinations-button" aria-label="Combinations" ng-click="cotizaciones.showCombinaciones = !cotizaciones.showCombinaciones">
+			<ng-md-icon icon="now_widgets" style="fill:white" size="24"></ng-md-icon>
+			<md-tooltip md-direction="bottom">
+			  Combinaciones
+			</md-tooltip>
+		</md-button>
+	  </md-toolbar>
+
+	  <md-content layout-padding>
+
+	    <form ng-submit="cotizaciones.generar()">
+
+	    	<div layout="row">
+	    		<md-input-container class="deephidden" flex="50">
+			        <label>Categoría</label>
+			        <md-select ng-model="cotizaciones.data.categoria" ng-change="cotizaciones.tempProducts = []" required>
+			          <md-option ng-repeat="item in cotizaciones.categorias" value="{{ item.id }}">
+			            {{ item.nombre_categoria }}
+			          </md-option>
+			        </md-select>
+			    </md-input-container>
+
+	    		<md-input-container class="deephidden" flex="50">
+			        <label>Vigencia</label>
+			        <md-select ng-model="cotizaciones.data.vigencia" md-on-open="cotizaciones.load('vigencia', 'vigencias')" required>
+			          <md-option ng-repeat="item in cotizaciones.vigencias" value="{{ item.vigencia }}">
+			            {{ item.vigencia }}
+			          </md-option>
+			        </md-select>
+			    </md-input-container>
+
+	    	</div>
+	    	<div layout="row">
+
+	    		<md-input-container class="deephidden" flex="50">
+			        <label>Tiempo De Entrega</label>
+			        <md-select ng-model="cotizaciones.data.tiempo_de_entrega" md-on-open="cotizaciones.load('tiemposdeentrega', 'tiempos')" required>
+			          <md-option ng-repeat="item in cotizaciones.tiempos" value="{{ item.tiempo_de_entrega }}">
+			            {{ item.tiempo_de_entrega }}
+			          </md-option>
+			        </md-select>
+			    </md-input-container>
+
+	    		<md-input-container class="deephidden" flex="50">
+			        <label>Términos De Negociación</label>
+			        <md-select ng-model="cotizaciones.data.terminos_de_negociacion" md-on-open="cotizaciones.load('terminosdepago', 'terminos')" required>
+			          <md-option ng-repeat="item in cotizaciones.terminos" value="{{ item.id }}">
+			            {{ item.terminos_de_pago }}
+			          </md-option>
+			        </md-select>
+			    </md-input-container>
+
+	    	</div>
+			
+			<div layout="row" class="animate-show" ng-show="cotizaciones.showCombinaciones">
+
+				<div style="border: thin solid #3F51B5;" layout="column" layout-fill>
+				  <md-toolbar class="small-toolbar">
+				 	
+				    <h2 class="text-center">
+				      <span>Combinaciones</span>
+				    </h2>
+				    
+				  </md-toolbar>
+
+				  <md-content layout-padding>
+
+				    <md-data-table-container class="bottom-radius-8">
+
+						<table md-data-table="">
+
+						<thead md-order="query.order" md-trigger="onOrderChange">
+						  <tr class="md-whiteframe-z1">
+						    <th class="justify-center-into-div" name="Descripción"></th>
+						    <th class="justify-center-into-div" name="Productos"></th>
+						    <th name="" class="options-table-button"></th>
+						  </tr>
+						</thead>
+
+						<tbody>
+						  <tr bindonce ng-repeat="row in cotizaciones.combinaciones" class="repeat-animation">
+						    <td class="text-center">{{ row.descripcion }}</td>
+						    <td class="text-center"><span ng-repeat="item in row.productos">{{ item.nombre }}<span ng-hide="$last"> || </span></span></td>
+						    <td class="options-table-button">
+								<md-button class="md-fab md-mini md-lightgreen" style="font-size: 24px" flex ng-click="cotizaciones.selectCombinacion(row)">
+									<ng-md-icon icon="send" fill="icon-fill-white" size="20" style="margin-left: 5px"></ng-md-icon>
+								</md-button>
+						    </td>
+						  </tr>
+						</tbody>
+						</table>
+
+
+					</md-data-table-container>
+				  </md-content>
+				</div>
+				
+
+			</div>
+	
+	    	<div layout="row" style="position:relative;">
+
+		    	<md-autocomplete 
+			    	md-floating-label="Seleccionar Producto" 
+			    	md-selected-item="cotizaciones.productTemp" 
+			    	md-search-text="cotizaciones.searchProduct" 
+			    	md-items="item in cotizaciones.getAutocomplete(cotizaciones.searchProduct, 'nombre', 'productos')" 
+			    	md-item-text="item.nombre" 
+			    	placeholder="Seleccionar Producto" 
+			    	md-min-length="3" 
+			    	md-selected-item-change="cotizaciones.validateSelection(item)" 
+			    	md-autoselect="false" flex ng-disabled="!cotizaciones.data.categoria" style="background: rgb(195, 204, 253);padding: 0 10px;height: 70px;">
+			      	<span md-highlight-text="cotizaciones.searchProduct">{{ item.nombre }}</span>
+			      
+			        <md-not-found>
+			          No hay resultados para "{{ cotizaciones.searchProduct }}".
+			        </md-not-found>
+
+			    </md-autocomplete>
+
+			    <ng-md-icon icon="search" size="80" style="fill: rgba(250, 250, 250, 0.24);position:absolute;right:49px;top:-5px;">
+			    </ng-md-icon>
+	    		
+	    	</div>
+
+
+	    	<md-data-table-container class="bottom-radius-8" layout-padding>
+
+				<table md-data-table>
+				<thead>
+				  <tr class="md-whiteframe-z1">
+				    <th class="justify-center-into-div" name="Item"></th>
+				    <th class="justify-center-into-div" name="Producto"></th>
+				    <th class="justify-center-into-div" name="Cantidad"></th>
+				    <th class="justify-center-into-div" name="Valor unitario"></th>
+				    <th class="justify-center-into-div" name="Descuento"></th>
+				    <th class="justify-center-into-div" name="IVA"></th>
+				    <th class="justify-center-into-div" name="Total"></th>
+				    <th name="" class="options-table-button"></th>
+				  </tr>
+				</thead>
+
+				<tbody>
+					<tr ng-hide="cotizaciones.tempProducts.length">
+						<td class="text-center" colspan="7"><h2>Por favor agregar productos a la lista.</h2></td>
+					</tr>
+
+				  <tr bindonce ng-repeat="row in cotizaciones.tempProducts" class="repeat-animation">
+				    <td class="text-center">{{ $index + 1 }}</td>
+				    <td class="text-center">{{ row.nombre}}</td>
+				    <td class="text-center">
+				    <!-- CUando cambie sume() ng-change -->
+					    <md-input-container>
+					    	<label>Cantidad</label>
+					    	<input type="number" ng-model="row.cantidad" ng-change="cotizaciones.sumar()">
+					    </md-input-container>
+				    </td>
+				    <td class="text-center">
+				    	{{ ( ( ( row.precio_de_compra * row.utilidad_bruta) / 100) + row.precio_de_compra ) | currency: '$' : 0 }}
+
+				    </td>
+				    <td class="text-center" ng-init="row.descuentoproducto = 0" ng-click="cotizaciones.openDiscountSlide(row)">
+						{{ row.descuentoproducto }} %
+				    </td>
+				    <td class="text-center">{{ row.iva }}</td>
+				    <td class="text-center">
+						
+				    {{
+                            ((((row.precio_de_compra*row.utilidad_bruta)/100)+row.precio_de_compra)*row.cantidad) - ((((((row.precio_de_compra*row.utilidad_bruta)/100)+row.precio_de_compra)*row.cantidad)*row.descuentoproducto)/100) + (((((((row.precio_de_compra*row.utilidad_bruta)/100)+row.precio_de_compra)*row.cantidad) - ((((((row.precio_de_compra*row.utilidad_bruta)/100)+row.precio_de_compra)*row.cantidad)*row.descuentoproducto)/100))*row.iva)/100) | currency:'$':0
+                            }}
+
+                            </td>
+				    <td class="options-table-button">
+				    	 <md-button class="md-fab md-mini md-red" aria-label="delete" ng-click="cotizaciones.removeProduct(row)">X</md-button>
+				    </td>
+
+				  </tr>
+				  <tr>
+				  	<td colspan="6" class="text-rigth">
+				  		<strong>Total: </strong>
+				  	</td>
+				  	<td>
+				  		{{ cotizaciones.sumaTotal | currency: '$' : 0 }}
+				  	</td>
+				  </tr>
+				
+				</tbody>
+
+				</table>
+
+
+			</md-data-table-container>
+
+			<textarea ui-tinymce="cotizaciones.optionsWYSIWYG" ng-model="cotizaciones.data.texto_adicional"></textarea>
+
+			<div layout="row" flex>
+				<md-button type="submit" class="md-primary md-raised text-center" layout="column" flex ng-disabled="cotizaciones.disabledSave" ng-click="cotizaciones.generar()">
+		    	<ng-md-icon icon="save" fill="icon-fill-white" size="24"></ng-md-icon> Guardar
+		    </md-button>
+			</div>
         
-	</form>
+		</form>
+	  </md-content>
+	</div>
+    
+	
 
 </md-content>
+    <div class="discountpanel" ng-show="cotizaciones.showDiscountPanel">
+    	<div layout="row" flex layout-align="center center">
+    		<div class="text-center" flex="5">
+	    		0
+	    	</div>
+	    	<div flex="60">
+
+	    		<md-slider class="md-primary" md-discrete ng-model="cotizaciones.descuentoTemporal" step="1" min="0" max="{{cotizaciones.descuentoMaximo}}" ng-change="cotizaciones.changeDiscount()" flex></md-slider>
+
+	    	</div>
+	    	<div class="text-center" flex="5">
+				
+				{{cotizaciones.descuentoMaximo}}
+	    		
+	    	</div>
+    	</div>
+    	
+		<span class="close" ng-click="cotizaciones.showDiscountPanel = false">X</span>
+    </div>
+
+
+    <div class="panelselect" ng-show="cotizaciones.panelselect">
+
+    	<div class="text-center">
+    		<h3>Seleccionar tipo de descuento</h3>
+    	</div>
+
+    	<div layout="row" flex>
+
+    		<md-button class="md-raised md-warn" aria-label="select" ng-click="cotizaciones.selectDiscountFromPanel(item, true)" flex>Ordinario</md-button>
+
+    		<md-button class="md-raised md-warn" style="background: {{item.categoriacliente.color}} !important" aria-label="select" ng-repeat="item in cotizaciones.filteredCategoriasCliente" class="item" ng-click="cotizaciones.selectDiscountFromPanel(item)" flex>{{ item.categoriacliente.nombre }}</md-button>
+
+    	</div>
+    </div>

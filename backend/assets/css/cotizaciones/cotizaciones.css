@@ -1,0 +1,87 @@
+.clientescotizacion.dialog-base.clientes
+{
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+.detalle
+{
+    margin-top: 1em;
+}
+.detalle__toolbar
+{
+    position: relative;
+}
+.detalle__toolbar__combinations-button
+{
+    position: absolute;
+    top: 60%;
+    right: 5%;
+}
+.small-toolbar
+{
+    line-height: 0;
+
+    height: 50px !important;
+    min-height: 50px !important;
+}
+.deephidden md-select-value
+{
+    overflow: hidden;
+}
+.discountpanel,
+.panelselect
+{
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+
+    width: 100%;
+    height: 45px;
+
+    background: #7cc8f5;
+    box-shadow: 0 -1px 3px 0 rgba(0,0,0,.2), 0 -1px 1px 0 rgba(0,0,0,.14), 0 -2px 1px -1px rgba(0,0,0,.12);
+}
+.discountpanel span.close,
+.panelselect span.close
+{
+    font-size: 20px;
+
+    position: absolute;
+    top: 5px;
+    right: 18px;
+
+    padding: 5px;
+
+    cursor: pointer;
+
+    color: #fff;
+    border-radius: 5px;
+    background: #e44b40;
+}
+.discountpanel.ng-hide-add,
+.panelselect.ng-hide-add,
+.discountpanel.ng-hide-remove,
+.panelselect.ng-hide-remove
+{
+    -webkit-transition: all .5s;
+            transition: all .5s;
+}
+.discountpanel.ng-hide
+{
+    bottom: -45px;
+}
+.panelselect.ng-hide
+{
+    bottom: -110px;
+}
+.panelselect
+{
+    height: 110px;
+}
+.crear-contacto
+{
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 1em;
+}

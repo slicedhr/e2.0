@@ -12,11 +12,18 @@
     .module('home')
     .controller('HomeCtrl', HomeCtrl);
 
-  function HomeCtrl(HomeService, $timeout) {
+  function HomeCtrl(HomeService, $timeout, ReportesService, AppService) {
 
     var vm = this;
 
     vm.homedata = {}
+
+    vm.graphicByDateCotizacionesData = [ [0,0,0,0,0,0,0] ]
+
+    vm.graphicByDateCotizacionesLabels = ReportesService.daysOfWeek
+
+    vm.graphicByDateCotizacionesSeries = ['Total vendido por día']
+
 
     vm.countTo = (current, to, time) => {
 
@@ -27,6 +34,81 @@
           current += 1
 
         $timeout(vm.countTo(current, to, time), time/to);
+    }
+
+    vm.getRep = value => {
+
+        var config = {
+          range: false,
+          by: value, // week, month, year
+          criteria: {
+            vendido: vm.vendido,
+            vendedor: vm.vendedor
+          }
+        }
+
+        ReportesService
+          .reporteVendidos(config)
+          .then(success => {
+
+            console.log(success.data)
+
+            vm.reporteTemporal = success.data
+
+
+            if (value === 'day'){
+
+              var transform = ReportesService.groupDates(success.data, 'updatedAt', 'day')
+
+              vm.graphicByDateCotizaciones = [transform.data]
+
+            }
+
+            if (value === 'month'){
+
+              var transform = ReportesService.groupDates(success.data, 'updatedAt', 'month')
+
+              vm.graphicByDateCotizaciones = [transform.data]
+
+
+            }
+
+            var transform = ReportesService.groupDates(success.data, 'updatedAt', 'thisMonth')
+
+            // vm.graphicByDateCotizaciones = [transform.data]
+          
+
+            // vm.graphicByDateCotizacionesData = [monthTransform.data]
+
+
+            console.log(transform)
+
+
+          })
+
+    }
+
+    vm.getByDate = () => {
+
+      var config = {
+          range: true,
+          from: vm.date.from,
+          to: vm.date.to,
+          criteria: {
+            vendido: vm.vendido,
+            vendedor: vm.vendedor
+          }
+        }
+
+      ReportesService
+          .reporteVendidos(config)
+          .then(success => {
+
+            console.log(success)
+
+
+          })
+
     }
 
 
@@ -41,6 +123,8 @@
         // vm.homedata.totalclientes.value = data.totalclientes
 
         // vm.homedata.totalclientes.options.max = data.totalclientes
+
+        
 
         vm.homedata.totalclientes = {
 

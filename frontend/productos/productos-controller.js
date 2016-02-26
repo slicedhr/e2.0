@@ -53,7 +53,6 @@
 
         query = 'where=' + JSON.stringify(query)
 
-        console.log(query)
 
         self.page = 1;
 

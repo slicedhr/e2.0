@@ -42,6 +42,7 @@
 
           var suma = 0;
 
+          
           switch (which) {
             case 'all':
               filtered = $scope.cotizaciones; 
@@ -113,6 +114,21 @@
               method: 'GET',
 
               url: AppService.setPrefix(`detallecotizacion?cotizacion=${idcotizacion}&populate=producto`)
+
+            }
+
+            $scope.setVendido = () => {
+
+              AppService.http({
+                method: 'PUT',
+                url: AppService.setPrefix(`cotizaciones/${idcotizacion}`),
+                data: {
+                  vendido: true
+                }
+              })
+              .then(success => {
+                $scope.data.vendido = true
+              })
 
             }
 

@@ -134,29 +134,32 @@
             } else self.validation = false;
           }
 
-          if (self.data.categoriascliente.length) for (var i = 0; i < self.data.categoriascliente.length; i++) {
+          if (self.data.categoriascliente.length) {
 
-            self.data.categoriascliente[i].categoriacliente = self.data.categoriascliente[i].categoriacliente.id;
+            for (var i = 0; i < self.data.categoriascliente.length; i++) {
 
-            if (self.data.categoriascliente[i].categoriasproductos) {
+              self.data.categoriascliente[i].categoriacliente = self.data.categoriascliente[i].categoriacliente.id;
 
-              self.data.categoriascliente[i].productos = [];
+              if (self.data.categoriascliente[i].categoriasproductos) {
 
-              for (var j = 0; j < self.data.categoriascliente[i].categoriasproductos.length; j++) self.data.categoriascliente[i].productos.push(self.data.categoriascliente[i].categoriasproductos[j].id);
-            }
-          };
+                self.data.categoriascliente[i].productos = [];
 
-          AppService.save(data, url).then(function (success) {
+                for (var j = 0; j < self.data.categoriascliente[i].categoriasproductos.length; j++) self.data.categoriascliente[i].productos.push(self.data.categoriascliente[i].categoriasproductos[j].id);
+              }
+            };
 
-            self.data.id = success.data.id;
+            AppService.save(data, url).then(function (success) {
 
-            AppService.broadcastDialog(success.data);
+              self.data.id = success.data.id;
 
-            $rootScope.$broadcast('saved:cliente', success.data);
-          })['catch'](function (err) {
+              AppService.broadcastDialog(success.data);
 
-            AppService.broadcastError(err);
-          });
+              $rootScope.$broadcast('saved:cliente', success.data);
+            })['catch'](function (err) {
+
+              AppService.broadcastError(err);
+            });
+          } else $mdToast.show($mdToast.simple().textContent('El cliente necesita al menos una categoría').position('bottom right').hideDelay(5000));
         };
 
         this.validateSelection = function (field, item) {

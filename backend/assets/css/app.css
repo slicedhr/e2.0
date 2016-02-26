@@ -19,6 +19,10 @@ body
 {
     background: #ebeff2;
 }
+.backgroundgray
+{
+    background: #ebeff2;
+}
 .hide-selectable tr td:first-child,
 .hide-selectable tr th:first-child
 {
@@ -792,4 +796,23 @@ md-dialog .rg-bottom
 .animate-show.ng-hide
 {
     opacity: 0;
+}
+.md-lightgreen
+{
+    color: #fff !important;
+    background: #2ecc71 !important;
+}
+.md-darkgreen
+{
+    color: #fff !important;
+    background: #27ae60 !important;
+}
+.md-red
+{
+    color: #fff !important;
+    background: #e44a40 !important;
+}
+.hidden-xy
+{
+    overflow: hidden;
 }

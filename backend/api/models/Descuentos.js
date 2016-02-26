@@ -14,20 +14,14 @@ module.exports = {
       autoIncrement: true
     },
   	descuento: {
-  		type: 'integer',
-  		required: true
-  	},
-  	distribuidor: {
-  		type: 'integer',
+  		type: 'integer'
   	},
   	producto: {
-  		model: 'Productos',
-      required: true
+  		model: 'Productos'
   	},
-  	activado: {
-  		type: 'boolean',
-  		defaultsTo: false
-  	},
+    categoriacliente:  {
+      model: 'CategoriaCliente'
+    }
   }
 };
 

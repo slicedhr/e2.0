@@ -19,7 +19,12 @@
     </md-tooltip>
     <ng-md-icon icon="check_circle" size="24" style="fill: green"></ng-md-icon>
   </span>
-    <span ng-repeat="item in row.categorias" data-item="{{row.id}}">{{ item.nombre_categoria }}</span></td>
+    
+    <span ng-if="row.categorias.length">
+      <span ng-repeat="item in row.categorias" data-item="{{row.id}}">{{ item.nombre_categoria }}</span>
+    </span>
+    <span ng-if="row.categoria">{{row.categoria.nombre_categoria}}</span>
+    </td>
     <td class="text-center">{{ row.generadaPor.first_name + ' ' + row.generadaPor.last_name }}</td>
     <td class="text-center">{{ row.createdAt | date }}</td>
     <td>

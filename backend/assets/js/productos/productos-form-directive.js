@@ -30,11 +30,32 @@
       templateUrl: 'productos/productos-form-directive.tpl.html',
       replace: false,
       controllerAs: 'productosForm',
-      controller: function controller($scope, $rootScope, AppService) {
+      controller: function controller($scope, $rootScope, AppService, $filter) {
 
         var self = this;
 
-        this.data = JSON.parse($scope.data) || { bodega: 1 };
+        this.data = JSON.parse($scope.data) || {};
+
+        this.data.tempDescuentos = {};
+
+        this.data.bodega = 1;
+
+        if (this.data.descuentos && this.data.descuentos.length) for (var i = 0, length1 = self.data.descuentos.length; i < length1; i++) self.data.tempDescuentos['id_' + self.data.descuentos[i].categoriacliente] = self.data.descuentos[i].descuento;else this.data.descuentos = [];
+
+        this.getCategoriasCliente = function () {
+
+          var config = {
+            method: 'GET',
+            url: AppService.setPrefix('categoriacliente?requireDiscount=1')
+          };
+
+          AppService.http(config).then(function (success) {
+
+            self.categoriascliente = success.data.results;
+          });
+        };
+
+        this.getCategoriasCliente();
 
         this.validations = [{
           key: 'categoria',
@@ -44,10 +65,6 @@
           key: 'marca',
           required: true,
           title: 'Marca'
-        }, {
-          key: 'tiemposdeentrega',
-          required: true,
-          title: 'Tiempo de entrega'
         }, {
           key: 'unidad_de_medida',
           required: true,
@@ -74,6 +91,16 @@
 
         this.source = 'productos';
 
+        this.discountChange = function (item, value) {
+
+          var found = $filter('filter')(self.data.descuentos, { categoriacliente: item.id })[0];
+
+          if (found) self.data.descuentos[self.data.descuentos.indexOf(found)].descuento = value;else self.data.descuentos.push({
+            descuento: value,
+            categoriacliente: item.id
+          });
+        };
+
         this.save = function () {
 
           var data = self.data,
@@ -91,25 +118,56 @@
 
           AppService.save(data, url).then(function (success) {
 
-            for (var i = 0; i < self.validations.length; i++) success.data[self.validations[i].key] = self.data['temp' + self.validations[i].key];
+            if (self.data.id) {
 
-            self.data.unidad_de_medida = self.data.tempunidad_de_medida.unidad;
+              AppService.http({
+                method: 'PUT',
+                data: {
+                  descuentos: self.data.descuentos
+                },
+                url: AppService.setPrefix('productos/modificar/descuentos')
+              }).then(function (thesuccess) {
 
-            $rootScope.$broadcast('saved:' + self.source, self.data);
+                success.data.descuentos = thesuccess.data;
+
+                self.afterSave(success);
+              });
+            } else {
+
+              AppService.http({
+                method: 'POST',
+                data: {
+                  descuentos: self.data.descuentos,
+                  producto: success.data.id
+                },
+                url: AppService.setPrefix('productos/crear/descuentos')
+              }).then(function (thesuccess) {
+
+                success.data.descuentos = thesuccess.data;
+
+                self.afterSave(success);
+              });
+            }
           })['catch'](function (err) {
 
             AppService.broadcastError(err);
           });
         };
 
-        this.validateSelection = function (field, item, unidad_de_medida) {
+        this.afterSave = function (success) {
 
-          if (item) {
+          for (var i = 0; i < self.validations.length; i++) self.data[self.validations[i].key] = self.data['temp' + self.validations[i].key];
 
-            self.data[field] = item.id;
+          self.data.id = success.data.id;
 
-            if (unidad_de_medida) self.data['unidad_de_medida'] = item.unidad;
-          } else return false;
+          AppService.broadcastDialog(self.data);
+
+          $rootScope.$broadcast('saved:' + self.source, self.data);
+        };
+
+        this.validateSelection = function (field, item) {
+
+          if (item) self.data[field] = item.id;else return false;
         };
 
         this.getAutocomplete = function (text, field, source) {

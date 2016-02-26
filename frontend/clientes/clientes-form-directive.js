@@ -153,7 +153,7 @@
 
           }
 
-          if (self.data.categoriascliente.length)
+          if (self.data.categoriascliente.length){
 
             for (var i = 0; i < self.data.categoriascliente.length; i++) {
 
@@ -171,23 +171,36 @@
 
             };
 
-          AppService
-            .save(data, url)
-            .then(success => {
-              
-              self.data.id = success.data.id
+            AppService
+              .save(data, url)
+              .then(success => {
+                
+                self.data.id = success.data.id
 
-              AppService.broadcastDialog(success.data)
+                AppService.broadcastDialog(success.data)
 
-              $rootScope.$broadcast('saved:cliente', success.data)
+                $rootScope.$broadcast('saved:cliente', success.data)
 
 
-            })
-            .catch(err => {
+              })
+              .catch(err => {
 
-              AppService.broadcastError(err)
+                AppService.broadcastError(err)
 
-            })
+              })
+
+          }
+          else
+            $mdToast.show(
+
+              $mdToast.simple()
+
+                .textContent('El cliente necesita al menos una categoría')
+                .position('bottom right')
+                .hideDelay(5000)
+
+            );
+            
 
         }
 

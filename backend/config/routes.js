@@ -59,9 +59,10 @@ module.exports.routes = {
   'GET /chat/:from/:to': 'MensajesController.getMessages',
   'GET /api/v1/cotizacion': 'CotizacionesController.getCotizaciones',
   '/cotizacion': 'CotizacionesController.PDF',
-  '/cotizacion/:id': 'CotizacionesController.PDFGenerator',
+  'GET /api/v1/ver-cotizacion': 'CotizacionesController.PDFGenerator',
 
   'GET /api/v1/tareas/obtener': 'TasksController.getTasks',
+  'GET /api/v1/reportes/cotizaciones/vendidas': 'ReportesController.reporteCotizaciones',
 
 
 //   //Actuales
@@ -117,6 +118,10 @@ module.exports.routes = {
 
   'GET /api/v1/contactos/obtener-seguimientos': 'ContactosController.getAndPopulate',
   'GET /api/v1/cliente/sorted': 'ClientesController.clienteSeguimientosOrdenados',
+
+  'POST /api/v1/combinaciones/nueva': 'CombinacionesController.crearCombinacion',
+  'POST /api/v1/productos/crear/descuentos': 'ProductosController.crearDescuentos',
+  'PUT /api/v1/productos/modificar/descuentos': 'ProductosController.editarDescuentos',
   // 'get /*(^.*)':{
   //   view:'app'
   // }

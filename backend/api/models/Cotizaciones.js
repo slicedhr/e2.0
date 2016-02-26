@@ -53,6 +53,9 @@ module.exports = {
     contacto: {
     	model: 'Contactos'
     },
+    categoria: {
+        model: 'CategoriasProductos'
+    },
     categorias: {
     	collection: 'CategoriasProductos',
         via:'cotizaciones',
@@ -77,7 +80,10 @@ module.exports = {
 
     mostrar_total: 'boolean',
 
-    vendido: 'boolean'
+    vendido: {
+        type: 'boolean',
+        defaultsTo: false
+    }
 
   },
   afterCreate : function(values,cb){
@@ -91,10 +97,9 @@ module.exports = {
             type: 2,
         }
         Notifications.create(notificacion).exec(function(err,notificacion){
-            sails.sockets.blast('notification',notificacion)
+            sails.sockets.blast('notification', notificacion)
         })
     }
-
     Usuarios.findOne({id:values.vendedor}).exec(function(err,data){
 
         var fecha = {}
@@ -113,30 +118,31 @@ module.exports = {
 
         var id_cotizacion = "S"+fecha.year+"-0"+ values.id+ toUppercase(data.first_name)+toUppercase(data.last_name);
 
-         Cotizaciones.update({id: values.id},{id_generado:id_cotizacion}).exec(function(err,data){
-            console.log(err)
-            console.log(data)
-         })
+         Cotizaciones
+            .update({ id: values.id },{ id_generado: id_cotizacion })
+            .exec(function(err,data){
+                console.log(err)
+            })
 
 
         
     })
 
-    var randomDay = Math.floor((Math.random() * 4));
+    // var randomDay = Math.floor((Math.random() * 4));
 
-    var seguimiento = {
-          cliente: values.cliente,
-          estado: 3,
-          minuta: 'Se envió cotización al cliente.',
-          programar_visita: new Date(values.fecha_probable_compra),
-          titulo: "Se envió cotización al cliente.",
-          vendedor: values.vendedor,
-          contacto: values.contacto
-      }
+    // var seguimiento = {
+    //       cliente: values.cliente,
+    //       estado: 3,
+    //       minuta: 'Se envió cotización al cliente.',
+    //       programar_visita: new Date(values.fecha_probable_compra),
+    //       titulo: "Se envió cotización al cliente.",
+    //       vendedor: values.vendedor,
+    //       contacto: values.contacto
+    //   }
   
-    Minuta.create(seguimiento).exec(function(err,minuta){
-      if (err) console.log(err)
-    })
+    // Minuta.create(seguimiento).exec(function(err,minuta){
+    //   if (err) console.log(err)
+    // })
     cb()
   }
 

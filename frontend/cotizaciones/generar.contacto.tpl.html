@@ -1,16 +1,47 @@
-<md-content class="fadeLeft md-whiteframe-z3 dialog-base contactos" layout-padding>
-	<h1 class="text-center">¿Deseas crear un contacto para el cliente?</h1>
-	<div layout="row">
-		<md-button class="md-raised md-primary" aria-label="Add" flex ng-click="cotizaciones.showFormContactos = true"><ng-md-icon icon="create" fill="icon-fill-white" size="24"></ng-md-icon> Crear</md-button>
+<md-content class="fadeLeft md-whiteframe-z3 dialog-base contactos crear-contacto anim-slide-left">
 
-		<md-button class="md-raised md-primary" aria-label="Skip" ui-sref="generar.detalle({ cliente: cotizaciones.cliente.id, contacto: 'none' })" flex><ng-md-icon icon="exit_to_app" fill="icon-fill-white" size="24"></ng-md-icon> Omitir</md-button>
+	<div layout-padding>
+		<div layout-padding>
+			
+			<h1 class="text-center">{{ cotizaciones.contactos.length ? 'Crear o Seleccionar Contacto' : '¿Deseas crear un contacto para el cliente?' }}</h1>
+			<div layout="row">
+				<md-button class="md-raised md-primary" aria-label="Add" flex ng-click="cotizaciones.showFormContactos = true"><ng-md-icon icon="create" fill="icon-fill-white" size="24"></ng-md-icon> Crear</md-button>
+
+				<md-button class="md-raised md-primary" aria-label="Skip" ui-sref="generar.detalle({ cliente: cotizaciones.cliente.id, contacto: 'none' })" ng-hide="cotizaciones.contactos.length" flex><ng-md-icon icon="exit_to_app" fill="icon-fill-white" size="24"></ng-md-icon> Omitir</md-button>
+			</div>
+
+		</div>
+	</div>
+
+	<div ng-if="cotizaciones.contactos.length" layout-padding>
+		<md-list>
+		  <md-list-item ng-repeat="item in cotizaciones.contactos">
+		    <p>{{ item.nombres_completos + ' - ' + item.cargo }}</p>
+		    	<md-button class="md-fab md-mini md-lightgreen" style="font-size: 24px;" ui-sref="generar.detalle({ cliente: cotizaciones.cliente.id, contacto: item.id })">
+					<ng-md-icon icon="send" fill="icon-fill-white" size="20" style="margin-left: 5px"></ng-md-icon>
+				</md-button>
+
+		    <md-divider ng-show="!$last"></md-divider>
+		  </md-list-item>
+		</md-list>
 	</div>
 
 	<div ng-show="cotizaciones.showFormContactos">
 
-		<h1>Crear Contacto</h1>
+		<md-toolbar class="md-lightgreen">
 
-		<contactos-form data='{}'></contactos-form>
+		    <h2 class="text-center">
+		      <span>Crear Contacto</span>
+		    </h2>
+
+	  	</md-toolbar>
+	  	
+	  	<md-content layout-padding>
+
+			<contactos-form data='{}'></contactos-form>
+
+	  	</md-content>
+
 		
 	</div>
 	
