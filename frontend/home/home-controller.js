@@ -18,11 +18,15 @@
 
     vm.homedata = {}
 
+    vm.cotizaciones = {}
+
+    vm.label = 'Total vendido por día'
+
     vm.graphicByDateCotizacionesData = [ [0,0,0,0,0,0,0] ]
 
     vm.graphicByDateCotizacionesLabels = ReportesService.daysOfWeek
 
-    vm.graphicByDateCotizacionesSeries = ['Total vendido por día']
+    vm.graphicByDateCotizacionesSeries = [vm.label]
 
 
     vm.countTo = (current, to, time) => {
@@ -42,8 +46,8 @@
           range: false,
           by: value, // week, month, year
           criteria: {
-            vendido: vm.vendido,
-            vendedor: vm.vendedor
+            vendido: vm.cotizaciones.vendido,
+            vendedor: vm.cotizaciones.vendedor
           }
         }
 
@@ -51,16 +55,24 @@
           .reporteVendidos(config)
           .then(success => {
 
+            Chart.defaults.global.tooltipTemplate = function(valueObj) {
+              return formatNumber(valueObj.value, 2, ',',  '.');
+            } 
+
             console.log(success.data)
 
             vm.reporteTemporal = success.data
 
 
-            if (value === 'day'){
+            if (value === 'week'){
 
               var transform = ReportesService.groupDates(success.data, 'updatedAt', 'day')
 
-              vm.graphicByDateCotizaciones = [transform.data]
+              vm.graphicByDateCotizacionesData = [transform.data]
+
+              vm.graphicByDateCotizacionesLabels = ReportesService.daysOfWeek
+
+              vm.graphicByDateCotizacionesSeries = vm.cotizaciones.vendido ? ['Total vendido por día'] : ['Total no vendido por día'] 
 
             }
 
@@ -68,7 +80,11 @@
 
               var transform = ReportesService.groupDates(success.data, 'updatedAt', 'month')
 
-              vm.graphicByDateCotizaciones = [transform.data]
+              vm.graphicByDateCotizacionesData = [transform.data]
+
+              vm.graphicByDateCotizacionesLabels = ReportesService.months
+
+              vm.graphicByDateCotizacionesSeries = vm.cotizaciones.vendido ? ['Total vendido por mes'] : ['Total no vendido por mes']
 
 
             }
@@ -95,8 +111,8 @@
           from: vm.date.from,
           to: vm.date.to,
           criteria: {
-            vendido: vm.vendido,
-            vendedor: vm.vendedor
+            vendido: vm.cotizaciones.vendido,
+            vendedor: vm.cotizaciones.vendedor
           }
         }
 

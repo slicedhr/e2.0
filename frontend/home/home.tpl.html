@@ -32,16 +32,15 @@
 
          </md-card>
          
-         <md-card class="md-whiteframe-z3" layout-padding flex>
-             <!--  <angular-chart options="home.graphics.byWeek.data"></angular-chart> -->
+<!--          <md-card class="md-whiteframe-z3" layout-padding flex>
 
-            <canvas id="line" class="chart chart-line" chart-data="home.graphicsByWeekData"
-              chart-labels="home.graphicsByWeekLabels" chart-legend="true" chart-series="home.graphicsByWeekSeries">
+            <canvas id="line" class="chart chart-line" chart-data="home.graphicByDateCotizacionesData"
+              chart-labels="home.graphicByDateCotizacionesLabels" chart-legend="true" chart-series="home.graphicByDateCotizacionesSeries">
             </canvas> 
 
 
          </md-card>
-         
+          -->
 
 
 
@@ -54,7 +53,53 @@
 
    </div>
 
+    <div layout="row">
+      
+      <div layout="column" layout-fill>
+        <md-toolbar>
+            <h2>Cotizaciones</h2>
+        </md-toolbar>
+        <md-content layout-align="center center">
+            
+            <div layout="row">
+               
+               <div flex="60">
+                   <canvas id="line" class="chart chart-line" chart-data="home.graphicByDateCotizacionesData"
+                    chart-labels="home.graphicByDateCotizacionesLabels" chart-legend="true" chart-series="home.graphicByDateCotizacionesSeries" >
+                  </canvas> 
+               </div>
+
+               <div flex="40">
+                  
+                  <h2>Lorem ipsum dolor</h2>
+
+                  <div layout="row">
+                        <md-button class="md-raised md-primary" ng-click="home.getRep('week')" flex>WEEK</md-button>
+                     <md-button class="md-raised md-primary" ng-click="home.getRep('month')" flex>MONTH</md-button>
+                     <md-button class="md-raised md-primary" ng-click="home.getRep('year')" flex>YEAR</md-button>
+                     </div>
+                     <div layout="row">
+                        <md-input-container>
+                           <label>Vendedor</label>
+                           <input type="number" ng-model="home.cotizaciones.vendedor">
+                        </md-input-container>
+                        <md-checkbox ng-model="home.cotizaciones.vendido" aria-label="string">
+                           Vendido
+                        </md-checkbox>
+                     </div>
+
+               </div>
+
+            </div>  
+
+        </md-content>
+      </div>
+
+   </div>
+
    <div layout="row">
+
+  
          
    <md-card class="md-whiteframe-z3" layout-padding>
             <md-input-container>
